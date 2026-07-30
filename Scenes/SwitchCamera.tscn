@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://bakp7i3fl0qqc"]
+
+[ext_resource type="Script" uid="uid://c5x2cp78yj5j6" path="res://Scripts/SwitchCamera.gd" id="1_bcuu2"]
+
+[node name="SwitchCamera" type="Camera2D" unique_id=747426950]
+script = ExtResource("1_bcuu2")

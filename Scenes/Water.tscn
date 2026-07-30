@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://cg73btl6xey6d"]
+
+[ext_resource type="Texture2D" uid="uid://cjq502q0om05v" path="res://Assets/Grounds/Sprites/Water.png" id="1_5v6ty"]
+[ext_resource type="Shader" uid="uid://douoirjai01kh" path="res://Shaders/Water.gdshader" id="1_aq4x0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aq4x0"]
+shader = ExtResource("1_aq4x0")
+shader_parameter/wave_speed = 0.86000004085
+shader_parameter/wave_rows = 5.7230001768425005
+shader_parameter/wave_curve = 0.0210000009975
+shader_parameter/line_width = 0.03500000096397999
+shader_parameter/line_color = Color(1, 1, 1, 0.5)
+
+[node name="Water" type="Node2D" unique_id=1027460051]
+
+[node name="Infinite" type="Parallax2D" parent="." unique_id=1268433314]
+scroll_scale = Vector2(0.8, 0.8)
+scroll_offset = Vector2(1182, -49)
+repeat_size = Vector2(128, 128)
+repeat_times = 20
+
+[node name="Texture" type="Sprite2D" parent="Infinite" unique_id=1885050988]
+modulate = Color(0.5585783, 0.9658274, 0.9999998, 1)
+texture_repeat = 2
+material = SubResource("ShaderMaterial_aq4x0")
+position = Vector2(735, 359)
+texture = ExtResource("1_5v6ty")
+region_rect = Rect2(-275.86115, -109.12556, 1275.8611, 823.941)

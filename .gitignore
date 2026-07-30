@@ -1,0 +1,51 @@
+# =========================================
+# Godot 4+ Cache and Engine-Generated Files
+# =========================================
+.godot/
+.nomedia
+*.tmp
+~*.dll
+
+# Older Godot Cache (Godot 3 compatibility)
+.import/
+
+# =========================================
+# Exported Builds & Sensitive Files
+# =========================================
+# Ignores exported project builds
+build/
+bin/
+*.apk
+*.aab
+*.exe
+*.zip
+
+# Ignores export settings with API keys, keystores, or passwords
+export.cfg
+export_credentials.cfg
+
+# Automatically generated translation files from CSVs
+*.translation
+
+# =========================================
+# Mono / C# Specific Files (If applicable)
+# =========================================
+.mono/
+data_*/
+mono_crash.*.json
+*.csproj.user
+*.sln.DotSettings.user
+
+# =========================================
+# Code Editors & IDE Files
+# =========================================
+# VS Code
+.vscode/
+
+# JetBrains / Rider / Fleet
+.idea/
+
+# OS-Specific junk files
+.DS_Store
+Thumbs.db
+desktop.ini
