@@ -1,28 +1,27 @@
 extends State;
 
 # Variables
-var ship = parent as CharacterBody2D;
 var driver: CharacterBody2D;
 
 func Entry() -> void:
 	# Setup Ship
-	ship.velocity = Vector2.ZERO;
+	parent.velocity = Vector2.ZERO;
 	# Connect Detector
-	ship.detector.body_entered.connect(driverEnter);
+	parent.detector.body_entered.connect(driverEnter);
 	
 func Exit() -> void:
-	ship.detector.body_entered.disconnect(driverEnter);
+	parent.detector.body_entered.disconnect(driverEnter);
 
 func driverEnter(body: Node2D):
 	if not body is CharacterBody2D: return;
-	if not ship.enterTimer.is_stopped(): return;
-	if not ship.exitTimer.is_stopped(): return;
+	if not parent.enterTimer.is_stopped(): return;
+	if not parent.exitTimer.is_stopped(): return;
 	
 	# Setup driver
-	ship.driver = body;
+	parent.driver = body;
 	
 	# Driver exist
-	driver = ship.getDriver()
+	driver = parent.getDriver()
 	
 	# Handle driver 
 	if (driver):
@@ -32,4 +31,4 @@ func driverEnter(body: Node2D):
 		stateManager.changeState.call_deferred((stateManager.States.DRIVING));
 	
 	# Cooldown	
-	ship.enterTimer.start(ship.coolDownTime);
+	parent.enterTimer.start(parent.coolDownTime);

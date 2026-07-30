@@ -4958,7 +4958,7 @@ tile_set = SubResource("TileSet_vngp5")
 position = Vector2(374, 228)
 
 [node name="StateManager" parent="Player" index="5" unique_id=728419902]
-currentState = 0
+playerState = 1
 
 [node name="Player2" parent="." unique_id=576287020 instance=ExtResource("5_qpfou")]
 position = Vector2(781, 136)

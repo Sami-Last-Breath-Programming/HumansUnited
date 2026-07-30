@@ -3,7 +3,7 @@ extends Node
 
 # States
 var States: Dictionary = {
-	"NULL" : 0,
+	"NULL" : 0,	
 };
 
 # Lazy Load
@@ -12,9 +12,6 @@ var States: Dictionary = {
 # Variables
 var StateData = {};
 var lastState: int = States.NULL;
-
-func _ready() -> void:
-	init();
 
 func init() -> void:
 	# Loop on all States and refer StateManager
@@ -33,12 +30,9 @@ func init() -> void:
 			processSetup(node, false);
 			count += 1;
 		
-	# Change state to default 
-	print(StateData);
-	print(States);
-	
-	#StateData[currentState].Entry();
-	#processSetup(StateData[currentState], true);
+	# Change state to default 	
+	StateData[currentState].Entry();
+	processSetup(StateData[currentState], true);
 
 func changeState(state: int) -> void:
 	# Stop the old state
