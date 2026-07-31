@@ -60,21 +60,19 @@ script = ExtResource("1_e0onf")
 
 [node name="Toggle" type="Control" parent="." unique_id=110166777]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="VirtualJoystick" type="VirtualJoystick" parent="Toggle" unique_id=31061367]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = -0.012
-anchor_top = 0.5
-anchor_right = 0.256
-anchor_bottom = 0.5
-offset_left = 0.48000002
-offset_top = -20.0
-offset_right = 309.76
-offset_bottom = 628.0
+anchor_right = 0.296
+anchor_bottom = 1.0
+offset_right = 0.0079956055
+grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
 theme_override_styles/normal_tip = SubResource("StyleBoxFlat_36asn")
@@ -90,20 +88,19 @@ visibility_mode = 1
 
 [node name="Boost" type="Control" parent="Toggle" unique_id=314057350]
 layout_mode = 1
-anchor_left = 28.497002
-anchor_top = 11.225
-anchor_right = 28.497002
-anchor_bottom = 11.225
-offset_left = -178.88013
-offset_top = -37.0
-offset_right = -138.88013
-offset_bottom = 3.0
+anchor_left = 1.0
+anchor_top = 0.66400003
+anchor_right = 1.0
+anchor_bottom = 0.66400003
+offset_left = -280.0
+offset_top = -53.272034
+offset_right = -194.0
+offset_bottom = 44.727966
 grow_horizontal = 0
-grow_vertical = 2
+grow_vertical = 0
 
 [node name="Touch" type="TouchScreenButton" parent="Toggle/Boost" unique_id=439257587]
 modulate = Color(1, 1, 1, 0.5176471)
-position = Vector2(-22, -9)
 scale = Vector2(2.229166, 2.229166)
 texture_normal = ExtResource("2_bjfho")
 texture_pressed = ExtResource("3_6fbih")
@@ -111,14 +108,14 @@ action = "Boost"
 
 [node name="ShipExt" type="Control" parent="Toggle" unique_id=2125212581]
 layout_mode = 1
-anchor_left = 28.792002
-anchor_top = 7.0120006
-anchor_right = 28.792002
-anchor_bottom = 7.0120006
-offset_left = -190.68005
-offset_top = -45.48001
-offset_right = -119.68005
-offset_bottom = 43.51999
+anchor_left = 1.0
+anchor_top = 0.41000003
+anchor_right = 1.0
+anchor_bottom = 0.41000003
+offset_left = -152.0
+offset_top = -44.680023
+offset_right = -81.0
+offset_bottom = 44.319977
 grow_horizontal = 0
 grow_vertical = 2
 
@@ -132,14 +129,14 @@ action = "ShipExit"
 
 [node name="ChangeScn" type="Control" parent="Toggle" unique_id=335036408]
 layout_mode = 1
-anchor_left = 28.650002
-anchor_top = 2.232
-anchor_right = 28.650002
-anchor_bottom = 2.232
-offset_left = -221.0
-offset_top = -45.280006
-offset_right = -221.0
-offset_bottom = -45.280006
+anchor_left = 1.0
+anchor_top = 0.125
+anchor_right = 1.0
+anchor_bottom = 0.125
+offset_left = -184.0
+offset_top = -61.0
+offset_right = -184.0
+offset_bottom = -61.0
 grow_horizontal = 0
 
 [node name="Touch" type="TouchScreenButton" parent="Toggle/ChangeScn" unique_id=966782673]
@@ -151,27 +148,24 @@ action = "CameraSwitch"
 [node name="Show" type="Button" parent="Toggle" unique_id=497276017]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 1.0
-anchor_top = 1.5120001
-anchor_right = 1.0
-anchor_bottom = 1.5120001
-offset_left = 5.0
-offset_top = -23.480003
-offset_right = 155.4045
-offset_bottom = 23.519997
+anchor_bottom = 0.124000005
+offset_left = 30.0
+offset_top = 22.0
+offset_right = 180.4045
+offset_bottom = -11.352005
+grow_horizontal = 2
+grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_3gfia")
 text = "DEBUG"
 
 [node name="Hide" type="Button" parent="Toggle" unique_id=148687886]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.254
+anchor_left = 0.27
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 312.84
-offset_top = 2.0
-offset_right = 1106.0
-offset_bottom = 608.0
+offset_left = -0.040008545
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_bjfho")
@@ -212,11 +206,12 @@ scroll_active = false
 scroll_following = true
 
 [node name="Properties" type="Panel" parent="Toggle" unique_id=1513665610]
+visible = false
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 8.927
-anchor_bottom = 16.2
-offset_right = -33.080017
+anchor_right = 0.272
+anchor_bottom = 1.0
+offset_right = -0.34402466
 grow_horizontal = 2
 grow_vertical = 2
 

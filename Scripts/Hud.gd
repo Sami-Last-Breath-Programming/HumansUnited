@@ -21,6 +21,7 @@ const LOG_PATH: String = "user://logs/godot.log";
 # Variables
 var filePos: int = 0;
 var logTimer: Timer = Timer.new();
+var jevent:  Array[StringName];
 
 func _ready() -> void:	
 	# Log Setup
@@ -30,6 +31,12 @@ func _ready() -> void:
 	logTimer.timeout.connect(checkLog);
 	self.add_child(logTimer);
 	# Joystick
+	jevent = [
+		jstick.action_up,
+		jstick.action_down,
+		jstick.action_left,
+		jstick.action_right
+	];
 	jstick.visibility_mode = VirtualJoystick.VISIBILITY_WHEN_TOUCHED;
 	jhidden.button_pressed = true;
 	# Debug Properties 
@@ -80,11 +87,24 @@ func disableBtn(btn: String) -> void:
 
 func disableSelf(yes: bool) -> void:
 	if (yes):
-		toggleHud.process_mode = Node.PROCESS_MODE_DISABLED;
+		# Hide the hud
 		toggleHud.visible = false;
+		# Stop Joystick Events
+		for event in jevent:
+			if event: Input.action_release(event);
+		# Clear the touch even
+		var release = InputEventScreenTouch.new()
+		release.pressed = false
+		release.index = 0
+		# Wait for engine
+		Input.parse_input_event(release)
+		await get_tree().process_frame
+		# Stop Processing Hud
+		toggleHud.process_mode = Node.PROCESS_MODE_DISABLED;
 	else:
+		# Start Processing Hud
 		toggleHud.process_mode = Node.PROCESS_MODE_INHERIT;
-		toggleHud.visible = true;	
+		toggleHud.visible = true;
 
 func enableBtn(btn: String) -> void:
 	match btn:

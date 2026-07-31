@@ -30,10 +30,7 @@ gdscript/warnings/unused_signal=0
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-
-[editor_plugins]
-
-enabled=PackedStringArray("res://addons/virtual_joystick_DX/plugin.cfg")
+window/handheld/orientation=4
 
 [global_group]
 
