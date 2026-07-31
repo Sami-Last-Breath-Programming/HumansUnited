@@ -139,6 +139,12 @@ func takeDamage(amount: float) -> void:
 		if(loadedSkins[2]): texture.texture = loadedSkins[2];
 		# Reduce Speed
 		if (not damageSpeedApplied):
+			# Disable boost btn
+			var hud = Manager.getHud();
+			var currentState = stateManager.getCurrentState();
+			# Only hide if its driving ship
+			if hud and currentState == stateManager.States.DRIVING:
+				hud.disableBtn("Boost");
 			shipSpeed /= 2.0; 
 			boostShipSpeed = 0.0;
 			sinkParticle.emitting = true;

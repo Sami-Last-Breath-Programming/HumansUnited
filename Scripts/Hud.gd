@@ -4,6 +4,7 @@ extends CanvasLayer;
 @onready var jstick: VirtualJoystick = $VirtualJoystick;
 @onready var properties: Panel = $Properties;
 @onready var hideBtn: Button = $Hide;
+@onready var boostBtn: Control = $Boost
 
 # Properties
 @onready var jsize: LineEdit = $Properties/Scroll/VBox/Prop/Val;
@@ -68,6 +69,18 @@ func showShipExit() -> void:
 func hideShipExit() -> void:
 	ship_ext.process_mode = Node.PROCESS_MODE_DISABLED;
 	ship_ext.visible = false;
+
+func disableBtn(btn: String) -> void:
+	match btn:
+		"Boost":
+			boostBtn.process_mode = Node.PROCESS_MODE_DISABLED;
+			boostBtn.visible = false;
+
+func enableBtn(btn: String) -> void:
+	match btn:
+		"Boost":
+			boostBtn.process_mode = Node.PROCESS_MODE_INHERIT;
+			boostBtn.visible = true;
 
 func showProperties() -> void:
 	hideBtn.process_mode = Node.PROCESS_MODE_INHERIT;

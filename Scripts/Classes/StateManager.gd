@@ -54,6 +54,9 @@ func _physics_process(delta: float) -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	StateData[currentState].HandleInput(event)
 
+func getCurrentState() -> int:
+	return currentState;
+
 func delete() -> void:
 	StateData[currentState].Exit();
 	processSetup(StateData[currentState], false);

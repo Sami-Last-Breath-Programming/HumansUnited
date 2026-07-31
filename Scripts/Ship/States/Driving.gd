@@ -53,7 +53,10 @@ func Exit() -> void:
 	
 	# Hide ship exit button 
 	var hud = Manager.getHud();
-	hud.hideShipExit();
+	# Hud Exist
+	if (hud):
+		hud.hideShipExit();
+		hud.enableBtn("Boost");
 	
 	# Start exit timer
 	parent.exitTimer.start(parent.exitTime);
