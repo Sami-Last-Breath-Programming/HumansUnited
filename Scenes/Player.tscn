@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://bbfa5adq5g3j1" path="res://Scripts/Player/Player.gd" id="1_5ixxa"]
 [ext_resource type="SpriteFrames" uid="uid://5w614xak5t6o" path="res://Resources/Skins/Player/1/skin.tres" id="2_gntrk"]
+[ext_resource type="Texture2D" uid="uid://xwn3qly8ttjw" path="res://Particles/ball.svg" id="3_bhhdu"]
+[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/pbarBg.svg" id="4_yoq75"]
+[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/pbarTop.svg" id="5_ksbbd"]
 [ext_resource type="Script" uid="uid://bwn3k22ic1bws" path="res://Scripts/Player/PlayerManager.gd" id="6_52ee3"]
 [ext_resource type="Script" uid="uid://diwho27rwi0eo" path="res://Scripts/Player/States/Idle.gd" id="7_bhhdu"]
 [ext_resource type="Script" uid="uid://dqqvblsycbnqr" path="res://Scripts/Player/States/Disabled.gd" id="8_megsn"]
@@ -11,9 +14,6 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vngp5"]
 radius = 8.0
 height = 28.0
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bndfx"]
-load_path = "res://.godot/imported/check_round_grey.svg-5b6d77ec54fdaa42ebc4352040233a82.ctex"
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_vngp5"]
 particle_flag_disable_z = true
@@ -25,12 +25,6 @@ linear_accel_min = -2.2351742e-06
 linear_accel_max = 9.999997
 scale_min = 0.099999994
 scale_max = 0.099999994
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bkhhj"]
-load_path = "res://.godot/imported/button_rectangle_depth_gradient.svg-239bec712f27a720065bdaa18f4195cf.ctex"
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_301fx"]
-load_path = "res://.godot/imported/button_rectangle_depth_border.svg-5a4a405e5c7db61e3da2867885eee7e6.ctex"
 
 [node name="Player" type="CharacterBody2D" unique_id=1342755234 groups=["Player"]]
 z_index = 2
@@ -58,7 +52,7 @@ z_index = 1
 position = Vector2(0, 11)
 emitting = false
 amount = 5
-texture = SubResource("CompressedTexture2D_bndfx")
+texture = ExtResource("3_bhhdu")
 lifetime = 0.5
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_vngp5")
@@ -81,8 +75,8 @@ grow_vertical = 2
 scale = Vector2(1.5862894, 0.52531004)
 value = 50.0
 nine_patch_stretch = true
-texture_under = SubResource("CompressedTexture2D_bkhhj")
-texture_progress = SubResource("CompressedTexture2D_301fx")
+texture_under = ExtResource("4_yoq75")
+texture_progress = ExtResource("5_ksbbd")
 
 [node name="StateManager" type="Node" parent="." unique_id=728419902]
 script = ExtResource("6_52ee3")
