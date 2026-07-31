@@ -4,8 +4,12 @@ extends State;
 var driver: CharacterBody2D;
 
 func Entry() -> void:
+	# Hud Exist 
+	var hud = Manager.getHud();
+	# Disable Boost Button 
+	if (hud):hud.disableBtn("Boost");
+	
 	# Enable Particle
-	print("Ship Sink: ", parent);
 	parent.sinkParticle.emitting = true;
 	parent.shipCamera.enabled = true;
 	
@@ -50,6 +54,12 @@ func Exit() -> void:
 	# Post Setup Driver 
 	if (driver and not driver.visible):
 		driver.visible = true;
+	
+	# Enable boost button
+	var hud = Manager.getHud();
+	# Disable Boost Button 
+	if (hud):hud.enableBtn("Boost");	
 		
+	# Disable particles
 	parent.sinkParticle.emitting = false;
 	parent.shipCamera.enabled = false;

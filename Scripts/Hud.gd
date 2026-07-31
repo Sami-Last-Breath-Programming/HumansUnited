@@ -1,17 +1,19 @@
 extends CanvasLayer;
 
 # Lazy Load
-@onready var jstick: VirtualJoystick = $VirtualJoystick;
-@onready var properties: Panel = $Properties;
-@onready var hideBtn: Button = $Hide;
-@onready var boostBtn: Control = $Boost
+@onready var jstick: VirtualJoystick = $Toggle/VirtualJoystick;
+@onready var properties: Panel = $Toggle/Properties;
+@onready var hideBtn: Button = $Toggle/Hide;
+@onready var boostBtn: Control = $Toggle/Boost;
 
 # Properties
-@onready var jsize: LineEdit = $Properties/Scroll/VBox/Prop/Val;
-@onready var jtip: LineEdit = $Properties/Scroll/VBox/Prop2/Val;
-@onready var jhidden: CheckButton = $Properties/Scroll/VBox/Prop5/Button;
-@onready var logCenter: RichTextLabel = $Hide/Log;
-@onready var ship_ext: Control = $ShipExt
+@onready var jsize: LineEdit = $Toggle/Properties/Scroll/VBox/Prop/Val;
+@onready var jtip: LineEdit = $Toggle/Properties/Scroll/VBox/Prop2/Val;
+@onready var jhidden: CheckButton = $Toggle/Properties/Scroll/VBox/Prop5/Button;
+@onready var logCenter: RichTextLabel = $Toggle/Hide/Log;
+@onready var ship_ext: Control = $Toggle/ShipExt;
+@onready var toggleHud: Control = $Toggle;
+
 
 # Constants
 const LOG_PATH: String = "user://logs/godot.log";
@@ -76,11 +78,23 @@ func disableBtn(btn: String) -> void:
 			boostBtn.process_mode = Node.PROCESS_MODE_DISABLED;
 			boostBtn.visible = false;
 
+func disableSelf(yes: bool) -> void:
+	if (yes):
+		toggleHud.process_mode = Node.PROCESS_MODE_DISABLED;
+		toggleHud.visible = false;
+	else:
+		toggleHud.process_mode = Node.PROCESS_MODE_INHERIT;
+		toggleHud.visible = true;	
+
 func enableBtn(btn: String) -> void:
 	match btn:
 		"Boost":
 			boostBtn.process_mode = Node.PROCESS_MODE_INHERIT;
 			boostBtn.visible = true;
+
+func deadScreen(_show: bool) -> void:
+	# TODO: Make Dead Screen;
+	pass;
 
 func showProperties() -> void:
 	hideBtn.process_mode = Node.PROCESS_MODE_INHERIT;

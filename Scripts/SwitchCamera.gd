@@ -6,8 +6,14 @@ var playerCamera: Camera2D;
 var closestPlayer: CharacterBody2D;
 var closestPlayerCamera: Camera2D;
 var closestDistant: float = INF;
+var hud: CanvasLayer;
 
 func _ready() -> void:
+	# Hud Exist
+	hud = Manager.getHud();
+	# Disable Hud
+	if hud: hud.disableSelf(true);
+	
 	# Get player camera
 	playerCamera = player.getCamera();	
 
@@ -23,7 +29,7 @@ func _ready() -> void:
 	
 	# Play and Free
 	playAnim();
-
+	
 func findClosestPlayer() -> void:
 	# Get All player nodes
 	var players: Array[Node] = get_tree().get_nodes_in_group("Player");
@@ -46,7 +52,10 @@ func findClosestPlayer() -> void:
 func playAnim() -> void:
 	
 	# If all players dead
-	if not closestPlayer: return; #TODO: Add Death Screen
+	if not closestPlayer:
+		# Show Dead Screen
+		if hud: hud.deadScreen(true);
+		return;
  	
 	# Get the closest player camera
 	closestPlayerCamera = closestPlayer.getCamera();
@@ -67,5 +76,10 @@ func playAnim() -> void:
 			closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IN_SHIP);
 		else:
 			closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IDLE);
+		
+		# Enable Hud
+		if hud: hud.disableSelf(false);
+		
 		self.queue_free();
 	)
+	
