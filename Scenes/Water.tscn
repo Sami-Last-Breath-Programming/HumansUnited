@@ -1,28 +1,88 @@
-[gd_scene format=3 uid="uid://cg73btl6xey6d"]
+[gd_scene format=3 uid="uid://dipajw62f85et"]
 
-[ext_resource type="Texture2D" uid="uid://cjq502q0om05v" path="res://Assets/Grounds/Sprites/Water.png" id="1_5v6ty"]
-[ext_resource type="Shader" uid="uid://douoirjai01kh" path="res://Shaders/Water.gdshader" id="1_aq4x0"]
+[ext_resource type="Shader" uid="uid://h8gprk4ghd4e" path="res://Shaders/Water2.gdshader" id="1_jwd5j"]
+[ext_resource type="Shader" uid="uid://douoirjai01kh" path="res://Shaders/Water.gdshader" id="2_67plt"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aq4x0"]
-shader = ExtResource("1_aq4x0")
-shader_parameter/wave_speed = 0.86000004085
-shader_parameter/wave_rows = 5.7230001768425005
-shader_parameter/wave_curve = 0.0210000009975
-shader_parameter/line_width = 0.03500000096397999
-shader_parameter/line_color = Color(1, 1, 1, 0.5)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5v6ty"]
+shader = ExtResource("1_jwd5j")
+shader_parameter/WATER_COL = Color(0.09558315, 0.6307345, 0.78477716, 1)
+shader_parameter/WATER2_COL = Color(4.9093364e-06, 0.5778842, 0.72719604, 1)
+shader_parameter/FOAM_COL = Color(1, 1, 1, 1)
+shader_parameter/distortion_speed = 4.0
+shader_parameter/tile = Vector2(2, 2)
+shader_parameter/offset = Vector2(0, 0)
 
-[node name="Water" type="Node2D" unique_id=1027460051]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ybqp2"]
+shader = ExtResource("1_jwd5j")
+shader_parameter/WATER_COL = Color(0.11008858, 0.64865327, 0.6773588, 1)
+shader_parameter/WATER2_COL = Color(0.07204311, 0.55607206, 0.5971077, 1)
+shader_parameter/FOAM_COL = Color(1, 1, 1, 1)
+shader_parameter/distortion_speed = 4.0
+shader_parameter/tile = Vector2(2, 2)
+shader_parameter/offset = Vector2(0, 0)
 
-[node name="Infinite" type="Parallax2D" parent="." unique_id=1268433314]
-scroll_scale = Vector2(0.8, 0.8)
-scroll_offset = Vector2(1182, -49)
-repeat_size = Vector2(128, 128)
-repeat_times = 20
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qpfou"]
+shader = ExtResource("2_67plt")
+shader_parameter/speed = 0.400000019
+shader_parameter/intensity = 0.2000000095
+shader_parameter/base_water_color = Color(0.05490196, 0.5411765, 0.6156863, 1)
+shader_parameter/highlight_scale = 0.80000003474012
+shader_parameter/clarity = 0.4800000228
 
-[node name="Texture" type="Sprite2D" parent="Infinite" unique_id=1885050988]
-modulate = Color(0.5585783, 0.9658274, 0.9999998, 1)
-texture_repeat = 2
-material = SubResource("ShaderMaterial_aq4x0")
-position = Vector2(735, 359)
-texture = ExtResource("1_5v6ty")
-region_rect = Rect2(-275.86115, -109.12556, 1275.8611, 823.941)
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iyh3f"]
+shader = ExtResource("2_67plt")
+shader_parameter/speed = 0.400000019
+shader_parameter/intensity = 0.2000000095
+shader_parameter/base_water_color = Color(2.3102762e-06, 0.8014429, 0.98812383, 1)
+shader_parameter/highlight_scale = 0.80000003474012
+shader_parameter/clarity = 0.4800000228
+
+[node name="Water" type="Node2D" unique_id=1606610127]
+
+[node name="Infinite" type="Parallax2D" parent="." unique_id=352316701]
+repeat_size = Vector2(1152, 640)
+repeat_times = 4
+
+[node name="Water" type="ColorRect" parent="Infinite" unique_id=1086585795]
+visible = false
+material = SubResource("ShaderMaterial_5v6ty")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Water3" type="ColorRect" parent="Infinite" unique_id=451806614]
+visible = false
+material = SubResource("ShaderMaterial_ybqp2")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Water2" type="ColorRect" parent="Infinite" unique_id=386221575]
+visible = false
+material = SubResource("ShaderMaterial_qpfou")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Water4" type="ColorRect" parent="Infinite" unique_id=1452141236]
+visible = false
+material = SubResource("ShaderMaterial_iyh3f")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
+grow_horizontal = 2
+grow_vertical = 2
