@@ -1,0 +1,510 @@
+[gd_scene format=3 uid="uid://cyr4ocd0fwleb"]
+
+[ext_resource type="Script" uid="uid://c4hktdax3wmie" path="res://Scripts/Hud.gd" id="1_e0onf"]
+[ext_resource type="Texture2D" uid="uid://y3028h4e3skw" path="res://Assets/UI/InGame/Transparent border/panel-transparent-border-014.png" id="2_bjfho"]
+[ext_resource type="Texture2D" uid="uid://c25grx4jfkja0" path="res://Assets/UI/InGame/Panel/panel-014.png" id="3_6fbih"]
+[ext_resource type="FontFile" uid="uid://c5do78llcfghm" path="res://Assets/Fonts/log.ttf" id="4_6fbih"]
+[ext_resource type="Texture2D" uid="uid://cwq54odloyoh4" path="res://Assets/UI/Hud/ship.png" id="4_8jye8"]
+[ext_resource type="Texture2D" uid="uid://lwqrgqmok48v" path="res://Assets/UI/Hud/camSwitch.png" id="4_t1xeu"]
+[ext_resource type="Texture2D" uid="uid://dlc5a3qjgd8rw" path="res://Assets/UI/Hud/ship_clicked.png" id="5_43w4t"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36asn"]
+bg_color = Color(1, 1, 1, 0.5176471)
+corner_radius_top_left = 60
+corner_radius_top_right = 60
+corner_radius_bottom_right = 60
+corner_radius_bottom_left = 60
+corner_detail = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3gfia"]
+bg_color = Color(0, 0, 0, 0.38431373)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bjfho"]
+bg_color = Color(0.1764706, 0.1764706, 0.1764706, 0.34117648)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vngp5"]
+bg_color = Color(0.12945755, 0.12945755, 0.12945755, 1)
+border_width_left = 4
+border_width_top = 3
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.7046392, 0.7046392, 0.70463914, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0onf"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_fccik"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_bjfho"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_e0onf"]
+bg_color = Color(0.18072194, 0.18072197, 0.18072197, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fccik"]
+bg_color = Color(0.34108615, 0.34108618, 0.34108606, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="Hud" type="CanvasLayer" unique_id=1483605297]
+script = ExtResource("1_e0onf")
+
+[node name="VirtualJoystick" type="VirtualJoystick" parent="." unique_id=31061367]
+anchors_preset = -1
+anchor_left = -0.012
+anchor_top = 0.5
+anchor_right = 0.256
+anchor_bottom = 0.5
+offset_left = 13.824
+offset_top = -324.0
+offset_right = 0.08798218
+offset_bottom = 324.0
+grow_vertical = 2
+offset_transform_enabled = true
+theme_override_styles/normal_tip = SubResource("StyleBoxFlat_36asn")
+theme_override_styles/pressed_tip = SubResource("StyleBoxFlat_36asn")
+joystick_mode = 1
+joystick_size = 144.0
+tip_size = 82.0
+action_left = &"Left"
+action_right = &"Right"
+action_up = &"Up"
+action_down = &"Down"
+visibility_mode = 1
+
+[node name="Boost" type="Control" parent="." unique_id=314057350]
+layout_mode = 3
+anchor_left = 0.92600006
+anchor_top = 0.693
+anchor_right = 0.92600006
+anchor_bottom = 0.693
+offset_left = -140.75208
+offset_top = -40.064026
+offset_right = -100.752075
+offset_bottom = -0.06402588
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Touch" type="TouchScreenButton" parent="Boost" unique_id=439257587]
+modulate = Color(1, 1, 1, 0.5176471)
+position = Vector2(-22, -9)
+scale = Vector2(2.229166, 2.229166)
+texture_normal = ExtResource("2_bjfho")
+texture_pressed = ExtResource("3_6fbih")
+action = "Boost"
+
+[node name="ShipExt" type="Control" parent="." unique_id=2125212581]
+visible = false
+layout_mode = 3
+anchor_left = 0.87000006
+anchor_top = 0.43300003
+anchor_right = 0.87000006
+anchor_bottom = 0.43300003
+offset_left = -83.24005
+offset_top = -44.584015
+offset_right = -12.240051
+offset_bottom = 44.415985
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="Touch" type="TouchScreenButton" parent="ShipExt" unique_id=1083379630]
+modulate = Color(1, 1, 1, 0.5176471)
+position = Vector2(-7, 7)
+scale = Vector2(0.15429689, 0.15429689)
+texture_normal = ExtResource("4_8jye8")
+texture_pressed = ExtResource("5_43w4t")
+action = "ShipExit"
+
+[node name="ChangeScn" type="Control" parent="." unique_id=335036408]
+layout_mode = 3
+anchor_left = 0.878
+anchor_top = 0.096
+anchor_right = 0.878
+anchor_bottom = 0.096
+offset_left = 134.54395
+offset_top = 52.792
+offset_right = 134.54395
+offset_bottom = 52.792
+grow_horizontal = 0
+
+[node name="Touch" type="TouchScreenButton" parent="ChangeScn" unique_id=966782673]
+modulate = Color(1, 1, 1, 0.5176471)
+position = Vector2(-242, -88)
+scale = Vector2(0.10207332, 0.10207332)
+texture_normal = ExtResource("4_t1xeu")
+action = "CameraSwitch"
+
+[node name="Show" type="Button" parent="." unique_id=497276017]
+offset_left = 45.0
+offset_top = 37.0
+offset_right = 195.4045
+offset_bottom = 84.0
+theme_override_styles/normal = SubResource("StyleBoxFlat_3gfia")
+text = "DEBUG"
+
+[node name="Hide" type="Button" parent="." unique_id=148687886]
+visible = false
+anchors_preset = -1
+anchor_left = 0.254
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.3919983
+offset_top = 2.0
+offset_bottom = 2.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/hover = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_bjfho")
+theme_override_styles/focus = SubResource("StyleBoxFlat_bjfho")
+
+[node name="Log" type="RichTextLabel" parent="Hide" unique_id=2081489616]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_top = 21.0
+offset_right = -24.0
+offset_bottom = -30.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_colors/font_shadow_color = Color(1, 1, 1, 1)
+theme_override_constants/shadow_outline_size = 4
+theme_override_fonts/normal_font = ExtResource("4_6fbih")
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 20
+theme_override_font_sizes/bold_italics_font_size = 20
+theme_override_font_sizes/italics_font_size = 20
+theme_override_font_sizes/mono_font_size = 20
+bbcode_enabled = true
+scroll_active = false
+scroll_following = true
+
+[node name="Properties" type="Panel" parent="." unique_id=1513665610]
+visible = false
+anchors_preset = -1
+anchor_right = 0.256
+anchor_bottom = 1.0
+offset_right = 0.08798218
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Scroll" type="ScrollContainer" parent="Properties" unique_id=985594938]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 15.0
+offset_right = -15.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 3
+vertical_scroll_mode = 3
+
+[node name="VBox" type="VBoxContainer" parent="Properties/Scroll" unique_id=161108557]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 20
+
+[node name="Prop" type="Panel" parent="Properties/Scroll/VBox" unique_id=1031969957]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vngp5")
+
+[node name="Name" type="Label" parent="Properties/Scroll/VBox/Prop" unique_id=1208913383]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.072000004
+anchor_top = 0.30800003
+anchor_right = 0.072000004
+anchor_bottom = 0.30800003
+offset_left = -0.0080013275
+offset_top = -11.480001
+offset_right = 155.90504
+offset_bottom = 10.519999
+theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
+theme_override_font_sizes/font_size = 10
+text = "Joystic Size"
+vertical_alignment = 1
+
+[node name="Val" type="LineEdit" parent="Properties/Scroll/VBox/Prop" unique_id=38886910]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.072000004
+anchor_top = 0.565
+anchor_right = 0.072000004
+anchor_bottom = 0.565
+offset_left = 0.9919987
+offset_top = -4.9000015
+offset_right = 105.03199
+offset_bottom = 12.099998
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_e0onf")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_fccik")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bjfho")
+placeholder_text = "Value:  144"
+
+[node name="Button" type="Button" parent="Properties/Scroll/VBox/Prop" unique_id=24006111]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88100004
+anchor_top = 0.45800003
+anchor_right = 0.88100004
+anchor_bottom = 0.45800003
+offset_left = -18.584015
+offset_top = -15.480001
+offset_right = 16.415985
+offset_bottom = 19.519999
+theme_override_styles/normal = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fccik")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
+text = " >"
+
+[node name="Prop2" type="Panel" parent="Properties/Scroll/VBox" unique_id=398173542]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vngp5")
+
+[node name="Name" type="Label" parent="Properties/Scroll/VBox/Prop2" unique_id=716540788]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.072000004
+anchor_top = 0.30800003
+anchor_right = 0.072000004
+anchor_bottom = 0.30800003
+offset_left = -0.0080013275
+offset_top = -11.480001
+offset_right = 155.90504
+offset_bottom = 10.519999
+theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
+theme_override_font_sizes/font_size = 10
+text = "Joystic Tip"
+vertical_alignment = 1
+
+[node name="Val" type="LineEdit" parent="Properties/Scroll/VBox/Prop2" unique_id=1813615949]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.072000004
+anchor_top = 0.565
+anchor_right = 0.072000004
+anchor_bottom = 0.565
+offset_left = 0.9919987
+offset_top = -4.9000015
+offset_right = 105.03199
+offset_bottom = 12.099998
+theme_override_font_sizes/font_size = 8
+theme_override_styles/normal = SubResource("StyleBoxEmpty_e0onf")
+theme_override_styles/read_only = SubResource("StyleBoxEmpty_fccik")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_bjfho")
+placeholder_text = "Value:  82"
+
+[node name="Button" type="Button" parent="Properties/Scroll/VBox/Prop2" unique_id=1910760692]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88100004
+anchor_top = 0.45800003
+anchor_right = 0.88100004
+anchor_bottom = 0.45800003
+offset_left = -18.584015
+offset_top = -15.480001
+offset_right = 16.415985
+offset_bottom = 19.519999
+theme_override_styles/normal = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fccik")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
+text = " >"
+
+[node name="Prop3" type="Panel" parent="Properties/Scroll/VBox" unique_id=374443663]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vngp5")
+
+[node name="Name" type="Label" parent="Properties/Scroll/VBox/Prop3" unique_id=1629804311]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.068
+anchor_top = 0.44200003
+anchor_right = 0.068
+anchor_bottom = 0.44200003
+offset_left = 5.0479984
+offset_top = -7.5200024
+offset_right = 160.96104
+offset_bottom = 13.479998
+theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
+theme_override_font_sizes/font_size = 10
+text = "Joystic Fixed"
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Properties/Scroll/VBox/Prop3" unique_id=1593222102]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88100004
+anchor_top = 0.45800003
+anchor_right = 0.88100004
+anchor_bottom = 0.45800003
+offset_left = -18.584015
+offset_top = -15.480001
+offset_right = 16.415985
+offset_bottom = 19.519999
+theme_override_styles/normal = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fccik")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
+text = " >"
+
+[node name="Prop4" type="Panel" parent="Properties/Scroll/VBox" unique_id=313649660]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vngp5")
+
+[node name="Name" type="Label" parent="Properties/Scroll/VBox/Prop4" unique_id=1007519288]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.068
+anchor_top = 0.44200003
+anchor_right = 0.068
+anchor_bottom = 0.44200003
+offset_left = 5.0479984
+offset_top = -7.5200024
+offset_right = 160.96104
+offset_bottom = 13.479998
+theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
+theme_override_font_sizes/font_size = 10
+text = "Joystic Dynamic"
+vertical_alignment = 1
+
+[node name="Button" type="Button" parent="Properties/Scroll/VBox/Prop4" unique_id=122594902]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88100004
+anchor_top = 0.45800003
+anchor_right = 0.88100004
+anchor_bottom = 0.45800003
+offset_left = -18.584015
+offset_top = -15.480001
+offset_right = 16.415985
+offset_bottom = 19.519999
+theme_override_styles/normal = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fccik")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
+text = " >"
+
+[node name="Prop5" type="Panel" parent="Properties/Scroll/VBox" unique_id=1836597578]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_vngp5")
+
+[node name="Name" type="Label" parent="Properties/Scroll/VBox/Prop5" unique_id=1600893229]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.068
+anchor_top = 0.44200003
+anchor_right = 0.068
+anchor_bottom = 0.44200003
+offset_left = 5.0479984
+offset_top = -7.5200024
+offset_right = 160.96104
+offset_bottom = 13.479998
+theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
+theme_override_font_sizes/font_size = 10
+text = "Joystic Hidden"
+vertical_alignment = 1
+
+[node name="Button" type="CheckButton" parent="Properties/Scroll/VBox/Prop5" unique_id=1910106243]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.88100004
+anchor_top = 0.45800003
+anchor_right = 0.88100004
+anchor_bottom = 0.45800003
+offset_left = -32.584015
+offset_top = -14.480001
+offset_right = 17.415985
+offset_bottom = 20.519999
+theme_override_styles/normal = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_fccik")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
+flat = true
+
+[connection signal="pressed" from="Show" to="." method="showProperties"]
+[connection signal="pressed" from="Hide" to="." method="hideProperties"]
+[connection signal="pressed" from="Properties/Scroll/VBox/Prop/Button" to="." method="joysticSizeUpdate"]
+[connection signal="pressed" from="Properties/Scroll/VBox/Prop2/Button" to="." method="joysticTipUpdate"]
+[connection signal="pressed" from="Properties/Scroll/VBox/Prop3/Button" to="." method="joysticFixedUpdate"]
+[connection signal="pressed" from="Properties/Scroll/VBox/Prop4/Button" to="." method="joysticDynamicUpdate"]
+[connection signal="toggled" from="Properties/Scroll/VBox/Prop5/Button" to="." method="joysticVisibilityUpdate"]

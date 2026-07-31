@@ -45,18 +45,25 @@ func Exit() -> void:
 			driver.removeShip();
 		
 		# Toggle Driver Visibality
-		if (not driver.visible):
+		if not driver.visible:
 			driver.visible = true;
+	
 	# Disconnect Detector
 	parent.detector.body_entered.disconnect(damageBody);
+	
+	# Hide ship exit button 
+	var hud = Manager.getHud();
+	hud.hideShipExit();
 	
 	# Start exit timer
 	parent.exitTimer.start(parent.exitTime);
 
 func damageBody(body: CharacterBody2D):
+	# Don't React
 	if not body is CharacterBody2D: return;
 	if not parent.damageTimer.is_stopped(): return;
 	if parent.velocity == Vector2.ZERO: return;
+	if not body.is_in_group("Player"): return;
 	
 	# Outside driver exist
 	var outsideDriver = parent.getDriver(body);
@@ -67,7 +74,7 @@ func damageBody(body: CharacterBody2D):
 	
 	# Cooldown	
 	parent.damageTimer.start(parent.damageTime)
-	print("Damage GIven")
+	print("Damage GIven to object: ", outsideDriver);
 	
 func HandleInput(_e: InputEvent) -> void:
 	# Handle Ship Exit
@@ -100,25 +107,46 @@ func PhysicsUpdate(_delta: float) -> void:
 	else:
 		parent.particle.emitting = false;
 	
+	parent.processFriction(_delta);
 	parent.move_and_slide();
-	handleCollisions(input);
+	handleCollisions(input, _delta);
 
 func getInput() -> Vector2:
 	var input =  Input.get_vector("Left", "Right", "Up", "Down");
 	return input if (input != Vector2.ZERO) else parent.external_input;
 
-func handleCollisions(input: Vector2) -> void:
+func handleCollisions(input: Vector2, _d: float) -> void:
 	# Loop over the collisions array
 	for index in parent.get_slide_collision_count():
 		var collision = parent.get_slide_collision(index);
 		var collider = collision.get_collider();
 		var tileData = getTileData(collider, collision); 
-		
+
+		# Check for other ships
+		if collider and collider.is_in_group("Ship"):
+			# If other ship not self
+			if collider != parent:
+				if collider.has_method("takeDamage"):
+					# Boost Damage
+					if canDamage(input):
+						# Give damage to other ship
+						collider.takeDamage(parent.shipDamage);
+						# Give damage to Self
+						parent.takeDamage(parent.shipDamage / 2.4);
+						print("Given damage to: ", collider);
+					else:
+						# Normal push 
+						if parent.velocity.length_squared() >= 1400 and input != Vector2.ZERO:
+							# Give damage to other ship
+							collider.takeDamage(parent.shipDamage);
+							# Give damage to Self
+							parent.takeDamage(parent.shipDamage / 4.8);
+							print("Given damage to: ", collider);
+					
 		# Check the tiledata
 		if tileData:
 			var tileType = tileData.get_custom_data("type");
-			var canDamage = input != Vector2.ZERO and parent.boostShipSpeed != 0.0 and isBoost;
-			if checkObjectCollided(tileType, canDamage): break;
+			if checkObjectCollided(tileType, canDamage(input)): break;
 		
 func getTileData(collider, collision) -> TileData:
 	# Check if collider is a tilemaplayer
@@ -128,12 +156,22 @@ func getTileData(collider, collision) -> TileData:
 		return collider.get_cell_tile_data(tile_coords);
 	return null;	
 	
-func checkObjectCollided(tileType, canDamage) -> bool:
+func checkObjectCollided(tileType, d) -> bool:
 	var isobj: bool;
 	# Handel Logic of Objects
 	match tileType:
-		"land": if canDamage: parent.takeDamage(10.0); isobj = true;
-		"stone": parent.takeDamage(5.0); isobj = true;
+		"land": 
+			if d: 
+				parent.takeDamage(10.0); 
+				print("Ship Collided with Land: ", parent);
+				isobj = true;
+		"stone": 
+			parent.takeDamage(5.0); 
+			print("Ship Collided with Stone: ", parent);
+			isobj = true;
 		_: isobj = false;
 
 	return isobj;
+
+func canDamage(input: Vector2) -> bool:
+	return (input != Vector2.ZERO and parent.boostShipSpeed != 0.0 and isBoost)

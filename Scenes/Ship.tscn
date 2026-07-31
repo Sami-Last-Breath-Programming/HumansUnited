@@ -2,9 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bjslu0dgek54o" path="res://Scripts/Ship/Ship.gd" id="1_sjai3"]
 [ext_resource type="Texture2D" uid="uid://b3unyntoqcle4" path="res://Assets/Ships/Sprites/Ship4.png" id="2_jfy60"]
-[ext_resource type="Texture2D" uid="uid://ctxr7o82dkiv5" path="res://Assets/UI/Menu/Red/check_round_grey.svg" id="3_cmh36"]
-[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/Menu/Grey/button_rectangle_depth_gradient.svg" id="4_sjai3"]
-[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/Menu/Grey/button_rectangle_depth_border.svg" id="5_by1o1"]
 [ext_resource type="Script" uid="uid://bi7plflpnttg3" path="res://Scripts/Ship/ShipManager.gd" id="6_by1o1"]
 [ext_resource type="Script" uid="uid://1aqwptl15hoj" path="res://Scripts/Ship/States/Empty.gd" id="7_m2wm3"]
 [ext_resource type="Script" uid="uid://5i5oysv7kayn" path="res://Scripts/Ship/States/Driving.gd" id="8_wj15d"]
@@ -14,7 +11,10 @@
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v4ccy"]
 resource_local_to_scene = true
 radius = 8.0
-height = 28.0
+height = 26.0
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bndfx"]
+load_path = "res://.godot/imported/check_round_grey.svg-5b6d77ec54fdaa42ebc4352040233a82.ctex"
 
 [sub_resource type="Gradient" id="Gradient_cmh36"]
 offsets = PackedFloat32Array(0, 0.7285276, 1)
@@ -32,6 +32,12 @@ scale_min = 0.19999999
 scale_max = 0.19999999
 color = Color(1.0763758, 1.1291975, 1.1291975, 1)
 color_ramp = SubResource("GradientTexture1D_7qett")
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_bkhhj"]
+load_path = "res://.godot/imported/button_rectangle_depth_gradient.svg-239bec712f27a720065bdaa18f4195cf.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_301fx"]
+load_path = "res://.godot/imported/button_rectangle_depth_border.svg-5a4a405e5c7db61e3da2867885eee7e6.ctex"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_52ee3"]
 radius = 5.0
@@ -57,7 +63,7 @@ rotation = -1.5707964
 scale = Vector2(1.0958903, 1.0958904)
 emitting = false
 amount = 60
-texture = ExtResource("3_cmh36")
+texture = SubResource("CompressedTexture2D_bndfx")
 lifetime = 2.0
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_jfy60")
@@ -69,7 +75,7 @@ rotation = -1.5707964
 scale = Vector2(1.0958903, 1.0958904)
 emitting = false
 amount = 60
-texture = ExtResource("3_cmh36")
+texture = SubResource("CompressedTexture2D_bndfx")
 lifetime = 0.3
 fixed_fps = 60
 process_material = SubResource("ParticleProcessMaterial_jfy60")
@@ -99,12 +105,12 @@ grow_vertical = 2
 scale = Vector2(1.5862894, 0.52531004)
 value = 50.0
 nine_patch_stretch = true
-texture_under = ExtResource("4_sjai3")
-texture_progress = ExtResource("5_by1o1")
+texture_under = SubResource("CompressedTexture2D_bkhhj")
+texture_progress = SubResource("CompressedTexture2D_301fx")
 
 [node name="Detect" type="Area2D" parent="." unique_id=1190020769]
 visible = false
-collision_mask = 2
+collision_mask = 3
 
 [node name="Shape" type="CollisionShape2D" parent="Detect" unique_id=1206651989]
 position = Vector2(0, -5)

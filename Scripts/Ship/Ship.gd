@@ -1,4 +1,4 @@
-extends Node
+extends CharacterBody2D;
 
 # Lazy Load
 @onready var texture := $Texture;
@@ -12,6 +12,7 @@ extends Node
 @onready var shipData := ShipData.new();
 
 # Editor Exposed
+@export var shipDrag: float;
 @export var shipSkin: int;
 @export var shipHealth: float;
 @export var shipSpeed: float;
@@ -38,6 +39,7 @@ var driver: CharacterBody2D = null;
 # Booleans
 var toset := false;
 var damageSpeedApplied := false;
+var canUpdatePhysics := false;
 
 func _ready() -> void:
 	# Init State Manager
@@ -77,11 +79,12 @@ func setSkin(index: int) -> void:
 	return;
 
 func setShipProperties() -> void:
-	if not shipSkin: 		shipSkin = Global.defaultShipSkin;
-	if not shipHealth:		shipHealth = Global.defaultShipSpeed;
-	if not shipSpeed:		shipSpeed = Global.defaultShipHealth;
-	if not shipDamage:		shipDamage = Global.defaultShipDamage;
-	if not boostShipSpeed: 	boostShipSpeed = Global.defaultBoostShipSpeed;
+	if not shipDrag:			shipDrag			= Global.defaultShipDrag;
+	if not shipSkin: 			shipSkin 			= Global.defaultShipSkin;
+	if not shipHealth:			shipHealth 			= Global.defaultShipSpeed;
+	if not shipSpeed:			shipSpeed 			= Global.defaultShipHealth;
+	if not shipDamage:			shipDamage 			= Global.defaultShipDamage;
+	if not boostShipSpeed: 		boostShipSpeed 		= Global.defaultBoostShipSpeed;
 
 func processSkin() -> void:
 	# Check if Skin Loaded
@@ -93,6 +96,9 @@ func processSkin() -> void:
 			# Check the status
 			if (isStr and Lod.stat(res, result) == Lod.Stat.LOADED):
 				changeSkin(res);
+
+func processFriction(_d) -> void:
+	self.velocity = velocity.move_toward(Vector2.ZERO, _d * Global.oceanFriction);
 
 func changeSkin(res: String) -> void:
 	# Change skin, scale and collider
@@ -122,6 +128,7 @@ func takeDamage(amount: float) -> void:
 	
 	# Check For sink
 	if (shipHealth <= 0.0): 
+		sinkParticle.emitting = false;
 		stateManager.changeState(stateManager.States.SINKING);
 	
 	# Check The Ship Damage Ratio
@@ -134,6 +141,7 @@ func takeDamage(amount: float) -> void:
 		if (not damageSpeedApplied):
 			shipSpeed /= 2.0; 
 			boostShipSpeed = 0.0;
+			sinkParticle.emitting = true;
 			damageSpeedApplied = true;
 	elif (ratio <= 65):
 		if(loadedSkins[1]): texture.texture = loadedSkins[1];

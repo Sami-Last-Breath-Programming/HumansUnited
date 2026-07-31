@@ -5,6 +5,7 @@ var driver: CharacterBody2D;
 
 func Entry() -> void:
 	# Enable Particle
+	print("Ship Sink: ", parent);
 	parent.sinkParticle.emitting = true;
 	parent.shipCamera.enabled = true;
 	
@@ -44,8 +45,10 @@ func Entry() -> void:
 	)
 	
 func Exit() -> void:
+	# If Driver Exist
+	driver = parent.getDriver();
 	# Post Setup Driver 
-	if (not driver.visible):
+	if (driver and not driver.visible):
 		driver.visible = true;
 		
 	parent.sinkParticle.emitting = false;

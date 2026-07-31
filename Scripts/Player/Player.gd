@@ -108,6 +108,7 @@ func takeDamage(amount: float) -> Health:
 	# Check player death 
 	if (playerHealth <= 0.0):
 		stateManager.changeState(stateManager.States.DEATH);
+		print("Player death: ", self);
 		return Health.GONE;
 	
 	# Show Damage Animation

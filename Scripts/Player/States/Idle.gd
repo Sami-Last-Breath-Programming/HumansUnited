@@ -15,6 +15,7 @@ func Entry() -> void:
 func Exit() -> void:
 	# Disable Camera
 	parent.camera.enabled = false;
+	parent.dust.emitting = false;
 	parent.collider.call_deferred("set_disabled", true);
 
 func HandleInput(_e: InputEvent) -> void:
@@ -44,5 +45,6 @@ func Update(_d: float) -> void:
 	parent.move_and_slide();
 
 func switchCamera(): 
+	
 	Manager.reqPlayerSwitch.emit(parent);
 	stateManager.changeState(stateManager.States.DISABLED);	

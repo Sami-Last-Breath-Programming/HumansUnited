@@ -13,6 +13,7 @@ config_version=5
 config/name="HumansUnited"
 run/main_scene="uid://chfplap3vh6wy"
 config/features=PackedStringArray("4.7", "Mobile")
+run/max_fps=60
 
 [autoload]
 
@@ -22,6 +23,7 @@ Lod="*uid://caid8n2e5bni8"
 
 [debug]
 
+file_logging/enable_file_logging=true
 gdscript/warnings/unused_signal=0
 
 [display]
@@ -29,10 +31,18 @@ gdscript/warnings/unused_signal=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/virtual_joystick_DX/plugin.cfg")
+
 [global_group]
 
 Player=""
 Ship=""
+
+[gui]
+
+theme/custom_font="uid://da4vp53lackbg"
 
 [input]
 
@@ -76,6 +86,10 @@ CameraSwitch={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [physics]
 
 3d/physics_engine="Jolt Physics"
@@ -85,3 +99,4 @@ CameraSwitch={
 textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true
