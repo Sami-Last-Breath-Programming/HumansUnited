@@ -128,6 +128,20 @@ func hideProperties() -> void:
 	hideBtn.visible = false;
 	properties.visible = false;
 
+func handleWaterShaders(index: int) -> void:
+	var water = Manager.getWater();
+	var parallex = water.get_child(0);
+	
+	# Setup Water
+	for texture in parallex.get_children():
+		texture.visible = false;
+		texture.process_mode = Node.PROCESS_MODE_DISABLED;
+		
+	# Temp setup 
+	var target = parallex.get_child(index);
+	target.process_mode = Node.PROCESS_MODE_INHERIT;
+	target.visible = true;
+	
 func joysticSizeUpdate() -> void:
 	if jsize.text != "":
 		jstick.joystick_size = jsize.text.to_float();

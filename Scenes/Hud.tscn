@@ -55,6 +55,8 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vngp5"]
+
 [node name="Hud" type="CanvasLayer" unique_id=1483605297]
 script = ExtResource("1_e0onf")
 
@@ -220,9 +222,10 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = 16.0
-offset_top = 15.0
-offset_right = -15.0
+offset_left = 21.0
+offset_top = 19.0
+offset_right = -24.0
+offset_bottom = -23.0
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 3
@@ -508,6 +511,38 @@ theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
 theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
 flat = true
 
+[node name="Prop6" type="VBoxContainer" parent="Toggle/Properties/Scroll/VBox" unique_id=1318892140]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 10
+
+[node name="HSeparator" type="HSeparator" parent="Toggle/Properties/Scroll/VBox/Prop6" unique_id=1606252766]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_styles/separator = SubResource("StyleBoxEmpty_vngp5")
+
+[node name="Name" type="Label" parent="Toggle/Properties/Scroll/VBox/Prop6" unique_id=1059255144]
+texture_filter = 1
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
+theme_override_font_sizes/font_size = 10
+text = "Water Texture"
+vertical_alignment = 1
+
+[node name="ItemList" type="ItemList" parent="Toggle/Properties/Scroll/VBox/Prop6" unique_id=1963244624]
+layout_mode = 2
+mouse_filter = 1
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 24
+theme_override_font_sizes/font_size = 12
+auto_width = true
+auto_height = true
+item_count = 4
+item_0/text = "Water 1"
+item_1/text = "Water 2"
+item_2/text = "Water 3"
+item_3/text = "Water 4"
+
 [connection signal="pressed" from="Toggle/Show" to="." method="showProperties"]
 [connection signal="pressed" from="Toggle/Hide" to="." method="hideProperties"]
 [connection signal="pressed" from="Toggle/Properties/Scroll/VBox/Prop/Button" to="." method="joysticSizeUpdate"]
@@ -515,3 +550,5 @@ flat = true
 [connection signal="pressed" from="Toggle/Properties/Scroll/VBox/Prop3/Button" to="." method="joysticFixedUpdate"]
 [connection signal="pressed" from="Toggle/Properties/Scroll/VBox/Prop4/Button" to="." method="joysticDynamicUpdate"]
 [connection signal="toggled" from="Toggle/Properties/Scroll/VBox/Prop5/Button" to="." method="joysticVisibilityUpdate"]
+[connection signal="item_activated" from="Toggle/Properties/Scroll/VBox/Prop6/ItemList" to="." method="handleWaterShaders"]
+[connection signal="item_selected" from="Toggle/Properties/Scroll/VBox/Prop6/ItemList" to="." method="handleWaterShaders"]
