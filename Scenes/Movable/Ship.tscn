@@ -1,0 +1,128 @@
+[gd_scene format=3 uid="uid://2yqq8e2krcr8"]
+
+[ext_resource type="Script" uid="uid://bjslu0dgek54o" path="res://Scripts/Ship/Ship.gd" id="1_sjai3"]
+[ext_resource type="Texture2D" uid="uid://b3unyntoqcle4" path="res://Assets/Ships/Sprites/Ship4.png" id="2_jfy60"]
+[ext_resource type="Texture2D" uid="uid://xwn3qly8ttjw" path="res://Particles/ball.svg" id="3_bkhhj"]
+[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/pbarBg.svg" id="4_m2wm3"]
+[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/pbarTop.svg" id="5_wj15d"]
+[ext_resource type="Script" uid="uid://bi7plflpnttg3" path="res://Scripts/Ship/ShipManager.gd" id="6_by1o1"]
+[ext_resource type="Script" uid="uid://1aqwptl15hoj" path="res://Scripts/Ship/States/Empty.gd" id="7_m2wm3"]
+[ext_resource type="Script" uid="uid://5i5oysv7kayn" path="res://Scripts/Ship/States/Driving.gd" id="8_wj15d"]
+[ext_resource type="Script" uid="uid://bo7xdcrkfu4lj" path="res://Scripts/Ship/States/Sinking.gd" id="9_csonu"]
+[ext_resource type="Script" uid="uid://wqp3hqj0isrt" path="res://Scripts/Ship/States/Disabled.gd" id="10_m2wm3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v4ccy"]
+resource_local_to_scene = true
+radius = 8.0
+height = 26.0
+
+[sub_resource type="Gradient" id="Gradient_cmh36"]
+offsets = PackedFloat32Array(0, 0.7285276, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.743865, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_7qett"]
+gradient = SubResource("Gradient_cmh36")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_jfy60"]
+particle_flag_disable_z = true
+initial_velocity_min = 30.0
+initial_velocity_max = 80.0
+gravity = Vector3(0, 0, 0)
+scale_min = 0.19999999
+scale_max = 0.19999999
+color = Color(1.0763758, 1.1291975, 1.1291975, 1)
+color_ramp = SubResource("GradientTexture1D_7qett")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_52ee3"]
+radius = 5.0
+
+[node name="Ship" type="CharacterBody2D" unique_id=1322391007 groups=["Ship"]]
+z_index = 2
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_sjai3")
+
+[node name="Collision" type="CollisionShape2D" parent="." unique_id=145130227]
+shape = SubResource("CapsuleShape2D_v4ccy")
+
+[node name="Texture" type="Sprite2D" parent="." unique_id=1017678954]
+texture_filter = 1
+scale = Vector2(0.9125, 0.9125001)
+texture = ExtResource("2_jfy60")
+
+[node name="Sink" type="GPUParticles2D" parent="Texture" unique_id=630063453]
+modulate = Color(0.49295598, 0.44892478, 0.40499747, 1)
+z_index = 1
+position = Vector2(0, 9.863012)
+rotation = -1.5707964
+scale = Vector2(1.0958903, 1.0958904)
+emitting = false
+amount = 60
+texture = ExtResource("3_bkhhj")
+lifetime = 2.0
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_jfy60")
+
+[node name="Particle" type="GPUParticles2D" parent="Texture" unique_id=1234429805]
+z_index = -1
+position = Vector2(0, -12.054793)
+rotation = -1.5707964
+scale = Vector2(1.0958903, 1.0958904)
+emitting = false
+amount = 60
+texture = ExtResource("3_bkhhj")
+lifetime = 0.3
+fixed_fps = 60
+process_material = SubResource("ParticleProcessMaterial_jfy60")
+
+[node name="Camera" type="Camera2D" parent="." unique_id=1799677954]
+enabled = false
+zoom = Vector2(1.5, 1.5)
+process_callback = 0
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="Progress" type="TextureProgressBar" parent="." unique_id=15689374]
+visible = false
+self_modulate = Color(1, 1, 1, 0.827451)
+z_index = 4
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -15.000001
+offset_top = -3.0
+offset_right = 3.9120474
+offset_bottom = 8.421814
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(1.5862894, 0.52531004)
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("4_m2wm3")
+texture_progress = ExtResource("5_wj15d")
+
+[node name="Detect" type="Area2D" parent="." unique_id=1190020769]
+visible = false
+collision_layer = 0
+collision_mask = 4
+
+[node name="Shape" type="CollisionShape2D" parent="Detect" unique_id=1206651989]
+position = Vector2(0, -5)
+shape = SubResource("CircleShape2D_52ee3")
+
+[node name="StateManager" type="Node" parent="." unique_id=1650113088]
+script = ExtResource("6_by1o1")
+
+[node name="EMPTY" type="Node" parent="StateManager" unique_id=2018359471]
+script = ExtResource("7_m2wm3")
+
+[node name="DRIVING" type="Node" parent="StateManager" unique_id=1667000128]
+script = ExtResource("8_wj15d")
+
+[node name="SINKING" type="Node" parent="StateManager" unique_id=148676056]
+script = ExtResource("9_csonu")
+
+[node name="DISABLED" type="Node" parent="StateManager" unique_id=166776474]
+script = ExtResource("10_m2wm3")

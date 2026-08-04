@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://cyr4ocd0fwleb"]
 
 [ext_resource type="Script" uid="uid://c4hktdax3wmie" path="res://Scripts/Hud.gd" id="1_e0onf"]
-[ext_resource type="Texture2D" uid="uid://y3028h4e3skw" path="res://Assets/UI/InGame/Transparent border/panel-transparent-border-014.png" id="2_bjfho"]
-[ext_resource type="Texture2D" uid="uid://c25grx4jfkja0" path="res://Assets/UI/InGame/Panel/panel-014.png" id="3_6fbih"]
+[ext_resource type="Texture2D" uid="uid://c6p1lvsit0q2k" path="res://Assets/UI/Hud/boost.png" id="2_gyfy3"]
+[ext_resource type="Texture2D" uid="uid://bwreuuhscc22d" path="res://Assets/UI/Hud/boost_clicked.png" id="3_xy7gf"]
 [ext_resource type="FontFile" uid="uid://c5do78llcfghm" path="res://Assets/Fonts/log.ttf" id="4_6fbih"]
 [ext_resource type="Texture2D" uid="uid://cwq54odloyoh4" path="res://Assets/UI/Hud/ship.png" id="4_8jye8"]
 [ext_resource type="Texture2D" uid="uid://lwqrgqmok48v" path="res://Assets/UI/Hud/camSwitch.png" id="4_t1xeu"]
@@ -55,8 +55,6 @@ corner_radius_top_right = 20
 corner_radius_bottom_right = 20
 corner_radius_bottom_left = 20
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vngp5"]
-
 [node name="Hud" type="CanvasLayer" unique_id=1483605297]
 script = ExtResource("1_e0onf")
 
@@ -104,8 +102,8 @@ grow_vertical = 0
 [node name="Touch" type="TouchScreenButton" parent="Toggle/Boost" unique_id=439257587]
 modulate = Color(1, 1, 1, 0.5176471)
 scale = Vector2(2.229166, 2.229166)
-texture_normal = ExtResource("2_bjfho")
-texture_pressed = ExtResource("3_6fbih")
+texture_normal = ExtResource("2_gyfy3")
+texture_pressed = ExtResource("3_xy7gf")
 action = "Boost"
 
 [node name="ShipExt" type="Control" parent="Toggle" unique_id=2125212581]
@@ -129,7 +127,7 @@ texture_normal = ExtResource("4_8jye8")
 texture_pressed = ExtResource("5_43w4t")
 action = "ShipExit"
 
-[node name="ChangeScn" type="Control" parent="Toggle" unique_id=335036408]
+[node name="CamSwitch" type="Control" parent="Toggle" unique_id=335036408]
 layout_mode = 1
 anchor_left = 1.0
 anchor_top = 0.125
@@ -141,7 +139,7 @@ offset_right = -184.0
 offset_bottom = -61.0
 grow_horizontal = 0
 
-[node name="Touch" type="TouchScreenButton" parent="Toggle/ChangeScn" unique_id=966782673]
+[node name="Touch" type="TouchScreenButton" parent="Toggle/CamSwitch" unique_id=966782673]
 modulate = Color(1, 1, 1, 0.5176471)
 scale = Vector2(0.10207332, 0.10207332)
 texture_normal = ExtResource("4_t1xeu")
@@ -511,38 +509,6 @@ theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_e0onf")
 theme_override_styles/focus = SubResource("StyleBoxFlat_e0onf")
 flat = true
 
-[node name="Prop6" type="VBoxContainer" parent="Toggle/Properties/Scroll/VBox" unique_id=1318892140]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/separation = 10
-
-[node name="HSeparator" type="HSeparator" parent="Toggle/Properties/Scroll/VBox/Prop6" unique_id=1606252766]
-custom_minimum_size = Vector2(0, 20)
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxEmpty_vngp5")
-
-[node name="Name" type="Label" parent="Toggle/Properties/Scroll/VBox/Prop6" unique_id=1059255144]
-texture_filter = 1
-layout_mode = 2
-theme_override_colors/font_color = Color(1, 1, 1, 0.7058824)
-theme_override_font_sizes/font_size = 10
-text = "Water Texture"
-vertical_alignment = 1
-
-[node name="ItemList" type="ItemList" parent="Toggle/Properties/Scroll/VBox/Prop6" unique_id=1963244624]
-layout_mode = 2
-mouse_filter = 1
-theme_override_constants/h_separation = 20
-theme_override_constants/v_separation = 24
-theme_override_font_sizes/font_size = 12
-auto_width = true
-auto_height = true
-item_count = 4
-item_0/text = "Water 1"
-item_1/text = "Water 2"
-item_2/text = "Water 3"
-item_3/text = "Water 4"
-
 [connection signal="pressed" from="Toggle/Show" to="." method="showProperties"]
 [connection signal="pressed" from="Toggle/Hide" to="." method="hideProperties"]
 [connection signal="pressed" from="Toggle/Properties/Scroll/VBox/Prop/Button" to="." method="joysticSizeUpdate"]
@@ -550,5 +516,3 @@ item_3/text = "Water 4"
 [connection signal="pressed" from="Toggle/Properties/Scroll/VBox/Prop3/Button" to="." method="joysticFixedUpdate"]
 [connection signal="pressed" from="Toggle/Properties/Scroll/VBox/Prop4/Button" to="." method="joysticDynamicUpdate"]
 [connection signal="toggled" from="Toggle/Properties/Scroll/VBox/Prop5/Button" to="." method="joysticVisibilityUpdate"]
-[connection signal="item_activated" from="Toggle/Properties/Scroll/VBox/Prop6/ItemList" to="." method="handleWaterShaders"]
-[connection signal="item_selected" from="Toggle/Properties/Scroll/VBox/Prop6/ItemList" to="." method="handleWaterShaders"]

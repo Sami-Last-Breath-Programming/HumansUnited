@@ -35,5 +35,5 @@ func driverEnter(body: Node2D):
 	
 	# Cooldown	
 	var hud = Manager.getHud();
-	hud.showShipExit();
+	hud.enableBtn(hud.Buttons.BOOST);
 	parent.enterTimer.start(parent.coolDownTime);

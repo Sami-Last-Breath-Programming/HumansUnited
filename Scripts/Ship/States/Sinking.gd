@@ -7,7 +7,9 @@ func Entry() -> void:
 	# Hud Exist 
 	var hud = Manager.getHud();
 	# Disable Boost Button 
-	if (hud):hud.disableBtn("Boost");
+	if (hud):
+		hud.disableBtn(hud.Buttons.BOOST);
+		hud.disableBtn(hud.Buttons.CAM_SWITCH);
 	
 	# Enable Particle
 	parent.sinkParticle.emitting = true;
@@ -40,9 +42,12 @@ func Entry() -> void:
 		driver = parent.getDriver();
 		if (driver):
 			var status = driver.takeDamage(Global.shipSinkDamage);
+			var lastState = driver.stateManager.lastState;
 			# Check if drive alive 
 			if (status == driver.Health.STILL): 
-				driver.stateManager.changeState(driver.stateManager.States.IDLE)
+				# Check for player last state
+				if (lastState != driver.stateManager.States.DISABLED):
+					driver.stateManager.changeState(driver.stateManager.States.IDLE);
 		
 		# Free the ship object
 		stateManager.delete();
@@ -58,8 +63,9 @@ func Exit() -> void:
 	# Enable boost button
 	var hud = Manager.getHud();
 	# Disable Boost Button 
-	if (hud):hud.enableBtn("Boost");	
-		
+	if (hud):
+		hud.enableBtn(hud.Buttons.BOOST);	
+		hud.enableBtn(hud.Buttons.CAM_SWITCH)
 	# Disable particles
 	parent.sinkParticle.emitting = false;
 	parent.shipCamera.enabled = false;

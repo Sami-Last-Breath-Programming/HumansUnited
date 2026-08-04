@@ -45,6 +45,5 @@ func Update(_d: float) -> void:
 	parent.move_and_slide();
 
 func switchCamera(): 
-	
 	Manager.reqPlayerSwitch.emit(parent);
 	stateManager.changeState(stateManager.States.DISABLED);	

@@ -144,7 +144,7 @@ func takeDamage(amount: float) -> void:
 			var currentState = stateManager.getCurrentState();
 			# Only hide if its driving ship
 			if hud and currentState == stateManager.States.DRIVING:
-				hud.disableBtn("Boost");
+				hud.disableBtn(hud.Buttons.BOOST);
 			shipSpeed /= 2.0; 
 			boostShipSpeed = 0.0;
 			sinkParticle.emitting = true;

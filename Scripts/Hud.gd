@@ -13,12 +13,13 @@ extends CanvasLayer;
 @onready var logCenter: RichTextLabel = $Toggle/Hide/Log;
 @onready var ship_ext: Control = $Toggle/ShipExt;
 @onready var toggleHud: Control = $Toggle;
-
+@onready var camSwitch: Control = $Toggle/CamSwitch
 
 # Constants
 const LOG_PATH: String = "user://logs/godot.log";
 
 # Variables
+enum Buttons {BOOST, CAM_SWITCH, SHIP_EXIT}
 var filePos: int = 0;
 var logTimer: Timer = Timer.new();
 var jevent:  Array[StringName];
@@ -71,19 +72,17 @@ func checkLog() -> void:
 	for line in lines:
 		logCenter.text = logCenter.text + "\n\t" + line + "\t";
 
-func showShipExit() -> void:
-	ship_ext.process_mode = Node.PROCESS_MODE_INHERIT;
-	ship_ext.visible = true;
-
-func hideShipExit() -> void:
-	ship_ext.process_mode = Node.PROCESS_MODE_DISABLED;
-	ship_ext.visible = false;
-
-func disableBtn(btn: String) -> void:
+func disableBtn(btn: Buttons) -> void:
 	match btn:
-		"Boost":
+		Buttons.BOOST:
 			boostBtn.process_mode = Node.PROCESS_MODE_DISABLED;
 			boostBtn.visible = false;
+		Buttons.SHIP_EXIT:
+			ship_ext.process_mode = Node.PROCESS_MODE_DISABLED;
+			ship_ext.visible = false;
+		Buttons.CAM_SWITCH:
+			camSwitch.process_mode = Node.PROCESS_MODE_DISABLED;
+			camSwitch.visible = false;
 
 func disableSelf(yes: bool) -> void:
 	if (yes):
@@ -106,11 +105,17 @@ func disableSelf(yes: bool) -> void:
 		toggleHud.process_mode = Node.PROCESS_MODE_INHERIT;
 		toggleHud.visible = true;
 
-func enableBtn(btn: String) -> void:
+func enableBtn(btn: Buttons) -> void:
 	match btn:
-		"Boost":
+		Buttons.BOOST:
 			boostBtn.process_mode = Node.PROCESS_MODE_INHERIT;
 			boostBtn.visible = true;
+		Buttons.SHIP_EXIT:
+			ship_ext.process_mode = Node.PROCESS_MODE_INHERIT;
+			ship_ext.visible = true;
+		Buttons.CAM_SWITCH:
+			camSwitch.process_mode = Node.PROCESS_MODE_INHERIT;
+			camSwitch.visible = true;
 
 func deadScreen(_show: bool) -> void:
 	# TODO: Make Dead Screen;
@@ -128,20 +133,6 @@ func hideProperties() -> void:
 	hideBtn.visible = false;
 	properties.visible = false;
 
-func handleWaterShaders(index: int) -> void:
-	var water = Manager.getWater();
-	var parallex = water.get_child(0);
-	
-	# Setup Water
-	for texture in parallex.get_children():
-		texture.visible = false;
-		texture.process_mode = Node.PROCESS_MODE_DISABLED;
-		
-	# Temp setup 
-	var target = parallex.get_child(index);
-	target.process_mode = Node.PROCESS_MODE_INHERIT;
-	target.visible = true;
-	
 func joysticSizeUpdate() -> void:
 	if jsize.text != "":
 		jstick.joystick_size = jsize.text.to_float();
