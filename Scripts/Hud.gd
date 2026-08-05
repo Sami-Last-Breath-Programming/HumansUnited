@@ -5,6 +5,7 @@ extends CanvasLayer;
 @onready var properties: Panel = $Toggle/Properties;
 @onready var hideBtn: Button = $Toggle/Hide;
 @onready var boostBtn: Control = $Toggle/Boost;
+@onready var fpsText: Label = $Toggle/FPS
 
 # Properties
 @onready var jsize: LineEdit = $Toggle/Properties/Scroll/VBox/Prop/Val;
@@ -48,6 +49,9 @@ func _ready() -> void:
 	hideBtn.visible = false;
 	properties.visible = false;
 
+func _process(_delta: float) -> void:
+	processFps();
+
 func checkLog() -> void:
 	# Check for file 
 	var logFile = FileAccess.open(LOG_PATH, FileAccess.READ);
@@ -71,6 +75,9 @@ func checkLog() -> void:
 	# Udate log center
 	for line in lines:
 		logCenter.text = logCenter.text + "\n\t" + line + "\t";
+
+func processFps() -> void:
+	fpsText.text = "FPS:  "+ str(Engine.get_frames_per_second());
 
 func disableBtn(btn: Buttons) -> void:
 	match btn:

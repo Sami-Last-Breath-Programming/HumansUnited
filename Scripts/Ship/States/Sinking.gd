@@ -4,10 +4,12 @@ extends State;
 var driver: CharacterBody2D;
 
 func Entry() -> void:
+	# Ship Last State
+	var lastState = parent.stateManager.lastState;
 	# Hud Exist 
 	var hud = Manager.getHud();
-	# Disable Boost Button 
-	if (hud): 
+	# Disable Boost, Exit Button 
+	if hud and lastState != parent.stateManager.States.DISABLED: 
 		hud.disableBtn(hud.Buttons.BOOST);
 		hud.disableBtn(hud.Buttons.CAM_SWITCH);
 	
@@ -42,7 +44,6 @@ func Entry() -> void:
 		driver = parent.getDriver();
 		if driver:
 			var status = driver.takeDamage(Global.shipSinkDamage);
-			var lastState = parent.stateManager.lastState;
 			# Check if drive alive 
 			if (status == driver.Health.STILL): 
 				# Check for ship disabled
@@ -61,10 +62,9 @@ func Exit() -> void:
 	# Post Setup Driver 
 	if (driver and not driver.visible):
 		driver.visible = true;
-	
 	# Enable boost button
 	var hud = Manager.getHud();
-	# Disable Boost Button 
+	# Enable Boost, Exit Button 
 	if (hud): 
 		hud.enableBtn(hud.Buttons.BOOST);
 		hud.enableBtn(hud.Buttons.CAM_SWITCH);

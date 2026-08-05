@@ -15,7 +15,7 @@ func Entry() -> void:
 	parent.camera.enabled = true;
 	parent.texture.sprite_frames = parent.playerSkinTexture
 	parent.collider.call_deferred("set_disabled", false);
-	# Animation setup 
+	# Animation setup
 	anim = parent.animManager;
 	
 func Exit() -> void:

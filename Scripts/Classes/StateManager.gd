@@ -35,14 +35,15 @@ func init() -> void:
 	processSetup(StateData[currentState], true);
 
 func changeState(state: int) -> void:
+	# Cache the last state
+	lastState = currentState;
 	# Stop the old state
 	StateData[currentState].Exit();
 	processSetup(StateData[currentState], false);
 	# Start the new state
-	StateData[state].Entry();
 	processSetup(StateData[state], true);
-	# Cache the new state
-	lastState = currentState;
+	StateData[state].Entry();
+	# Set the current state
 	currentState = state;
 
 func _process(delta: float) -> void:
