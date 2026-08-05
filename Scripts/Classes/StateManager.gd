@@ -40,7 +40,7 @@ func changeState(state: int) -> void:
 	processSetup(StateData[currentState], false);
 	# Start the new state
 	StateData[state].Entry();
-	processSetup(StateData[currentState], true);
+	processSetup(StateData[state], true);
 	# Cache the new state
 	lastState = currentState;
 	currentState = state;

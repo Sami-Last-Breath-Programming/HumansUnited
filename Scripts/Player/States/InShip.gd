@@ -18,14 +18,21 @@ func Exit() -> void:
 
 func HandleInput(_e: InputEvent) -> void:
 	if _e.is_action_pressed("CameraSwitch"): switchCamera();
-
+	
 func switchCamera(): 
-	Manager.reqPlayerSwitch.emit(parent);
-	stateManager.changeState(stateManager.States.DISABLED);	
-
 	# Ship Exist
 	ship = parent.getShip();
+	# Handle Ship sinking
+	if (not ship): return;
+	
+	# Switch request to manager
+	Manager.reqPlayerSwitch.emit(parent);
+	stateManager.changeState(stateManager.States.DISABLED);	
+	
+	# Ship Exist
+	ship = parent.getShip();
+	# Disable Ship
 	var last = ship;
-	if (ship):
+	if ship:
 		ship.stateManager.changeState(ship.stateManager.States.DISABLED);
 		parent.setShip(last);

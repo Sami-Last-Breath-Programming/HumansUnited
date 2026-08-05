@@ -9,6 +9,7 @@ enum Health {STILL, GONE, Cooldown}
 @onready var healthBar := $Progress;
 @onready var collider := $Collision;
 @onready var stateManager := $StateManager;
+@onready var animManager := $AnimManager;
 @onready var playerData := PlayerData.new();
 
 # Exported
@@ -24,6 +25,7 @@ var coolDownTime := 0.5;
 var healthBarTime := 2.4;
 var coolDownTimer := Timer.new();
 var healthBarTimer := Timer.new();
+var splashTimer := Timer.new();
 var ship: CharacterBody2D = null;
 var playerBoatTexture: SpriteFrames = null;
 var playerSkinTexture: SpriteFrames = null;
@@ -46,6 +48,8 @@ func _ready() -> void:
 	healthBar.max_value = playerHealth;
 	self.add_child(coolDownTimer);
 	self.add_child(healthBarTimer);
+	self.add_child(splashTimer);
+	splashTimer.one_shot = true;
 	coolDownTimer.one_shot = true;
 	healthBarTimer.one_shot = true;
 	healthBarTimer.timeout.connect(func():healthBar.visible = false);

@@ -36,6 +36,7 @@ window/handheld/orientation=4
 
 Player=""
 Ship=""
+Ground=""
 
 [gui]
 
@@ -93,6 +94,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_2="Rock"
 2d_physics/layer_3="Player"
 2d_physics/layer_4="Ship"
+2d_physics/layer_5="Water"
 
 [physics]
 
