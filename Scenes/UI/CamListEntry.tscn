@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://c3ej8bivfwlno"]
+
+[ext_resource type="Script" uid="uid://dae4stigx2wc8" path="res://Scripts/Ui/CamSwitch/CamListEntry.gd" id="1_gi6pv"]
+[ext_resource type="Texture2D" uid="uid://gw178uxb1576" path="res://Assets/UI/Hud/SwitchList/Banner_Slots.png" id="1_ijtrl"]
+
+[node name="Entry" type="VBoxContainer" unique_id=1710862875]
+custom_minimum_size = Vector2(0, 80)
+size_flags_horizontal = 3
+size_flags_vertical = 0
+script = ExtResource("1_gi6pv")
+
+[node name="Button" type="TextureButton" parent="." unique_id=85467475]
+layout_mode = 2
+size_flags_vertical = 3
+mouse_filter = 1
+texture_normal = ExtResource("1_ijtrl")
+texture_pressed = ExtResource("1_ijtrl")
+texture_hover = ExtResource("1_ijtrl")
+texture_disabled = ExtResource("1_ijtrl")
+texture_focused = ExtResource("1_ijtrl")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Text" type="Label" parent="Button" unique_id=1482634458]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_right = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(1, 1, 1, 0.98039216)
+theme_override_font_sizes/font_size = 20
+text = "Dummy Player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="Button" to="." method="handleSwitch"]

@@ -6,18 +6,42 @@ var playerCamera: Camera2D;
 var closestPlayer: CharacterBody2D;
 var closestPlayerCamera: Camera2D;
 var closestDistant: float = INF;
-var hud: CanvasLayer;
 
-func _ready() -> void:
+func switch(p: CharacterBody2D, tP: CharacterBody2D) -> void:
 	# Hud Exist
-	hud = Manager.getHud();
+	print(p)
+	print(tP)
+	
+	var hud = Manager.getHud();
 	# Disable Hud
 	if hud: hud.disableSelf(true);
 	
-	# Get player camera
-	playerCamera = player.getCamera();	
+	# Setup player and cameras
+	self.player = p;
+	self.closestPlayer = tP;
+	self.playerCamera = player.getCamera();
+	
+	# Set the camera values
+	self.global_position = player.global_position;
+	self.zoom = playerCamera.zoom;
+	
+	# Set Camera
+	self.make_current();
+	
+	# Play switch animation
+	playAnim();
 
-	# Set the Camera Properties
+func randomSwitch(p: CharacterBody2D) -> void:
+	# Hud Exist
+	var hud = Manager.getHud();
+	# Disable Hud
+	if hud: hud.disableSelf(true);
+	
+	# Setup player and cameras
+	self.player = p;
+	self.playerCamera = player.getCamera();
+	
+	# Set the camera values
 	self.global_position = player.global_position;
 	self.zoom = playerCamera.zoom;
 	
@@ -56,7 +80,10 @@ func playAnim() -> void:
 	# If all players dead
 	if not closestPlayer:
 		# Show Dead Screen
-		if hud: hud.deadScreen(true);
+		var hud = Manager.getHud();
+		if hud: 
+			hud.setCamList(false);
+			hud.deadScreen(true);
 		return;
  	
 	# Get the closest player camera
@@ -74,14 +101,26 @@ func playAnim() -> void:
 		
 		# Ship Exist
 		var ship = closestPlayer.getShip();
-		if (ship):
+		# Set the closest player state
+		if ship:
 			closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IN_SHIP);
 		else:
 			closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IDLE);
 		
+		# Ship Exist
+		ship = player.getShip();
+		# Set the current player state
+		if ship:
+			player.stateManager.changeState(player.stateManager.States.DISABLED);
+			ship.stateManager.changeState(ship.stateManager.States.DISABLED);
+		else:
+			player.stateManager.changeState(player.stateManager.States.DISABLED);
+		
 		# Enable Hud
-		if hud: hud.disableSelf(false);
+		var hud = Manager.getHud();
+		if hud: 
+			hud.setCamList(false);
+			hud.disableSelf(false);
 		
 		self.queue_free();
 	)
-	

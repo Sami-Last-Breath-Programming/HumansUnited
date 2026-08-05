@@ -3,11 +3,6 @@ extends Node;
 # Global Signlas
 signal reqPlayerSwitch(player: Variant);
 
-# Global Lazy Load
-const SwitchCameraScene: PackedScene = preload("res://Scenes/SwitchCamera.tscn");
-const gameHud: PackedScene = preload("res://Scenes/Hud.tscn");
-const gameWater: PackedScene = preload("res://Scenes/Water.tscn");
-
 # Variables 
 var hud: CanvasLayer;
 var water: Node2D;
@@ -16,10 +11,10 @@ func _ready() -> void:
 	# Connect Signlas
 	reqPlayerSwitch.connect(initSwitchCamera);
 	# Setup Water
-	water = gameWater.instantiate();
+	water = Lod.gameWater.instantiate();
 	get_tree().current_scene.add_child(water);
 	# Setup Hud 
-	hud = gameHud.instantiate();
+	hud = Lod.gameHud.instantiate();
 	get_tree().current_scene.add_child(hud);
 
 func getHud() -> CanvasLayer:
@@ -32,8 +27,8 @@ func getWater() -> Node2D:
 
 func initSwitchCamera(player: Variant):
 	print("Switch Request from: ", reqPlayerSwitch);
-	if (SwitchCameraScene):
+	if (Lod.SwitchCameraScene):
 		# Start Switching 
-		var switchCamera = SwitchCameraScene.instantiate();
-		switchCamera.player = player;
+		var switchCamera = Lod.SwitchCameraScene.instantiate();
 		get_tree().current_scene.add_child(switchCamera);
+		switchCamera.randomSwitch(player);

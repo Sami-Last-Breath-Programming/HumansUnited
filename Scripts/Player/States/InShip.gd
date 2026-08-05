@@ -24,15 +24,13 @@ func switchCamera():
 	ship = parent.getShip();
 	# Handle Ship sinking
 	if (not ship): return;
-	
-	# Switch request to manager
-	Manager.reqPlayerSwitch.emit(parent);
-	stateManager.changeState(stateManager.States.DISABLED);	
-	
-	# Ship Exist
-	ship = parent.getShip();
-	# Disable Ship
+	# Hold reference
 	var last = ship;
-	if ship:
-		ship.stateManager.changeState(ship.stateManager.States.DISABLED);
-		parent.setShip(last);
+	
+	# Hud Exist
+	var hud = Manager.getHud();
+	# Switch request to Hud
+	if hud: hud.reqCamList.emit(parent);
+	
+	# Set reference
+	parent.setShip(last);

@@ -88,5 +88,7 @@ func checkWater() -> void:
 					inWater = true;
 
 func switchCamera(): 
-	Manager.reqPlayerSwitch.emit(parent);
-	stateManager.changeState(stateManager.States.DISABLED);	
+	# Hud Exist
+	var hud = Manager.getHud();
+	# Show PLayer Camera-Switch List
+	if hud: hud.reqCamList.emit(parent);

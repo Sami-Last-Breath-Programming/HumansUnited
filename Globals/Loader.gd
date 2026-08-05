@@ -1,5 +1,11 @@
 extends Node
 
+# Auto Start Load 
+const gameHud 			:= 	preload("res://Scenes/Hud.tscn");
+const camList 			:= 	preload("res://Scenes/UI/CamList.tscn");
+const gameWater 		:= 	preload("res://Scenes/Water.tscn");
+const SwitchCameraScene := 	preload("res://Scenes/SwitchCamera.tscn");
+
 enum Stat {
 	INVALID = ResourceLoader.THREAD_LOAD_INVALID_RESOURCE,
 	IN_PROG = ResourceLoader.THREAD_LOAD_IN_PROGRESS,
