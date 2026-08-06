@@ -2,15 +2,40 @@
 
 [ext_resource type="Script" uid="uid://dae4stigx2wc8" path="res://Scripts/Ui/CamSwitch/CamListEntry.gd" id="1_gi6pv"]
 [ext_resource type="Texture2D" uid="uid://gw178uxb1576" path="res://Assets/UI/Hud/SwitchList/Banner_Slots.png" id="1_ijtrl"]
+[ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="3_ueoas"]
+[ext_resource type="Script" uid="uid://bsufjcw4lsn2a" path="res://addons/proton_control_animation/src/animations/slide.gd" id="4_shb8j"]
 
-[node name="Entry" type="VBoxContainer" unique_id=1710862875]
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vngp5"]
+
+[sub_resource type="Resource" id="Resource_o7vrp"]
+script = ExtResource("4_shb8j")
+to = 3
+to_global_position = Vector2(50, 20)
+to_local_offset = Vector2(-370, 0)
+default_duration = 0.6
+metadata/_custom_type_script = "uid://bsufjcw4lsn2a"
+
+[node name="Entry" type="VBoxContainer" unique_id=1775734571]
 custom_minimum_size = Vector2(0, 80)
 size_flags_horizontal = 3
 size_flags_vertical = 0
+mouse_filter = 2
 script = ExtResource("1_gi6pv")
 
-[node name="Button" type="TextureButton" parent="." unique_id=85467475]
+[node name="Base" type="Panel" parent="." unique_id=1617516120]
+custom_minimum_size = Vector2(0, 80)
 layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_vngp5")
+
+[node name="Button" type="TextureButton" parent="Base" unique_id=125319939]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 374.0
+offset_right = 374.0
+grow_horizontal = 2
+grow_vertical = 2
 size_flags_vertical = 3
 mouse_filter = 1
 texture_normal = ExtResource("1_ijtrl")
@@ -21,7 +46,7 @@ texture_focused = ExtResource("1_ijtrl")
 ignore_texture_size = true
 stretch_mode = 0
 
-[node name="Text" type="Label" parent="Button" unique_id=1482634458]
+[node name="Text" type="Label" parent="Base/Button" unique_id=181226722]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -37,4 +62,14 @@ text = "Dummy Player"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="Button" to="." method="handleSwitch"]
+[node name="SlideIn" type="Node" parent="Base/Button" unique_id=1461224779 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("3_ueoas")
+target = NodePath("..")
+animation = SubResource("Resource_o7vrp")
+start_trigger_source = NodePath("..")
+stop_trigger_source = NodePath("..")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[connection signal="mouse_entered" from="Base/Button" to="." method="onFocus"]
+[connection signal="mouse_exited" from="Base/Button" to="." method="notFocus"]
+[connection signal="pressed" from="Base/Button" to="." method="handleSwitch"]

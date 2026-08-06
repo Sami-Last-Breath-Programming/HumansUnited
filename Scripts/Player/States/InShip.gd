@@ -11,10 +11,10 @@ func Entry() -> void:
 		ship.stateManager.changeState(ship.stateManager.States.DRIVING);
 	# Player setup
 	parent.position = Vector2.ZERO;
-	parent.texture.sprite_frames = parent.playerBoatTexture;
+	parent.setPlayerSkin(parent.SkinType.BOAT);
 
 func Exit() -> void:
-	parent.texture.sprite_frames = parent.playerSkinTexture;
+	parent.setPlayerSkin(parent.SkinType.SKIN);
 
 func HandleInput(_e: InputEvent) -> void:
 	if _e.is_action_pressed("CameraSwitch"): switchCamera();

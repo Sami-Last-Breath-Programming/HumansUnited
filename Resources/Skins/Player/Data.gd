@@ -6,7 +6,9 @@ var skins: Dictionary = {
 	0:	[
 			"res://Resources/Skins/Player/1/skin.tres",
 			"res://Resources/Skins/Player/1/boat.tres",
-			[8.0, 28.0, [-1.0, 0.0]],  # Land
-			[6.0, 14.0, [-1.0, -5.0]], # Water
+			"res://Resources/Skins/Player/1/skinCollider.tres",
+			"res://Resources/Skins/Player/1/boatCollider.tres",
+			[0.0, -0.16, [0.0, -10.0]],  	# Land Trans
+			[0.0, -5.0, [0.0, 0.0]],   # Boat Trans
 		]
 };

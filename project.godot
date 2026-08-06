@@ -31,12 +31,18 @@ gdscript/warnings/unused_signal=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=4
+mouse_cursor/custom_image="uid://bduhlf8cd4eoe"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/proton_control_animation/plugin.cfg")
 
 [global_group]
 
 Player=""
 Ship=""
 Ground=""
+Flora=""
 
 [gui]
 
@@ -95,6 +101,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_3="Player"
 2d_physics/layer_4="Ship"
 2d_physics/layer_5="Water"
+2d_physics/layer_6="Flora"
 
 [physics]
 

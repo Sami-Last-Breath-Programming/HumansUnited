@@ -1,7 +1,7 @@
 extends Node
 
 # Animations Types
-enum Anim { SWIM, SPLASH }
+enum Anim { SWIM, SPLASH}
 
 # Lazy Load
 @onready var playerTexture := $"../Texture"

@@ -1,11 +1,18 @@
 extends VBoxContainer
 
 # Lazy Load
-@onready var Name: Label = $Button/Text
+@onready var Name: Label = $Base/Button/Text
+@onready var SlideIn: ProtonControlAnimation = $Base/Button/SlideIn
 
 # Variables
 var player: CharacterBody2D;
 var targetPlayer: CharacterBody2D;
+
+func onFocus():
+	Manager.setCursor(Lod.clickedCursor);
+
+func notFocus():
+	Manager.removeCursor();
 
 func setName(pName: String):
 	Name.text = pName;
@@ -20,3 +27,6 @@ func handleSwitch() -> void:
 	var switchCamera = Lod.SwitchCameraScene.instantiate();
 	get_tree().current_scene.add_child(switchCamera);
 	switchCamera.switch(player, targetPlayer);
+
+func playStart() -> void:
+	SlideIn.start();

@@ -45,7 +45,7 @@ func Exit() -> void:
 	driver = parent.getDriver();
 	# Set Driver Child of current scene
 	if (driver): 
-		driver.reparent(get_tree().current_scene);
+		driver.reparent(get_tree().current_scene.get_node("Y-Order"));
 		driver.global_position = parent.global_position + Vector2(20, 0);
 		
 		# Remove the Ship reference from driver

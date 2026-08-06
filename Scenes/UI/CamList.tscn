@@ -2,18 +2,36 @@
 
 [ext_resource type="Texture2D" uid="uid://dlrnsnxvw585j" path="res://Assets/UI/Hud/SwitchList/Banner.png" id="1_dn0xe"]
 [ext_resource type="Script" uid="uid://b5fnrfufrpxui" path="res://Scripts/Ui/CamSwitch/CamList.gd" id="1_eayuc"]
+[ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="3_gd6qk"]
+[ext_resource type="Script" uid="uid://bsufjcw4lsn2a" path="res://addons/proton_control_animation/src/animations/slide.gd" id="4_ygbqr"]
 
-[node name="CamList" type="Control" unique_id=1226944745]
+[sub_resource type="Resource" id="Resource_vngp5"]
+script = ExtResource("4_ygbqr")
+to = 3
+to_global_position = Vector2(10, 20)
+to_local_offset = Vector2(-680, 10)
+default_duration = 0.6
+metadata/_custom_type_script = "uid://bsufjcw4lsn2a"
+
+[sub_resource type="Resource" id="Resource_gd6qk"]
+script = ExtResource("4_ygbqr")
+to = 1
+to_global_position = Vector2(10, 20)
+to_local_offset = Vector2(-680, 10)
+default_duration = 0.6
+metadata/_custom_type_script = "uid://bsufjcw4lsn2a"
+
+[node name="CamList" type="Control" unique_id=1422283782]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -378.0
+offset_left = 283.0
 offset_top = 23.0
-offset_right = -2.0
+offset_right = 659.0
 offset_bottom = 504.65292
 mouse_filter = 1
 script = ExtResource("1_eayuc")
 
-[node name="BG" type="NinePatchRect" parent="." unique_id=1826841083]
+[node name="BG" type="NinePatchRect" parent="." unique_id=1273797700]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -27,23 +45,42 @@ patch_margin_top = 64
 patch_margin_right = 64
 patch_margin_bottom = 64
 
-[node name="Scroll" type="ScrollContainer" parent="BG" unique_id=1048747877]
+[node name="Scroll" type="ScrollContainer" parent="BG" unique_id=29076557]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.112
 anchor_top = 0.054
 anchor_right = 0.934
 anchor_bottom = 0.882
-offset_left = -0.11199951
+offset_left = -13.1119995
 offset_top = -0.00925827
 offset_right = -0.184021
-offset_bottom = 0.18209839
+offset_bottom = -66.8179
 grow_horizontal = 2
 grow_vertical = 2
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 
-[node name="Vbox" type="VBoxContainer" parent="BG/Scroll" unique_id=806206657]
+[node name="Vbox" type="VBoxContainer" parent="BG/Scroll" unique_id=1018413753]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
+
+[node name="Entry" type="Node" parent="." unique_id=1644542939 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("3_gd6qk")
+target = NodePath("..")
+animation = SubResource("Resource_vngp5")
+start_trigger_source = NodePath("..")
+start_custom_signal = "ready"
+stop_trigger_source = NodePath("..")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[node name="Free" type="Node" parent="." unique_id=2115439176 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("3_gd6qk")
+target = NodePath("..")
+animation = SubResource("Resource_gd6qk")
+start_trigger_source = NodePath("..")
+stop_trigger_source = NodePath("..")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[connection signal="animation_ended" from="Free" to="." method="handleFree"]

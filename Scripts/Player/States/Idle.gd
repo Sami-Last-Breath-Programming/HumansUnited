@@ -8,12 +8,13 @@ enum {WATER = 16};
 # Booleans
 var isBoost = false;
 var inWater = false;
-var isSplashed = false;
+var isEntredWater = false;
+var isSubmerge = false;
 
 func Entry() -> void:
 	# Player Setup
 	parent.camera.enabled = true;
-	parent.texture.sprite_frames = parent.playerSkinTexture
+	parent.setPlayerSkin(parent.SkinType.SKIN);
 	parent.collider.call_deferred("set_disabled", false);
 	# Animation setup
 	anim = parent.animManager;
@@ -22,11 +23,13 @@ func Exit() -> void:
 	# Disable Camera
 	parent.camera.enabled = false;
 	parent.dust.emitting = false;
+	parent.showOutLine(false);
 	# Disable Water Effects 
 	if inWater:
 		anim.stop(anim.Anim.SPLASH);
 		anim.stop(anim.Anim.SWIM);
-		isSplashed = false;
+		isEntredWater = false;
+		isSubmerge = false;
 	# Enable Collider
 	parent.collider.call_deferred("set_disabled", true);
 
@@ -36,8 +39,13 @@ func HandleInput(_e: InputEvent) -> void:
 	elif _e.is_action_released("Boost"): isBoost = false
 
 func Update(_d: float) -> void:
-	# Check Water
+	# Process outline 
+	parent.processOutline();
+
+	# Check 
 	checkWater();
+	checkTree();
+	
 	# Get Movement
 	var input = Input.get_vector(
 		"Left", "Right", "Up", 
@@ -63,30 +71,53 @@ func Update(_d: float) -> void:
 	parent.move_and_slide();
 
 func checkWater() -> void:
-	# Get The Chuck Grounds
-	var grounds: Array[Node] = get_tree().get_nodes_in_group("Ground");
-	# Loop over Grounds
-	for ground in grounds:
-		# If Ground not null and TileMap
-		if (ground and ground is TileMapLayer):
-			# Player feet position
-			var local_pos = ground.local_to_map(parent.global_position);
-			# Get ground tile 
-			var g_tile = ground.get_cell_source_id(local_pos);
-			# Check if on ground tile 
-			if g_tile != -1: 
-				inWater = false;
+	# Get The Ground tilemaplayer
+	var ground: TileMapLayer =  get_tree().get_first_node_in_group("Ground")
+	# If Ground Exits
+	if ground:
+		# Player feet position
+		var local_pos = ground.local_to_map(parent.global_position);
+		# Get ground tile 
+		var g_tile = ground.get_cell_source_id(local_pos);
+		# Check if on ground tile 
+		if g_tile != -1: 
+			# Check for submerge
+			if isSubmerge:
+				parent.call_deferred("setPlayerSkin", parent.SkinType.SKIN);
+				isSubmerge = false;
+			# Player water animations stop
+			if inWater:
 				anim.stop(anim.Anim.SWIM);	
-				isSplashed = false;
-			else: 
-				if isSplashed and parent.splashTimer.is_stopped(): 
-					anim.stop(anim.Anim.SPLASH);
-				if not isSplashed:
-					anim.play(anim.Anim.SPLASH);
-					parent.splashTimer.start(1);
-					isSplashed = true;
-					inWater = true;
+				inWater = false;
+			# Set Flag
+			isEntredWater = false;
+		else: 
+			if isEntredWater and parent.isEntredWaterTimer.is_stopped(): 
+				anim.stop(anim.Anim.SPLASH);
+			if not isEntredWater:
+				# Check for submerge
+				if not isSubmerge:
+					parent.call_deferred("setPlayerSkin", parent.SkinType.BOAT);
+					isSubmerge = true;
+				# Player water animations
+				anim.play(anim.Anim.SPLASH);
+				parent.isEntredWaterTimer.start(1);
+				isEntredWater = true;
+				inWater = true;
 
+func checkTree() -> void:
+	# Get The Folar tilemaplayer
+	var floraLayer: TileMapLayer = get_tree().get_first_node_in_group("Flora")
+	# If flora Exist
+	if floraLayer:
+		# Player feet position
+		var local_pos = floraLayer.local_to_map(parent.global_position);
+		# Get flora tile
+		var f_tile = floraLayer.get_cell_source_id(local_pos);
+		# Check if on flora tile 
+		if f_tile != -1: parent.showOutLine(true);
+		else: parent.showOutLine(false);
+		
 func switchCamera(): 
 	# Hud Exist
 	var hud = Manager.getHud();

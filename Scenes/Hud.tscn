@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://cyr4ocd0fwleb"]
 
 [ext_resource type="Script" uid="uid://c4hktdax3wmie" path="res://Scripts/Hud.gd" id="1_e0onf"]
-[ext_resource type="Texture2D" uid="uid://c6p1lvsit0q2k" path="res://Assets/UI/Hud/boost.png" id="2_gyfy3"]
-[ext_resource type="Texture2D" uid="uid://bwreuuhscc22d" path="res://Assets/UI/Hud/boost_clicked.png" id="3_xy7gf"]
-[ext_resource type="Texture2D" uid="uid://cwq54odloyoh4" path="res://Assets/UI/Hud/ship.png" id="4_8jye8"]
-[ext_resource type="Texture2D" uid="uid://lwqrgqmok48v" path="res://Assets/UI/Hud/camSwitch.png" id="4_t1xeu"]
-[ext_resource type="Texture2D" uid="uid://dlc5a3qjgd8rw" path="res://Assets/UI/Hud/ship_clicked.png" id="5_43w4t"]
+[ext_resource type="Texture2D" uid="uid://c6p1lvsit0q2k" path="res://Assets/UI/Hud/Main/boost.png" id="2_gyfy3"]
+[ext_resource type="Texture2D" uid="uid://bwreuuhscc22d" path="res://Assets/UI/Hud/Main/boost_clicked.png" id="3_xy7gf"]
+[ext_resource type="Texture2D" uid="uid://cwq54odloyoh4" path="res://Assets/UI/Hud/Main/ship.png" id="4_8jye8"]
+[ext_resource type="Texture2D" uid="uid://lwqrgqmok48v" path="res://Assets/UI/Hud/Main/camSwitch.png" id="4_t1xeu"]
+[ext_resource type="Texture2D" uid="uid://dlc5a3qjgd8rw" path="res://Assets/UI/Hud/Main/ship_clicked.png" id="5_43w4t"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36asn"]
 bg_color = Color(1, 1, 1, 0.5176471)
@@ -54,8 +54,8 @@ anchor_right = 1.0
 anchor_bottom = 0.66400003
 offset_left = -280.0
 offset_top = -53.272034
-offset_right = -194.0
-offset_bottom = 44.727966
+offset_right = -169.0
+offset_bottom = 55.727966
 grow_horizontal = 0
 grow_vertical = 0
 
@@ -88,15 +88,16 @@ texture_pressed = ExtResource("5_43w4t")
 action = "ShipExit"
 
 [node name="CamSwitch" type="Control" parent="Toggle" unique_id=335036408]
+custom_minimum_size = Vector2(20, 20)
 layout_mode = 1
 anchor_left = 1.0
 anchor_top = 0.125
 anchor_right = 1.0
 anchor_bottom = 0.125
-offset_left = -184.0
-offset_top = -61.0
-offset_right = -184.0
-offset_bottom = -61.0
+offset_left = -177.0
+offset_top = -44.0
+offset_right = -49.0
+offset_bottom = 78.0
 grow_horizontal = 0
 
 [node name="Touch" type="TouchScreenButton" parent="Toggle/CamSwitch" unique_id=966782673]
@@ -119,3 +120,10 @@ theme_override_font_sizes/font_size = 20
 text = "FPS:	  60"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[connection signal="mouse_entered" from="Toggle/Boost" to="." method="onFocus"]
+[connection signal="mouse_exited" from="Toggle/Boost" to="." method="notFocus"]
+[connection signal="mouse_entered" from="Toggle/ShipExt" to="." method="onFocus"]
+[connection signal="mouse_exited" from="Toggle/ShipExt" to="." method="notFocus"]
+[connection signal="mouse_entered" from="Toggle/CamSwitch" to="." method="onFocus"]
+[connection signal="mouse_exited" from="Toggle/CamSwitch" to="." method="notFocus"]

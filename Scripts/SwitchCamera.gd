@@ -7,11 +7,7 @@ var closestPlayer: CharacterBody2D;
 var closestPlayerCamera: Camera2D;
 var closestDistant: float = INF;
 
-func switch(p: CharacterBody2D, tP: CharacterBody2D) -> void:
-	# Hud Exist
-	print(p)
-	print(tP)
-	
+func switch(p: CharacterBody2D, tP: CharacterBody2D) -> void:	
 	var hud = Manager.getHud();
 	# Disable Hud
 	if hud: hud.disableSelf(true);
@@ -82,7 +78,7 @@ func playAnim() -> void:
 		# Show Dead Screen
 		var hud = Manager.getHud();
 		if hud: 
-			hud.setCamList(false);
+			hud.setCamList(false, false);
 			hud.deadScreen(true);
 		return;
  	
@@ -98,29 +94,33 @@ func playAnim() -> void:
 	# Wait for animation finised
 	tween.finished.connect(func ():
 		self.enabled = false;
-		
-		# Ship Exist
-		var ship = closestPlayer.getShip();
-		# Set the closest player state
-		if ship:
-			closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IN_SHIP);
-		else:
-			closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IDLE);
-		
-		# Ship Exist
-		ship = player.getShip();
-		# Set the current player state
-		if ship:
-			player.stateManager.changeState(player.stateManager.States.DISABLED);
-			ship.stateManager.changeState(ship.stateManager.States.DISABLED);
-		else:
-			player.stateManager.changeState(player.stateManager.States.DISABLED);
-		
+		# Handle states
+		handleStates();
 		# Enable Hud
 		var hud = Manager.getHud();
 		if hud: 
-			hud.setCamList(false);
+			hud.setCamList(false, false);
 			hud.disableSelf(false);
-		
+		# Remove self
 		self.queue_free();
 	)
+
+func handleStates() -> void:
+	# Ship Exist
+	var ship = closestPlayer.getShip();	
+	# Set the closest player state
+	if ship:
+		closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IN_SHIP);
+	else:
+		closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IDLE);
+	
+	# Ship Exist
+	ship = player.getShip();
+	# Set the current player state
+	if ship:
+		player.stateManager.changeState(player.stateManager.States.DISABLED);
+		ship.stateManager.changeState(ship.stateManager.States.DISABLED);
+		# Set Ship Reference
+		player.setShip(ship);
+	else:
+		player.stateManager.changeState(player.stateManager.States.DISABLED);

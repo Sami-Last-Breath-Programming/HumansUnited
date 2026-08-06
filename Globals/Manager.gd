@@ -25,6 +25,12 @@ func getWater() -> Node2D:
 	if (water): return water;
 	else : return null;	
 
+func setCursor(c :Resource) -> void:
+	Input.set_custom_mouse_cursor(c);
+
+func removeCursor() -> void:
+	setCursor(Lod.cursor);
+
 func initSwitchCamera(player: Variant):
 	print("Switch Request from: ", reqPlayerSwitch);
 	if (Lod.SwitchCameraScene):

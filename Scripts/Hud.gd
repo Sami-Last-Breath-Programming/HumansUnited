@@ -20,6 +20,7 @@ var camListNode: Control;
 var isCamList = false;
 
 func _ready() -> void:	
+	
 	# Connect Signal 
 	reqCamList.connect(showCamList);
 	
@@ -90,10 +91,10 @@ func deadScreen(_show: bool) -> void:
 	# TODO: Make Dead Screen;
 	pass;
 
-func setCamList(flag: bool):
+func setCamList(flag: bool, anim: bool):
 	if not flag:
 		isCamList = false;
-		if camListNode: camListNode.queue_free();
+		if camListNode: camListNode.freeSelf(anim);
 	else:
 		isCamList = true;
 
@@ -101,11 +102,17 @@ func showCamList(player: Variant):
 	# Toggle Cam List
 	if not isCamList:
 		# Set Flag
-		setCamList(true);
+		setCamList(true, false);
 		# Setup the CamList
 		camListNode = Lod.camList.instantiate() as Control;
 		camSwitch.add_child(camListNode);
 		# Start feaching players
 		camListNode.fetch(player);
 	else:
-		setCamList(false);
+		setCamList(false, true);
+
+func onFocus():
+	Manager.setCursor(Lod.clickedCursor);
+
+func notFocus():
+	Manager.removeCursor();

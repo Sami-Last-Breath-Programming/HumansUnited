@@ -1,13 +1,15 @@
 extends CharacterBody2D;
 
 enum Health {STILL, GONE, Cooldown}
+enum SkinType {SKIN, BOAT}
 
 # Lazy Load 
 @onready var dust := $Dust;
 @onready var texture := $Texture;
 @onready var camera := $Camera;
+@onready var outline := $Outline;
 @onready var healthBar := $Progress;
-@onready var collider := $Collision;
+@onready var collider: CollisionShape2D = $Collision;
 @onready var stateManager := $StateManager;
 @onready var animManager := $AnimManager;
 @onready var playerData := PlayerData.new();
@@ -25,10 +27,12 @@ var coolDownTime := 0.5;
 var healthBarTime := 2.4;
 var coolDownTimer := Timer.new();
 var healthBarTimer := Timer.new();
-var splashTimer := Timer.new();
+var isEntredWaterTimer := Timer.new();
 var ship: CharacterBody2D = null;
 var playerBoatTexture: SpriteFrames = null;
 var playerSkinTexture: SpriteFrames = null;
+var playerSkinCollider: Resource = null;
+var playerBoatCollider: Resource = null;
 
 # Booelans
 var toset: bool = false;
@@ -48,8 +52,8 @@ func _ready() -> void:
 	healthBar.max_value = playerHealth;
 	self.add_child(coolDownTimer);
 	self.add_child(healthBarTimer);
-	self.add_child(splashTimer);
-	splashTimer.one_shot = true;
+	self.add_child(isEntredWaterTimer);
+	isEntredWaterTimer.one_shot = true;
 	coolDownTimer.one_shot = true;
 	healthBarTimer.one_shot = true;
 	healthBarTimer.timeout.connect(func():healthBar.visible = false);
@@ -61,8 +65,10 @@ func setSkin(index: int) -> void:
 	# Request resource loader to load skin
 	toset = true;
 	currentPlayerSkin = index;
-	Lod.req(getSkin(0));	# Skin Load
-	Lod.req(getSkin(1));	# Boat Player Skin Load
+	# Request Resource Load
+	for res in playerData.skins[currentPlayerSkin]:
+		if res is String:
+			Lod.req(res);	
 
 func setPlayerProperties() -> void:
 	if not playerHealth: 		playerHealth = Global.defaultPlayerHeath;
@@ -70,6 +76,10 @@ func setPlayerProperties() -> void:
 
 func getSkin(index: int) -> String:
 	return playerData.skins[currentPlayerSkin][index];
+
+func processOutline() -> void:
+	outline.sprite_frames = texture.sprite_frames;
+	outline.position = texture.position;
 
 func processSkin() -> void:
 	if not toset:
@@ -81,9 +91,11 @@ func processSkin() -> void:
 	
 	# Check if both ready
 	if (skin_s == Lod.Stat.LOADED and boat_skin_s == Lod.Stat.LOADED):
-		playerSkinTexture = Lod.grep(getSkin(0));
-		playerBoatTexture = Lod.grep(getSkin(1));
-		texture.sprite_frames = playerSkinTexture;
+		playerSkinTexture 		= Lod.grep(getSkin(0));
+		playerBoatTexture 		= Lod.grep(getSkin(1));
+		playerSkinCollider 		= Lod.grep(getSkin(2));
+		playerBoatCollider 		= Lod.grep(getSkin(3));
+		setPlayerSkin(SkinType.SKIN);
 		toset = false;
 		print("Both Skins Loaded");
 	
@@ -145,3 +157,24 @@ func setShip(body: CharacterBody2D) -> void:
 
 func removeShip() -> void:
 	ship = null;
+
+func setPlayerSkin(type: SkinType):
+	match type:
+		SkinType.SKIN:
+			texture.sprite_frames = playerSkinTexture;
+			collider.set_deferred("shape", playerSkinCollider);
+			collider.position.x = playerData.skins[currentPlayerSkin][4][0];
+			collider.position.y = playerData.skins[currentPlayerSkin][4][1];
+			texture.position.x 	= playerData.skins[currentPlayerSkin][4][2][0];
+			texture.position.y 	= playerData.skins[currentPlayerSkin][4][2][1];
+		SkinType.BOAT:
+			texture.sprite_frames = playerBoatTexture;
+			collider.set_deferred("shape", playerBoatCollider);
+			collider.position.x = playerData.skins[currentPlayerSkin][5][0];
+			collider.position.y = playerData.skins[currentPlayerSkin][5][1];
+			texture.position.x 	= playerData.skins[currentPlayerSkin][5][2][0];
+			texture.position.y 	= playerData.skins[currentPlayerSkin][5][2][1];
+
+func showOutLine(flag: bool) -> void:
+	if flag: outline.visible = true;
+	else: outline.visible = false;

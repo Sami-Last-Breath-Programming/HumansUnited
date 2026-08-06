@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://bjslu0dgek54o" path="res://Scripts/Ship/Ship.gd" id="1_sjai3"]
 [ext_resource type="Texture2D" uid="uid://b3unyntoqcle4" path="res://Assets/Ships/Sprites/Ship4.png" id="2_jfy60"]
 [ext_resource type="Texture2D" uid="uid://xwn3qly8ttjw" path="res://Particles/ball.svg" id="3_bkhhj"]
-[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/pbarBg.svg" id="4_m2wm3"]
-[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/pbarTop.svg" id="5_wj15d"]
+[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/Hud/ProgressBars/pbarBg.svg" id="4_m2wm3"]
+[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/Hud/ProgressBars/pbarTop.svg" id="5_wj15d"]
 [ext_resource type="Script" uid="uid://bi7plflpnttg3" path="res://Scripts/Ship/ShipManager.gd" id="6_by1o1"]
 [ext_resource type="Script" uid="uid://1aqwptl15hoj" path="res://Scripts/Ship/States/Empty.gd" id="7_m2wm3"]
 [ext_resource type="Script" uid="uid://5i5oysv7kayn" path="res://Scripts/Ship/States/Driving.gd" id="8_wj15d"]
@@ -33,26 +33,28 @@ scale_max = 0.19999999
 color = Color(1.0763758, 1.1291975, 1.1291975, 1)
 color_ramp = SubResource("GradientTexture1D_7qett")
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_52ee3"]
-radius = 5.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_embt1"]
+radius = 7.0
+height = 24.0
 
 [node name="Ship" type="CharacterBody2D" unique_id=1322391007 groups=["Ship"]]
-z_index = 2
 collision_layer = 8
 collision_mask = 11
 script = ExtResource("1_sjai3")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=145130227]
+visible = false
 shape = SubResource("CapsuleShape2D_v4ccy")
 
 [node name="Texture" type="Sprite2D" parent="." unique_id=1017678954]
+z_index = 2
+y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(0.9125, 0.9125001)
 texture = ExtResource("2_jfy60")
 
 [node name="Sink" type="GPUParticles2D" parent="Texture" unique_id=630063453]
 modulate = Color(0.49295598, 0.44892478, 0.40499747, 1)
-z_index = 1
 position = Vector2(0, 9.863012)
 rotation = -1.5707964
 scale = Vector2(1.0958903, 1.0958904)
@@ -109,8 +111,7 @@ collision_layer = 0
 collision_mask = 4
 
 [node name="Shape" type="CollisionShape2D" parent="Detect" unique_id=1206651989]
-position = Vector2(0, -5)
-shape = SubResource("CircleShape2D_52ee3")
+shape = SubResource("CapsuleShape2D_embt1")
 
 [node name="StateManager" type="Node" parent="." unique_id=1650113088]
 script = ExtResource("6_by1o1")
