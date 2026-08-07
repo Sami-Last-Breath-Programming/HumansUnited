@@ -3,19 +3,21 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bten64f3rwh5o"
-path="res://.godot/imported/Ship15.png-10cc03d11df6d1f1e99c8156e25eddce.ctex"
+path.s3tc="res://.godot/imported/Ship15.png-10cc03d11df6d1f1e99c8156e25eddce.s3tc.ctex"
+path.etc2="res://.godot/imported/Ship15.png-10cc03d11df6d1f1e99c8156e25eddce.etc2.ctex"
 metadata={
-"vram_texture": false
+"imported_formats": ["s3tc_bptc", "etc2_astc"],
+"vram_texture": true
 }
 
 [deps]
 
 source_file="res://Assets/Ships/Sprites/Ship15.png"
-dest_files=["res://.godot/imported/Ship15.png-10cc03d11df6d1f1e99c8156e25eddce.ctex"]
+dest_files=["res://.godot/imported/Ship15.png-10cc03d11df6d1f1e99c8156e25eddce.s3tc.ctex", "res://.godot/imported/Ship15.png-10cc03d11df6d1f1e99c8156e25eddce.etc2.ctex"]
 
 [params]
 
-compress/mode=0
+compress/mode=2
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/uastc_level=0

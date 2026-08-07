@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://dipajw62f85et"]
+
+[node name="WaterParticle" type="Node2D" unique_id=1150504666]
+z_index = -10
+
+[node name="Infinite" type="Parallax2D" parent="." unique_id=1328442146]
+scroll_offset = Vector2(142, -5)
+repeat_size = Vector2(8, 8)
+repeat_times = 256

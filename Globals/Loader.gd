@@ -3,10 +3,9 @@ extends Node
 # Auto Start Load 
 const gameHud 			:= 	preload("res://Scenes/Hud.tscn");
 const camList 			:= 	preload("res://Scenes/UI/CamList.tscn");
-const gameWater 		:= 	preload("res://Scenes/Water.tscn");
 const SwitchCameraScene := 	preload("res://Scenes/SwitchCamera.tscn");
-const cursor			:= preload("res://Assets/UI/Hud/Main/cursor.png");
-const clickedCursor		:= 	preload("res://Assets/UI/Hud/Main/click.png");
+const cursor			:= 	preload("res://Assets/UI/Hud/cursor.png");
+const clickedCursor		:= 	preload("res://Assets/UI/Hud/click.png");
 
 enum Stat {
 	INVALID = ResourceLoader.THREAD_LOAD_INVALID_RESOURCE,

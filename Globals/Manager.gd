@@ -5,14 +5,10 @@ signal reqPlayerSwitch(player: Variant);
 
 # Variables 
 var hud: CanvasLayer;
-var water: Node2D;
 
 func _ready() -> void:
 	# Connect Signlas
 	reqPlayerSwitch.connect(initSwitchCamera);
-	# Setup Water
-	water = Lod.gameWater.instantiate();
-	get_tree().current_scene.add_child(water);
 	# Setup Hud 
 	hud = Lod.gameHud.instantiate();
 	get_tree().current_scene.add_child(hud);
@@ -20,10 +16,6 @@ func _ready() -> void:
 func getHud() -> CanvasLayer:
 	if (hud): return hud;
 	else: return null;
-
-func getWater() -> Node2D:
-	if (water): return water;
-	else : return null;	
 
 func setCursor(c :Resource) -> void:
 	Input.set_custom_mouse_cursor(c);

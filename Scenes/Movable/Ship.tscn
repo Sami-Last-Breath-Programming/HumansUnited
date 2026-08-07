@@ -1,10 +1,10 @@
 [gd_scene format=3 uid="uid://2yqq8e2krcr8"]
 
 [ext_resource type="Script" uid="uid://bjslu0dgek54o" path="res://Scripts/Ship/Ship.gd" id="1_sjai3"]
-[ext_resource type="Texture2D" uid="uid://b3unyntoqcle4" path="res://Assets/Ships/Sprites/Ship4.png" id="2_jfy60"]
+[ext_resource type="Texture2D" uid="uid://cu7v4h4opya8u" path="res://Assets/Ships/Sprites/Ship1.png" id="2_h0sre"]
 [ext_resource type="Texture2D" uid="uid://xwn3qly8ttjw" path="res://Particles/ball.svg" id="3_bkhhj"]
-[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/Hud/ProgressBars/pbarBg.svg" id="4_m2wm3"]
-[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/Hud/ProgressBars/pbarTop.svg" id="5_wj15d"]
+[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/ProgressBars/pbarBg.svg" id="4_embt1"]
+[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/ProgressBars/pbarTop.svg" id="5_6jtfc"]
 [ext_resource type="Script" uid="uid://bi7plflpnttg3" path="res://Scripts/Ship/ShipManager.gd" id="6_by1o1"]
 [ext_resource type="Script" uid="uid://1aqwptl15hoj" path="res://Scripts/Ship/States/Empty.gd" id="7_m2wm3"]
 [ext_resource type="Script" uid="uid://5i5oysv7kayn" path="res://Scripts/Ship/States/Driving.gd" id="8_wj15d"]
@@ -43,7 +43,6 @@ collision_mask = 11
 script = ExtResource("1_sjai3")
 
 [node name="Collision" type="CollisionShape2D" parent="." unique_id=145130227]
-visible = false
 shape = SubResource("CapsuleShape2D_v4ccy")
 
 [node name="Texture" type="Sprite2D" parent="." unique_id=1017678954]
@@ -51,7 +50,7 @@ z_index = 2
 y_sort_enabled = true
 texture_filter = 1
 scale = Vector2(0.9125, 0.9125001)
-texture = ExtResource("2_jfy60")
+texture = ExtResource("2_h0sre")
 
 [node name="Sink" type="GPUParticles2D" parent="Texture" unique_id=630063453]
 modulate = Color(0.49295598, 0.44892478, 0.40499747, 1)
@@ -79,7 +78,7 @@ process_material = SubResource("ParticleProcessMaterial_jfy60")
 
 [node name="Camera" type="Camera2D" parent="." unique_id=1799677954]
 enabled = false
-zoom = Vector2(1.5, 1.5)
+zoom = Vector2(1.8, 1.8)
 process_callback = 0
 position_smoothing_enabled = true
 rotation_smoothing_enabled = true
@@ -102,8 +101,8 @@ grow_vertical = 2
 scale = Vector2(1.5862894, 0.52531004)
 value = 50.0
 nine_patch_stretch = true
-texture_under = ExtResource("4_m2wm3")
-texture_progress = ExtResource("5_wj15d")
+texture_under = ExtResource("4_embt1")
+texture_progress = ExtResource("5_6jtfc")
 
 [node name="Detect" type="Area2D" parent="." unique_id=1190020769]
 visible = false

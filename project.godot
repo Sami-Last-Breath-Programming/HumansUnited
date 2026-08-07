@@ -13,7 +13,7 @@ config_version=5
 config/name="HumansUnited"
 run/main_scene="uid://bbs2000l5bqdx"
 config/features=PackedStringArray("4.7", "Mobile")
-run/max_fps=60
+run/max_fps=90
 
 [autoload]
 
@@ -31,7 +31,7 @@ gdscript/warnings/unused_signal=0
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=4
-mouse_cursor/custom_image="uid://bduhlf8cd4eoe"
+mouse_cursor/custom_image="uid://b3miqhcopndcq"
 
 [editor_plugins]
 
@@ -113,3 +113,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="mobile"
 textures/vram_compression/import_etc2_astc=true
+environment/defaults/default_clear_color=Color(0.23529412, 0.68235296, 0.6392157, 1)

@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://c3ej8bivfwlno"]
 
 [ext_resource type="Script" uid="uid://dae4stigx2wc8" path="res://Scripts/Ui/CamSwitch/CamListEntry.gd" id="1_gi6pv"]
-[ext_resource type="Texture2D" uid="uid://gw178uxb1576" path="res://Assets/UI/Hud/SwitchList/Banner_Slots.png" id="1_ijtrl"]
+[ext_resource type="Texture2D" uid="uid://gw178uxb1576" path="res://Assets/UI/SwitchList/Banner_Slots.png" id="1_ijtrl"]
 [ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="3_ueoas"]
 [ext_resource type="Script" uid="uid://bsufjcw4lsn2a" path="res://addons/proton_control_animation/src/animations/slide.gd" id="4_shb8j"]
 

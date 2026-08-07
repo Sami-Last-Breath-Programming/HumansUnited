@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://nlkqw732mg5f"]
 
-[ext_resource type="Texture2D" uid="uid://dlrnsnxvw585j" path="res://Assets/UI/Hud/SwitchList/Banner.png" id="1_dn0xe"]
 [ext_resource type="Script" uid="uid://b5fnrfufrpxui" path="res://Scripts/Ui/CamSwitch/CamList.gd" id="1_eayuc"]
+[ext_resource type="Texture2D" uid="uid://dlrnsnxvw585j" path="res://Assets/UI/SwitchList/Banner.png" id="2_gd6qk"]
 [ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="3_gd6qk"]
 [ext_resource type="Script" uid="uid://bsufjcw4lsn2a" path="res://addons/proton_control_animation/src/animations/slide.gd" id="4_ygbqr"]
 
@@ -39,7 +39,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("1_dn0xe")
+texture = ExtResource("2_gd6qk")
 patch_margin_left = 64
 patch_margin_top = 64
 patch_margin_right = 64
