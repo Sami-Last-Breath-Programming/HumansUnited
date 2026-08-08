@@ -41,7 +41,7 @@ var toset := false;
 var damageSpeedApplied := false;
 var canUpdatePhysics := false;
 
-func _ready() -> void:
+func _ready() -> void:	
 	# Init State Manager
 	stateManager.init();
 	
@@ -160,6 +160,10 @@ func takeDamage(amount: float) -> void:
 	# Cooldown
 	coolDownTimer.start(coolDownTime);
 
+func setDriver(d: CharacterBody2D) -> void:
+	if d: driver = d;
+	else: driver = null;
+
 func getDriver(body: CharacterBody2D = null) -> CharacterBody2D:
 	var check = driver if not body else body; 
 	if (
@@ -170,6 +174,9 @@ func getDriver(body: CharacterBody2D = null) -> CharacterBody2D:
 	): return check;
 	
 	else: return null;
+
+func removeDriver() -> void:
+	driver = null;
 
 func hasRoof() -> bool:
 	return shipSkin in shipData.roofs;

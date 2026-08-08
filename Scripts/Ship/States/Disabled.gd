@@ -7,7 +7,7 @@ func Entry() -> void:
 	# Driver Exist
 	driver = parent.getDriver();
 	# Set Driver as Child
-	if (driver):
+	if driver:
 		driver.reparent(parent);
 		driver.global_position = parent.global_position;
 		# Set Driver False
@@ -18,6 +18,6 @@ func Exit() -> void:
 	# Driver Exist
 	driver = parent.getDriver();
 	# Set Driver true
-	if (driver): 
+	if driver: 
 		driver.visible = true;
-		driver.reparent(get_tree().current_scene);
+		driver.reparent(get_tree().current_scene.get_node("Y-Order"));

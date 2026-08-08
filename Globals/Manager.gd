@@ -24,7 +24,6 @@ func removeCursor() -> void:
 	setCursor(Lod.cursor);
 
 func initSwitchCamera(player: Variant):
-	print("Switch Request from: ", reqPlayerSwitch);
 	if (Lod.SwitchCameraScene):
 		# Start Switching 
 		var switchCamera = Lod.SwitchCameraScene.instantiate();

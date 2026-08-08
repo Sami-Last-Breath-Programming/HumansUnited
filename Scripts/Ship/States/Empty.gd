@@ -4,6 +4,9 @@ extends State;
 var driver: CharacterBody2D;
 
 func Entry() -> void:
+	# Remove Ship Driver
+	driver = parent.getDriver();
+	if driver: parent.removeDriver();
 	# Setup Ship
 	parent.velocity = Vector2.ZERO;
 	# Connect Detector
@@ -21,7 +24,7 @@ func driverEnter(body: Node2D):
 	if not body.is_in_group("Player"): return;
 	
 	# Setup driver
-	parent.driver = body;
+	parent.setDriver(body);
 	
 	# Driver exist
 	driver = parent.getDriver()

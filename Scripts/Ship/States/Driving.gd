@@ -8,12 +8,11 @@ var driver: CharacterBody2D;
 var isBoost: bool = false;
 
 func Entry() -> void:
-	# Show ship exit button 
 	var hud = Manager.getHud();
 	# Hud Exist
-	if (hud):
-		hud.enableBtn(hud.Buttons.BOOST);
-		hud.enableBtn(hud.Buttons.SHIP_EXIT);
+	if hud:
+		hud.enableBtn.call_deferred(hud.Buttons.BOOST);
+		hud.enableBtn.call_deferred(hud.Buttons.SHIP_EXIT);
 	
 	# Driver exist
 	driver = parent.getDriver();
@@ -33,6 +32,7 @@ func Entry() -> void:
 	# Setup ship
 	parent.shipCamera.enabled = true;
 	parent.shipCamera.make_current();
+
 	# Connect Detector
 	parent.detector.body_entered.connect(damageBody);
 
@@ -55,14 +55,14 @@ func Exit() -> void:
 		# Toggle Driver Visibality
 		if not driver.visible:
 			driver.visible = true;
-	
+
 	# Disconnect Detector
 	parent.detector.body_entered.disconnect(damageBody);
 	
 	# Hide ship exit button 
 	var hud = Manager.getHud();
 	# Hud Exist
-	if (hud): hud.disableBtn(hud.Buttons.SHIP_EXIT);
+	if hud: hud.disableBtn(hud.Buttons.SHIP_EXIT);
 		
 	# Start exit timer
 	parent.exitTimer.start(parent.exitTime);

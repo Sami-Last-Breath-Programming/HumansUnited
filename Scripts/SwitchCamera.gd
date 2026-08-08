@@ -94,28 +94,34 @@ func playAnim() -> void:
 	# Wait for animation finised
 	tween.finished.connect(func ():
 		self.enabled = false;
-		# Handle states
-		handleStates();
-		# Enable Hud
+		# # Enable Hud
 		var hud = Manager.getHud();
 		if hud: 
 			hud.setCamList(false, false);
 			hud.disableSelf(false);
+		# Handle states
+		handleStates();
 		# Remove self
 		self.queue_free();
 	)
 
 func handleStates() -> void:
-	# Ship Exist
-	var ship = closestPlayer.getShip();	
+	var ship: CharacterBody2D;
+
+	# Closest Player Not Dead
+	if is_instance_valid(closestPlayer): ship = closestPlayer.getShip();
+	else: return;
+	
 	# Set the closest player state
 	if ship:
 		closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IN_SHIP);
 	else:
 		closestPlayer.stateManager.changeState(closestPlayer.stateManager.States.IDLE);
 	
-	# Ship Exist
-	ship = player.getShip();
+	# Player Not Dead
+	if is_instance_valid(player): ship = player.getShip();
+	else: return;
+
 	# Set the current player state
 	if ship:
 		player.stateManager.changeState(player.stateManager.States.DISABLED);

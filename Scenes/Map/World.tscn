@@ -22,14 +22,17 @@ position = Vector2(655, 227)
 [node name="StateManager" parent="Y-Order/Players/Player" index="9" unique_id=728419902]
 playerState = 1
 
-[node name="Player2" parent="Y-Order/Players" unique_id=1087807571 instance=ExtResource("1_jhh15")]
-position = Vector2(1295, 856)
+[node name="Player2" parent="Y-Order/Players" unique_id=29665311 instance=ExtResource("1_jhh15")]
+position = Vector2(1328, 702)
 
-[node name="Player3" parent="Y-Order/Players" unique_id=1711770315 instance=ExtResource("1_jhh15")]
-position = Vector2(1493, -286)
+[node name="Player3" parent="Y-Order/Players" unique_id=1983845796 instance=ExtResource("1_jhh15")]
+position = Vector2(1710, 347)
 
-[node name="Player4" parent="Y-Order/Players" unique_id=1345268781 instance=ExtResource("1_jhh15")]
-position = Vector2(104, 174)
+[node name="Player4" parent="Y-Order/Players" unique_id=1385310624 instance=ExtResource("1_jhh15")]
+position = Vector2(52, 220)
+
+[node name="Player5" parent="Y-Order/Players" unique_id=1675415518 instance=ExtResource("1_jhh15")]
+position = Vector2(1519, -474)
 
 [node name="Ships" type="Node2D" parent="Y-Order" unique_id=185378479]
 y_sort_enabled = true

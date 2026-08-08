@@ -8,8 +8,11 @@ func Entry() -> void:
 	var lastState = parent.stateManager.lastState;
 	# Hud Exist 
 	var hud = Manager.getHud();
-	# Disable Boost, Exit Button 
-	if hud and lastState != parent.stateManager.States.DISABLED: 
+	# Disable Boost, Exit Button if not player ship
+	if hud and not lastState in [	
+			parent.stateManager.States.EMPTY,
+			parent.stateManager.States.DISABLED, 
+		]: 
 		hud.disableBtn(hud.Buttons.BOOST);
 		hud.disableBtn(hud.Buttons.CAM_SWITCH);
 	
@@ -20,9 +23,8 @@ func Entry() -> void:
 	# Driver Exist
 	driver = parent.getDriver();
 	# Make sure Driver is not Shifted
-	if (driver):
+	if driver:
 		driver.global_position = parent.global_position;
-		
 		# Handle Roof Ships
 		if parent.hasRoof():
 			driver.visible = false;

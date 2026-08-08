@@ -283,9 +283,8 @@ frame_progress = 0.39680395
 position = Vector2(0, -4)
 scale = Vector2(0.5408249, 0.517456)
 sprite_frames = SubResource("SpriteFrames_l60uc")
-animation = &"swim"
+animation = &"none"
 autoplay = "none"
-frame_progress = 0.9600924
 
 [node name="Dust" type="GPUParticles2D" parent="." unique_id=1678672454]
 z_index = 1
