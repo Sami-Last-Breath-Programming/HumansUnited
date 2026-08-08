@@ -31,8 +31,8 @@ var coolDownTime := 0.6;
 var exitTimer := Timer.new();
 var enterTimer := Timer.new();
 var damageTimer := Timer.new(); 
-var healthBarTimer := Timer.new();
 var coolDownTimer := Timer.new();
+var healthBarTimer := Timer.new();
 var loadedSkins := [null, null, null, null];
 var driver: CharacterBody2D = null;
 
@@ -45,11 +45,11 @@ func _ready() -> void:
 	# Init State Manager
 	stateManager.init();
 	
-	# Set the default
+	# Set the defaults
 	setSkin(shipSkin);
 	setShipProperties();
 	
-	# Setup Heath Bar and Timer
+	# Setup Health Bar and Timer
 	healthBar.visible = false;
 	healthBar.value = shipHealth;
 	healthBar.max_value = shipHealth;

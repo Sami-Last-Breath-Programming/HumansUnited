@@ -102,6 +102,7 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_4="Ship"
 2d_physics/layer_5="Water"
 2d_physics/layer_6="Flora"
+2d_physics/layer_7="Plane"
 
 [physics]
 

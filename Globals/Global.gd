@@ -14,6 +14,11 @@ var defaultPlayerHeath: float;
 var defaultShipDamage: float;
 var shipSinkDamage: float;
 var oceanFriction: float;
+var planeHeath: float;
+var planeSpeed: float;
+var planeDamage: float;
+var planeBoostSpeed: float;
+var airFriction: float;
 
 # Init Globals
 func _ready() -> void:
@@ -28,4 +33,9 @@ func _ready() -> void:
 	defaultShipDamage = 50.0;
 	shipSinkDamage = 80.0;
 	oceanFriction = 100.0;
+	planeHeath = 200.0;
+	planeSpeed = 400.0;
+	planeBoostSpeed = 600.0;
+	planeDamage = 100.0;
+	airFriction = 80.0;
 	defaultBoostShipSpeed = 200.0;

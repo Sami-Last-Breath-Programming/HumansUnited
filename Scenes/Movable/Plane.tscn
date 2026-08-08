@@ -1,0 +1,108 @@
+[gd_scene format=3 uid="uid://f4fvp6rtmaub"]
+
+[ext_resource type="Texture2D" uid="uid://bay2nfs0ga8v6" path="res://Assets/Ships/Air/AirShips.png" id="1_ebey7"]
+[ext_resource type="Script" uid="uid://bo120cr3c035u" path="res://Scripts/Plane/Plane.gd" id="1_hpm2a"]
+[ext_resource type="Texture2D" uid="uid://cr42m2guee3u3" path="res://Assets/UI/ProgressBars/pbarTop.svg" id="2_lxpwv"]
+[ext_resource type="Texture2D" uid="uid://44hyllvindvx" path="res://Assets/UI/ProgressBars/pbarBg.svg" id="3_hpm2a"]
+[ext_resource type="Script" uid="uid://b8uxsosqogqkl" path="res://Scripts/Plane/PlaneManager.gd" id="5_gasgw"]
+[ext_resource type="Script" uid="uid://dexjduuoons84" path="res://Scripts/Plane/States/Idle.gd" id="6_342fb"]
+[ext_resource type="Script" uid="uid://dujakodoq2we1" path="res://Scripts/Plane/States/Fly.gd" id="7_342fb"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qgo8v"]
+atlas = ExtResource("1_ebey7")
+region = Rect2(32, 128, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_g2gtw"]
+atlas = ExtResource("1_ebey7")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vngp5"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qgo8v")
+}],
+"loop": 1,
+"name": &"crashed",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_g2gtw")
+}],
+"loop": 1,
+"name": &"normal",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_342fb"]
+height = 42.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ebey7"]
+size = Vector2(20, 58)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l60uc"]
+size = Vector2(15, 19)
+
+[node name="Plane" type="CharacterBody2D" unique_id=37351039]
+y_sort_enabled = true
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_hpm2a")
+
+[node name="Texture" type="AnimatedSprite2D" parent="." unique_id=479429653]
+z_index = 2
+y_sort_enabled = true
+position = Vector2(0, -21.999998)
+scale = Vector2(1.8807871, 2.1250002)
+sprite_frames = SubResource("SpriteFrames_vngp5")
+animation = &"normal"
+autoplay = "normal"
+
+[node name="Body" type="CollisionShape2D" parent="." unique_id=119540015]
+position = Vector2(1, -20)
+shape = SubResource("CapsuleShape2D_342fb")
+
+[node name="Wings" type="CollisionShape2D" parent="." unique_id=1977722985]
+position = Vector2(1, -27)
+rotation = 1.5707964
+shape = SubResource("RectangleShape2D_ebey7")
+
+[node name="Camera" type="Camera2D" parent="." unique_id=1003002335]
+enabled = false
+zoom = Vector2(0.8, 0.8)
+process_callback = 0
+position_smoothing_enabled = true
+rotation_smoothing_enabled = true
+
+[node name="Detector" type="Area2D" parent="." unique_id=1910239176]
+collision_layer = 0
+collision_mask = 4
+
+[node name="Detect" type="CollisionShape2D" parent="Detector" unique_id=323472046]
+position = Vector2(1.5, -29.5)
+shape = SubResource("RectangleShape2D_l60uc")
+
+[node name="HealthBar" type="TextureProgressBar" parent="." unique_id=547757965]
+visible = false
+z_index = 5
+offset_left = -12.0
+offset_top = -19.0
+offset_right = 13.0
+offset_bottom = -12.0
+nine_patch_stretch = true
+texture_under = ExtResource("2_lxpwv")
+texture_progress = ExtResource("3_hpm2a")
+
+[node name="StateManager" type="Node" parent="." unique_id=791346995]
+script = ExtResource("5_gasgw")
+
+[node name="IDLE" type="Node" parent="StateManager" unique_id=619424091]
+script = ExtResource("6_342fb")
+
+[node name="FLY" type="Node" parent="StateManager" unique_id=133330171]
+script = ExtResource("7_342fb")
+
+[node name="CRASHED" type="Node" parent="StateManager" unique_id=2075107082]
+
+[node name="DISABLED" type="Node" parent="StateManager" unique_id=1182274846]

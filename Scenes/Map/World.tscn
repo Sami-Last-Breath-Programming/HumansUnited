@@ -3,6 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://fqa7moca3wny" path="res://Scenes/Movable/Player.tscn" id="1_jhh15"]
 [ext_resource type="PackedScene" uid="uid://bxgblcs82p6cu" path="res://Scenes/Map/Chunk/Middle.tscn" id="1_my3o7"]
 [ext_resource type="PackedScene" uid="uid://2yqq8e2krcr8" path="res://Scenes/Movable/Ship.tscn" id="2_my3o7"]
+[ext_resource type="PackedScene" uid="uid://f4fvp6rtmaub" path="res://Scenes/Movable/Plane.tscn" id="4_febdn"]
 
 [node name="World" type="Node2D" unique_id=1073102178]
 metadata/_edit_horizontal_guides_ = [270.0]
@@ -17,7 +18,7 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Player" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
-position = Vector2(655, 227)
+position = Vector2(198, 1224)
 
 [node name="StateManager" parent="Y-Order/Players/Player" index="9" unique_id=728419902]
 playerState = 1
@@ -75,5 +76,11 @@ shipHealth = 250.0
 shipSpeed = 400.0
 shipDamage = 50.0
 boostShipSpeed = 600.0
+
+[node name="Planes" type="Node2D" parent="Y-Order" unique_id=760533035]
+y_sort_enabled = true
+
+[node name="Plane" parent="Y-Order/Planes" unique_id=37351039 instance=ExtResource("4_febdn")]
+position = Vector2(193, 1355)
 
 [editable path="Y-Order/Players/Player"]
