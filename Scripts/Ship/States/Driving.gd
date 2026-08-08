@@ -125,11 +125,11 @@ func getInput() -> Vector2:
 	return input if (input != Vector2.ZERO) else parent.external_input;
 
 func handleCollisions(input: Vector2, _d: float) -> void:
-	var layer;
+	var layer: int;
 	# Loop over the collisions array
 	for index in parent.get_slide_collision_count():
-		var collision = parent.get_slide_collision(index);
-		var collider = collision.get_collider();
+		var collision: KinematicCollision2D = parent.get_slide_collision(index);
+		var collider: Object = collision.get_collider();
 		if not collider: continue;
 		# Get Collision Layer
 		if collider is TileMapLayer:

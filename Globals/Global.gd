@@ -3,6 +3,7 @@ extends Node;
 # Default Variables
 var defaultShipSkin: int;
 var defaultPlayerSkin: int;
+var defaultLoadTime: float;
 var defaultShipSpeed: float;
 var defaultShipHealth: float;
 var defaultBoostShipSpeed: float;

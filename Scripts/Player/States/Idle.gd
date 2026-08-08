@@ -1,8 +1,10 @@
-extends State;
+extends State
 
 # Variables
-var ship: CharacterBody2D;
 var anim: Node;
+var ship: CharacterBody2D;
+var ground: TileMapLayer;
+var floraLayer: TileMapLayer;
 enum {WATER = 16};
 
 # Booleans
@@ -12,6 +14,10 @@ var isEntredWater = false;
 var isSubmerge = false;
 
 func Entry() -> void:
+	# TileMapLayer setup
+	ground = parent.getGround();
+	floraLayer = parent.getFlora();
+	
 	# Player Setup
 	parent.camera.enabled = true;
 	parent.setPlayerSkin(parent.SkinType.SKIN);
@@ -38,7 +44,7 @@ func HandleInput(_e: InputEvent) -> void:
 	elif  _e.is_action_pressed("Boost"): isBoost = true;
 	elif _e.is_action_released("Boost"): isBoost = false
 
-func Update(_d: float) -> void:
+func PhysicsUpdate(_d: float) -> void:
 	# Process outline 
 	parent.processOutline();
 
@@ -71,8 +77,6 @@ func Update(_d: float) -> void:
 	parent.move_and_slide();
 
 func checkWater() -> void:
-	# Get The Ground tilemaplayer
-	var ground: TileMapLayer =  get_tree().get_first_node_in_group("Ground")
 	# If Ground Exits
 	if ground:
 		# Player feet position
@@ -106,8 +110,6 @@ func checkWater() -> void:
 				inWater = true;
 
 func checkTree() -> void:
-	# Get The Folar tilemaplayer
-	var floraLayer: TileMapLayer = get_tree().get_first_node_in_group("Flora")
 	# If flora Exist
 	if floraLayer:
 		# Player feet position
@@ -118,7 +120,7 @@ func checkTree() -> void:
 		if f_tile != -1: parent.showOutLine(true);
 		else: parent.showOutLine(false);
 		
-func switchCamera(): 
+func switchCamera() -> void:
 	# Hud Exist
 	var hud = Manager.getHud();
 	# Show PLayer Camera-Switch List

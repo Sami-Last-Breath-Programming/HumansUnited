@@ -12,6 +12,7 @@ var States: Dictionary = {
 # Variables
 var StateData = {};
 var lastState: int = States.NULL;
+var currentStateRef: State;
 
 func init() -> void:
 	# Loop on all States and refer StateManager
@@ -29,38 +30,44 @@ func init() -> void:
 			# Disable Process
 			processSetup(node, false);
 			count += 1;
-		
+
+	# Get the current state ref
+	currentStateRef = StateData[currentState];
+
 	# Change state to default 	
-	StateData[currentState].Entry();
-	processSetup(StateData[currentState], true);
+	currentStateRef.Entry();
+	processSetup(currentStateRef, true);
 
 func changeState(state: int) -> void:
 	# Cache the last state
 	lastState = currentState;
 	# Stop the old state
-	StateData[currentState].Exit();
-	processSetup(StateData[currentState], false);
-	# Start the new state
-	processSetup(StateData[state], true);
-	StateData[state].Entry();
-	# Set the current state
+	currentStateRef.Exit();
+	processSetup(currentStateRef, false);
+	
+	# Get the current state ref
 	currentState = state;
+	currentStateRef = StateData[currentState];
+	
+	# Start the new state
+	processSetup(currentStateRef, true);
+	currentStateRef.Entry();
 
 func _process(delta: float) -> void:
-	StateData[currentState].Update(delta)
+	currentStateRef.Update(delta)
 
 func _physics_process(delta: float) -> void:
-	StateData[currentState].PhysicsUpdate(delta)
+	currentStateRef.PhysicsUpdate(delta)
 
 func _unhandled_input(event: InputEvent) -> void:
-	StateData[currentState].HandleInput(event)
+	currentStateRef.HandleInput(event)
 
 func getCurrentState() -> int:
 	return currentState;
 
 func delete() -> void:
-	StateData[currentState].Exit();
-	processSetup(StateData[currentState], false);
+	currentStateRef.Exit();
+	processSetup(currentStateRef, false);
 	self.get_parent().queue_free();
 
 func processSetup(n: Node, b: bool) -> void:

@@ -4,38 +4,38 @@ enum Health {STILL, GONE, Cooldown}
 enum SkinType {SKIN, BOAT}
 
 # Lazy Load 
-@onready var dust := $Dust;
-@onready var texture := $Texture;
-@onready var camera := $Camera;
-@onready var outline := $Outline;
-@onready var healthBar := $Progress;
-@onready var collider: CollisionShape2D = $Collision;
-@onready var stateManager := $StateManager;
-@onready var animManager := $AnimManager;
-@onready var playerData := PlayerData.new();
+@onready var dust 			:= $Dust;
+@onready var texture 		:= $Texture;
+@onready var camera 		:= $Camera;
+@onready var outline 		:= $Outline;
+@onready var healthBar 		:= $Progress;
+@onready var collider 		:= $Collision;
+@onready var stateManager 	:= $StateManager;
+@onready var animManager 	:= $AnimManager;
+@onready var playerData 	:= PlayerData.new();
 
 # Exported
-@export var playerHealth: float;
-@export var currentPlayerSkin: int;
+@export var playerHealth: 		float;
+@export var currentPlayerSkin: 	int;
 
 # Shared Variable
-var externalInput: Vector2 = Vector2.ZERO;
+var externalInput: 		Vector2 		= Vector2.ZERO;
 
 # Variables
-var result := [null];
-var coolDownTime := 0.5;
-var healthBarTime := 2.4;
-var coolDownTimer := Timer.new();
-var healthBarTimer := Timer.new();
-var isEntredWaterTimer := Timer.new();
-var ship: CharacterBody2D = null;
-var playerBoatTexture: SpriteFrames = null;
-var playerSkinTexture: SpriteFrames = null;
-var playerSkinCollider: Resource = null;
-var playerBoatCollider: Resource = null;
+var coolDownTime: 		float 			= 0.5;
+var healthBarTime: 		float 			= 2.4;
+var ship: 				CharacterBody2D = null;
+var playerBoatTexture: 	SpriteFrames 	= null;
+var playerSkinTexture: 	SpriteFrames 	= null;
+var playerSkinCollider: Resource 		= null;
+var playerBoatCollider: Resource 		= null;
+var result: 			Array 			= [null];
+var coolDownTimer: 		Timer 			= Timer.new();
+var healthBarTimer: 	Timer 			= Timer.new();
+var isEntredWaterTimer: Timer 			= Timer.new();
 
 # Booelans
-var toset: bool = false;
+var toset:		bool = false;
 var isCooldown: bool = false;
 
 func _ready() -> void:
@@ -46,30 +46,32 @@ func _ready() -> void:
 	setSkin(currentPlayerSkin);
 	setPlayerProperties();
 	
-	# Set Health Bar and Timer
+	# Set Health Bar
 	healthBar.visible = false;
 	healthBar.value = playerHealth;
 	healthBar.max_value = playerHealth;
+	
+	# Timers Setup
 	self.add_child(coolDownTimer);
 	self.add_child(healthBarTimer);
 	self.add_child(isEntredWaterTimer);
-	isEntredWaterTimer.one_shot = true;
 	coolDownTimer.one_shot = true;
 	healthBarTimer.one_shot = true;
+	isEntredWaterTimer.one_shot = true;
 	healthBarTimer.timeout.connect(func():healthBar.visible = false);
-	
+
 func _process(_delta: float) -> void:
 	processSkin();
-	
+
 func setSkin(index: int) -> void:
-	# Request resource loader to load skin
+	# Set the skin index
 	toset = true;
 	currentPlayerSkin = index;
 	# Request Resource Load
 	for res in playerData.skins[currentPlayerSkin]:
 		if res is String:
-			Lod.req(res);	
-
+			Lod.req(res);
+	
 func setPlayerProperties() -> void:
 	if not playerHealth: 		playerHealth = Global.defaultPlayerHeath;
 	if not currentPlayerSkin: 	currentPlayerSkin = Global.defaultPlayerSkin;
@@ -82,9 +84,9 @@ func processOutline() -> void:
 	outline.position = texture.position;
 
 func processSkin() -> void:
-	if not toset:
-		return;
-
+	# Check flag
+	if not toset: return;
+	
 	# Get status
 	var skin_s = Lod.stat(getSkin(0), result);
 	var boat_skin_s = Lod.stat(getSkin(1), result);
@@ -97,12 +99,11 @@ func processSkin() -> void:
 		playerBoatCollider 		= Lod.grep(getSkin(3));
 		setPlayerSkin(SkinType.SKIN);
 		toset = false;
-		print("Both Skins Loaded");
-	
+		print("Both Skins Loaded"); 
+
 	# Handle Error
 	elif (skin_s == Lod.Stat.FAILED or boat_skin_s == Lod.Stat.FAILED):
 		print("Error: One of the skins failed to load!");
-		toset = false;
 
 func takeDamage(amount: float) -> Health:
 	# Wait for cooldown
@@ -178,3 +179,13 @@ func setPlayerSkin(type: SkinType):
 func showOutLine(flag: bool) -> void:
 	if flag: outline.visible = true;
 	else: outline.visible = false;
+
+func getGround() -> TileMapLayer:
+	var tmp: TileMapLayer = get_tree().get_first_node_in_group("Ground");
+	if tmp: return tmp;
+	else: return null;
+
+func getFlora() -> TileMapLayer:
+	var tmp: TileMapLayer = get_tree().get_first_node_in_group("Flora");
+	if tmp: return tmp;
+	else: return null;
