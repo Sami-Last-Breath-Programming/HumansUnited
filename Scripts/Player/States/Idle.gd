@@ -146,11 +146,9 @@ func handleVehicle(packet: Dictionary):
 	match packet[&"vehicle"]:
 		&"Ship":
 			var ship: CharacterBody2D = instance_from_id(packet[&"id"]) as CharacterBody2D;
-			print(ship);
 			if ship:
 				parent.setVehicle(ship);
 				stateManager.changeState(stateManager.States.IN_SHIP);
-				print("to-ship-now");
 		&"Plane":
 			stateManager.changeState(stateManager.States.IN_PLANE); # Todo
 	# Disconnect Signal

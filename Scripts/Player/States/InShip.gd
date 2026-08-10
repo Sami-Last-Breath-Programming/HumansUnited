@@ -19,11 +19,21 @@ func Entry() -> void:
 
 	# Signal to Manager
 	var mainCamera = Manager.getMainCamera();
-	var packet: Dictionary = {
-		&"vehicleId": parent.getVehicle().get_instance_id(),
-		&"vehiclePos": parent.getVehicle().global_position,
-	}
-	if mainCamera: mainCamera.playerVehicleActive.emit(packet);
+	var vehical = parent.getVehicle();
+	# Exist
+	if vehical and mainCamera:
+		var packet: Dictionary = {
+			&"vehicleId": vehical.get_instance_id(),
+			&"vehiclePos": vehical.global_position,
+		}
+		var packet2: Dictionary = {
+			&"vehicle": &"Ship",
+			&"vehicleDamaged": vehical.damageSpeedApplied,
+		}
+		# Signal to camera
+		if mainCamera: mainCamera.playerVehicleActive.emit(packet);
+		# Signal to hud
+		Manager.driverEnter.emit(packet2);  
 
 	# Player setup
 	parent.position = Vector2.ZERO;

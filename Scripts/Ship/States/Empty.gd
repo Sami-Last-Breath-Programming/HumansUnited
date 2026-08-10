@@ -32,6 +32,7 @@ func driverEnter(body: Node2D):
 	var packet: Dictionary = {
 		&"id": parent.get_instance_id(),
 		&"vehicle":&"Ship",
+		&"vehicleDamaged": parent.damageSpeedApplied,
 	};
 	Manager.driverEnter.emit(packet);
 

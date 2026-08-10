@@ -1,5 +1,6 @@
 extends Node;
 
+# driverEnter: Player/Idle.gd, Hud.gd, Empty.gd
 # driverExit: Sinking.gd, InShip.gd
 # reqCamList: InShip.gd, Player/Idle.gd, Hud.gd
 # cameraSwitching: MainCamera.gd, Hud.gd, Player/Idle.gd, InShip.gd

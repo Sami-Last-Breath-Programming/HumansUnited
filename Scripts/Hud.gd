@@ -27,6 +27,8 @@ func _ready() -> void:
 	Manager.playerIdle.connect(func(_drive: CharacterBody2D):
 		# Disable Vehicle controls 
 		hideDriverHud();
+		# Enable player controls
+		showPlayerHud();
 	);
 	
 	Manager.vehicleDestroying.connect(func(packet: Dictionary):
@@ -152,10 +154,16 @@ func onFocus():
 func notFocus():
 	Manager.removeCursor();
 
+func showPlayerHud() -> void:
+	enableBtn(Buttons.BOOST);
+	enableBtn(Buttons.CAM_SWITCH);
+
 func showDriverHud(packet: Dictionary) -> void:
 	match packet[&"vehicle"]:
 		&"Ship":
 			enableBtn(Buttons.VEHICLE_EXIT);
+			if not packet[&"vehicleDamaged"]: enableBtn(Buttons.BOOST);
+			else: disableBtn(Buttons.BOOST);	
 
 func hideDriverHud(packet: Dictionary = {&"vehicle": null}) -> void:
 	match packet[&"vehicle"]:

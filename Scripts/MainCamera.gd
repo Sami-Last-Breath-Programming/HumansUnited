@@ -55,6 +55,7 @@ func followVehicle(packet: Dictionary) -> void:
 	if vehicle:
 		self.reparent(vehicle);
 		self.global_position = packet[&"vehiclePos"];
+		
 		# Wait
 		await get_tree().create_timer(0.2).timeout;
 
