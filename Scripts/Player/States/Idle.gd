@@ -2,7 +2,6 @@ extends State
 
 # Variables
 var anim: Node;
-var ship: CharacterBody2D;
 var ground: TileMapLayer;
 var floraLayer: TileMapLayer;
 enum {WATER = 16};
@@ -14,20 +13,34 @@ var isEntredWater = false;
 var isSubmerge = false;
 
 func Entry() -> void:
+	# Connect Signal 
+	Manager.cameraSwitching.connect(func ():
+		stateManager.changeState(stateManager.States.DISABLED),
+		CONNECT_ONE_SHOT	
+	)
+	if (not Manager.driverEnter.is_connected(handleVehicle)):
+		Manager.driverEnter.connect(handleVehicle);
+	
+	# Signal To Main Camera
+	var mainCamera = Manager.getMainCamera();
+	mainCamera.playerIdle.emit.call_deferred(parent);
+	
 	# TileMapLayer setup
 	ground = parent.getGround();
 	floraLayer = parent.getFlora();
 	
 	# Player Setup
-	parent.camera.enabled = true;
 	parent.setPlayerSkin(parent.SkinType.SKIN);
 	parent.collider.call_deferred("set_disabled", false);
 	# Animation setup
 	anim = parent.animManager;
 	
-func Exit() -> void:
-	# Disable Camera
-	parent.camera.enabled = false;
+func Exit() -> void:	
+	# Disconnect signal 
+	if Manager.driverEnter.is_connected(handleVehicle):
+		Manager.driverEnter.disconnect(handleVehicle);
+	
+	# Disable Effects
 	parent.dust.emitting = false;
 	parent.showOutLine(false);
 	# Disable Water Effects 
@@ -36,11 +49,11 @@ func Exit() -> void:
 		anim.stop(anim.Anim.SWIM);
 		isEntredWater = false;
 		isSubmerge = false;
-	# Enable Collider
+	# Disable Collider
 	parent.collider.call_deferred("set_disabled", true);
 
 func HandleInput(_e: InputEvent) -> void:
-	if _e.is_action_pressed("CameraSwitch"): switchCamera();	
+	if _e.is_action_pressed("CameraSwitch"): reqSwitch()	
 	elif  _e.is_action_pressed("Boost"): isBoost = true;
 	elif _e.is_action_released("Boost"): isBoost = false
 
@@ -57,11 +70,7 @@ func PhysicsUpdate(_d: float) -> void:
 		"Left", "Right", "Up", 
 		"Down"
 	);
-	
-	# Handle Joystic
-	if (input == Vector2.ZERO):
-		input = parent.externalInput;
-		
+			
 	# Handle Rotation, Particles & Animation
 	if (input != Vector2.ZERO):
 		if inWater: 
@@ -120,8 +129,18 @@ func checkTree() -> void:
 		if f_tile != -1: parent.showOutLine(true);
 		else: parent.showOutLine(false);
 		
-func switchCamera() -> void:
-	# Hud Exist
-	var hud = Manager.getHud();
-	# Show PLayer Camera-Switch List
-	if hud: hud.reqCamList.emit(parent);
+func reqSwitch() -> void:
+	# Payload
+	var packet: Dictionary = {&"name": parent.name,}
+	Manager.reqCamList.emit(packet);
+
+func handleVehicle(vehicle: Manager.Vehicles):
+	# Match Vehicle
+	match vehicle:
+		Manager.Vehicles.SHIP:
+			stateManager.changeState(stateManager.States.IN_SHIP);
+		Manager.Vehicles.PLANE:
+			stateManager.changeState(stateManager.States.IN_PLANE); # Todo
+	# Disconnect Signal
+	if (Manager.driverEnter.is_connected(handleVehicle)):
+		Manager.driverEnter.disconnect(handleVehicle);

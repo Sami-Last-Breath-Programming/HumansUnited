@@ -5,7 +5,7 @@ extends VBoxContainer
 @onready var SlideIn: ProtonControlAnimation = $Base/Button/SlideIn
 
 # Variables
-var player: CharacterBody2D;
+var lastPlayerName: StringName
 var targetPlayer: CharacterBody2D;
 
 func onFocus():
@@ -17,16 +17,19 @@ func notFocus():
 func setName(pName: String):
 	Name.text = pName;
 
-func setCurrent(current: CharacterBody2D = null):
-	if current: player = current;
+func setLastPlayerName(lpName: StringName):
+	lastPlayerName = lpName;
 
 func setTarget(target: CharacterBody2D = null):
-	if target: targetPlayer = target;
+	if target and is_instance_valid(target): targetPlayer = target;
+	else: targetPlayer = null;
 
 func handleSwitch() -> void:
-	var switchCamera = Lod.SwitchCameraScene.instantiate();
-	get_tree().current_scene.add_child(switchCamera);
-	switchCamera.switch(player, targetPlayer);
+	var packet: Dictionary = {
+		&"lastPlayerName": lastPlayerName,
+		&"targetPlayer": targetPlayer,
+	}
+	Manager.reqLinearSwitch.emit(packet);
 
 func playStart() -> void:
 	SlideIn.start();

@@ -1,28 +1,52 @@
 extends CanvasLayer;
 
-# Signals
-signal reqCamList(player: Variant);
-
 # Lazy Load
 @onready var jstick: VirtualJoystick = $Toggle/VirtualJoystick;
 @onready var boostBtn: Control = $Toggle/Boost;
 @onready var fpsText: Label = $FPS
-@onready var ship_ext: Control = $Toggle/ShipExt;
+@onready var vehicalExt: Control = $Toggle/VehicleExt;
 @onready var toggleHud: Control = $Toggle;
 @onready var camSwitch: Control = $Toggle/CamSwitch
 
 # Variables
-var jevent:  Array[StringName];
-enum Buttons {BOOST, CAM_SWITCH, SHIP_EXIT}
 var camListNode: Control;
+var jevent:  Array[StringName];
+enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT}
 
 # Booleans
 var isCamList = false;
 
 func _ready() -> void:	
-	
 	# Connect Signal 
-	reqCamList.connect(showCamList);
+	Manager.reqCamList.connect(showCamList);
+	Manager.noPlayersLeft.connect(deadScreen);
+	Manager.driverEnter.connect(showDriverHud);
+	Manager.driverExit.connect(hideDriverHud);
+	
+	# Lamda Signlas;
+	Manager.vehicleDestroying.connect(func(packet: Dictionary):
+		if packet[&"driver"]: 
+			await get_tree().create_timer(0.1).timeout;
+			disableSelf(true);
+	);
+	
+	Manager.vehicleDestroyed.connect(func(packet: Dictionary):
+		if packet[&"driver"]: disableSelf(false);	
+	)
+
+	Manager.cameraSwitching.connect(func():
+		setCamList(false, true);
+		# showCamList();
+		await get_tree().create_timer(0.6).timeout;
+		disableSelf(true);
+	);
+	Manager.cameraSwitched.connect(func(): 
+		await get_tree().create_timer(0.4).timeout;	
+		disableSelf(false)
+	);
+	Manager.vehicalLowHp.connect(func(driver: CharacterBody2D):
+		if driver: disableBtn(Buttons.BOOST);
+	);
 	
 	# Joystick
 	jevent = [
@@ -33,8 +57,8 @@ func _ready() -> void:
 	];
 	jstick.visibility_mode = VirtualJoystick.VISIBILITY_WHEN_TOUCHED;
 	# Debug Properties 
-	ship_ext.process_mode = Node.PROCESS_MODE_DISABLED;
-	ship_ext.visible = false;
+	vehicalExt.process_mode = Node.PROCESS_MODE_DISABLED;
+	vehicalExt.visible = false;
 
 func _process(_delta: float) -> void:
 	processFps();
@@ -47,14 +71,14 @@ func disableBtn(btn: Buttons) -> void:
 		Buttons.BOOST:
 			boostBtn.process_mode = Node.PROCESS_MODE_DISABLED;
 			boostBtn.visible = false;
-		Buttons.SHIP_EXIT:
-			ship_ext.process_mode = Node.PROCESS_MODE_DISABLED;
-			ship_ext.visible = false;
+		Buttons.VEHICLE_EXIT:
+			vehicalExt.process_mode = Node.PROCESS_MODE_DISABLED;
+			vehicalExt.visible = false;
 		Buttons.CAM_SWITCH:
 			camSwitch.process_mode = Node.PROCESS_MODE_DISABLED;
 			camSwitch.visible = false;
 
-func disableSelf(yes: bool) -> void:
+func disableSelf(yes: bool = true) -> void:
 	if (yes):
 		# Hide the hud
 		toggleHud.visible = false;
@@ -80,34 +104,40 @@ func enableBtn(btn: Buttons) -> void:
 		Buttons.BOOST:
 			boostBtn.process_mode = Node.PROCESS_MODE_INHERIT;
 			boostBtn.visible = true;
-		Buttons.SHIP_EXIT:
-			ship_ext.process_mode = Node.PROCESS_MODE_INHERIT;
-			ship_ext.visible = true;
+		Buttons.VEHICLE_EXIT:
+			vehicalExt.process_mode = Node.PROCESS_MODE_INHERIT;
+			vehicalExt.visible = true;
 		Buttons.CAM_SWITCH:
 			camSwitch.process_mode = Node.PROCESS_MODE_INHERIT;
 			camSwitch.visible = true;
 
-func deadScreen(_show: bool) -> void:
+func deadScreen() -> void:
 	# TODO: Make Dead Screen;
 	pass;
 
 func setCamList(flag: bool, anim: bool):
 	if not flag:
 		isCamList = false;
-		if camListNode: camListNode.freeSelf(anim);
+		if camListNode and not camListNode.onWay: 
+			camListNode.hideSelf(anim);
 	else:
 		isCamList = true;
 
-func showCamList(player: Variant):
+func showCamList(packet: Dictionary):
+	# Hadnle Toggle
+	if camListNode and camListNode.onWay:
+		return
 	# Toggle Cam List
 	if not isCamList:
 		# Set Flag
 		setCamList(true, false);
 		# Setup the CamList
-		camListNode = Lod.camList.instantiate() as Control;
-		camSwitch.add_child(camListNode);
-		# Start feaching players
-		camListNode.fetch(player);
+		if camListNode and is_instance_valid(camListNode):
+			camListNode.fetch(packet);
+		else:
+			camListNode = Lod.camList.instantiate() as Control;
+			camSwitch.add_child(camListNode);
+			camListNode.fetch(packet);
 	else:
 		setCamList(false, true);
 
@@ -116,3 +146,13 @@ func onFocus():
 
 func notFocus():
 	Manager.removeCursor();
+
+func showDriverHud(vehicle: Manager.Vehicles) -> void:
+	match vehicle:
+		Manager.Vehicles.SHIP:
+			enableBtn(Buttons.VEHICLE_EXIT);
+
+func hideDriverHud(packet: Dictionary) -> void:
+	match packet[&"vehicle"]:
+		&"Ship":
+			disableBtn(Buttons.VEHICLE_EXIT);

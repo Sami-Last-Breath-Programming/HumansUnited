@@ -1,37 +1,37 @@
-[gd_scene format=3 uid="uid://nlkqw732mg5f"]
+[gd_scene format=3 uid="uid://oboa84a3bklq"]
 
-[ext_resource type="Script" uid="uid://b5fnrfufrpxui" path="res://Scripts/Ui/CamSwitch/CamList.gd" id="1_eayuc"]
-[ext_resource type="Texture2D" uid="uid://dlrnsnxvw585j" path="res://Assets/UI/SwitchList/Banner.png" id="2_gd6qk"]
-[ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="3_gd6qk"]
-[ext_resource type="Script" uid="uid://bsufjcw4lsn2a" path="res://addons/proton_control_animation/src/animations/slide.gd" id="4_ygbqr"]
+[ext_resource type="Script" uid="uid://b5fnrfufrpxui" path="res://Scripts/Ui/CamSwitch/CamList.gd" id="1_2jplh"]
+[ext_resource type="Texture2D" uid="uid://dlrnsnxvw585j" path="res://Assets/UI/SwitchList/Banner.png" id="2_ruugg"]
+[ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="3_711it"]
+[ext_resource type="Script" uid="uid://bsufjcw4lsn2a" path="res://addons/proton_control_animation/src/animations/slide.gd" id="4_0syl4"]
 
 [sub_resource type="Resource" id="Resource_vngp5"]
-script = ExtResource("4_ygbqr")
+script = ExtResource("4_0syl4")
 to = 3
 to_global_position = Vector2(10, 20)
-to_local_offset = Vector2(-680, 10)
+to_local_offset = Vector2(-650, 30)
 default_duration = 0.6
 metadata/_custom_type_script = "uid://bsufjcw4lsn2a"
 
 [sub_resource type="Resource" id="Resource_gd6qk"]
-script = ExtResource("4_ygbqr")
+script = ExtResource("4_0syl4")
 to = 1
 to_global_position = Vector2(10, 20)
 to_local_offset = Vector2(-680, 10)
 default_duration = 0.6
 metadata/_custom_type_script = "uid://bsufjcw4lsn2a"
 
-[node name="CamList" type="Control" unique_id=1422283782]
+[node name="CamList" type="Control" unique_id=1674986368]
 layout_mode = 3
 anchors_preset = 0
-offset_left = 283.0
-offset_top = 23.0
-offset_right = 659.0
-offset_bottom = 504.65292
+offset_left = 266.0
+offset_top = 30.0
+offset_right = 642.0
+offset_bottom = 511.65292
 mouse_filter = 1
-script = ExtResource("1_eayuc")
+script = ExtResource("1_2jplh")
 
-[node name="BG" type="NinePatchRect" parent="." unique_id=1273797700]
+[node name="BG" type="NinePatchRect" parent="." unique_id=616670704]
 texture_filter = 1
 layout_mode = 1
 anchors_preset = 15
@@ -39,13 +39,13 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_gd6qk")
+texture = ExtResource("2_ruugg")
 patch_margin_left = 64
 patch_margin_top = 64
 patch_margin_right = 64
 patch_margin_bottom = 64
 
-[node name="Scroll" type="ScrollContainer" parent="BG" unique_id=29076557]
+[node name="Scroll" type="ScrollContainer" parent="BG" unique_id=1356839636]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.112
@@ -61,26 +61,26 @@ grow_vertical = 2
 horizontal_scroll_mode = 3
 vertical_scroll_mode = 3
 
-[node name="Vbox" type="VBoxContainer" parent="BG/Scroll" unique_id=1018413753]
+[node name="Vbox" type="VBoxContainer" parent="BG/Scroll" unique_id=2092798911]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Entry" type="Node" parent="." unique_id=1644542939 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
-script = ExtResource("3_gd6qk")
+[node name="Show" type="Node" parent="." unique_id=292692029 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("3_711it")
 target = NodePath("..")
 animation = SubResource("Resource_vngp5")
 start_trigger_source = NodePath("..")
-start_custom_signal = "ready"
 stop_trigger_source = NodePath("..")
 metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
 
-[node name="Free" type="Node" parent="." unique_id=2115439176 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
-script = ExtResource("3_gd6qk")
+[node name="Hide" type="Node" parent="." unique_id=1645774870 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("3_711it")
 target = NodePath("..")
 animation = SubResource("Resource_gd6qk")
 start_trigger_source = NodePath("..")
 stop_trigger_source = NodePath("..")
 metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
 
-[connection signal="animation_ended" from="Free" to="." method="handleFree"]
+[connection signal="animation_ended" from="Show" to="." method="handleShow"]
+[connection signal="animation_ended" from="Hide" to="." method="handleHide"]

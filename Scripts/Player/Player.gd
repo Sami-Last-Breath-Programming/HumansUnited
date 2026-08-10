@@ -1,12 +1,10 @@
 extends CharacterBody2D;
 
-enum Health {STILL, GONE, Cooldown}
 enum SkinType {SKIN, BOAT}
 
 # Lazy Load 
 @onready var dust 			:= $Dust;
 @onready var texture 		:= $Texture;
-@onready var camera 		:= $Camera;
 @onready var outline 		:= $Outline;
 @onready var healthBar 		:= $Progress;
 @onready var collider 		:= $Collision;
@@ -18,13 +16,10 @@ enum SkinType {SKIN, BOAT}
 @export var playerHealth: 		float;
 @export var currentPlayerSkin: 	int;
 
-# Shared Variable
-var externalInput: 		Vector2 		= Vector2.ZERO;
-
 # Variables
 var coolDownTime: 		float 			= 0.5;
 var healthBarTime: 		float 			= 2.4;
-var ship: 				CharacterBody2D = null;
+var vehicle: 			CharacterBody2D = null;
 var playerBoatTexture: 	SpriteFrames 	= null;
 var playerSkinTexture: 	SpriteFrames 	= null;
 var playerSkinCollider: Resource 		= null;
@@ -105,9 +100,9 @@ func processSkin() -> void:
 	elif (skin_s == Lod.Stat.FAILED or boat_skin_s == Lod.Stat.FAILED):
 		print("Error: One of the skins failed to load!");
 
-func takeDamage(amount: float) -> Health:
+func takeDamage(amount: float) -> void:
 	# Wait for cooldown
-	if not coolDownTimer.is_stopped(): return Health.Cooldown;
+	if not coolDownTimer.is_stopped(): return;
 	
 	# Show Health for a while
 	if healthBarTimer.is_stopped():
@@ -126,7 +121,7 @@ func takeDamage(amount: float) -> Health:
 	if (playerHealth <= 0.0):
 		stateManager.changeState(stateManager.States.DEATH);
 		print("Player death: ", self);
-		return Health.GONE;
+		return;
 	
 	# Show Damage Animation
 	var tween = create_tween().set_loops(3);
@@ -135,15 +130,9 @@ func takeDamage(amount: float) -> Health:
 	
 	# Start Timer
 	coolDownTimer.start(coolDownTime);
-	
-	# Driver Alive
-	return Health.STILL;
-	
-func getCamera() -> Camera2D:
-	return camera;
 
-func getShip(body: CharacterBody2D = null) -> CharacterBody2D:
-	var check = ship if not body else body; 
+func getVehicle(body: CharacterBody2D = null) -> CharacterBody2D:
+	var check = vehicle if not body else body; 
 	if ( 
 		is_instance_valid(check) and 
 		not check.is_queued_for_deletion() and 
@@ -153,11 +142,11 @@ func getShip(body: CharacterBody2D = null) -> CharacterBody2D:
 	
 	else: return null;
 
-func setShip(body: CharacterBody2D) -> void:
-	ship = body;
+func setVehicle(body: CharacterBody2D) -> void:
+	vehicle = getVehicle(body);
 
-func removeShip() -> void:
-	ship = null;
+func removeVehicle() -> void:
+	vehicle = null;
 
 func setPlayerSkin(type: SkinType):
 	match type:
@@ -189,3 +178,11 @@ func getFlora() -> TileMapLayer:
 	var tmp: TileMapLayer = get_tree().get_first_node_in_group("Flora");
 	if tmp: return tmp;
 	else: return null;
+
+func handleSwitch():
+	# Disconnect Signal 
+	if Manager.cameraSwitched.is_connected(handleSwitch):
+		Manager.cameraSwitched.disconnect(handleSwitch);
+	
+	# Change State
+	stateManager.changeState(stateManager.States.IDLE);

@@ -2,7 +2,6 @@ extends CharacterBody2D;
 
 # Lazy Load
 @onready var texture := $Texture;
-@onready var shipCamera := $Camera;
 @onready var stateManager := $StateManager;
 @onready var shipCollider := $Collision;
 @onready var particle := $Texture/Particle;
@@ -18,9 +17,6 @@ extends CharacterBody2D;
 @export var shipSpeed: float;
 @export var shipDamage: float;
 @export var boostShipSpeed: float;
-
-# Shared Variables
-var external_input := Vector2.ZERO;
 
 # Variables
 var result := [null];
@@ -139,16 +135,11 @@ func takeDamage(amount: float) -> void:
 		if(loadedSkins[2]): texture.texture = loadedSkins[2];
 		# Reduce Speed
 		if (not damageSpeedApplied):
-			# Disable boost btn
-			var hud = Manager.getHud();
-			var currentState = stateManager.getCurrentState();
-			# Only hide if its driving ship
-			if hud and currentState == stateManager.States.DRIVING:
-				hud.disableBtn(hud.Buttons.BOOST);
 			shipSpeed /= 2.0; 
 			boostShipSpeed = 0.0;
-			sinkParticle.emitting = true;
 			damageSpeedApplied = true;
+			sinkParticle.emitting = true;
+			Manager.vehicalLowHp.emit(getDriver());
 	elif (ratio <= 65):
 		if(loadedSkins[1]): texture.texture = loadedSkins[1];
 	

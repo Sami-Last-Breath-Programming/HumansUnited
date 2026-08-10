@@ -1,20 +1,46 @@
 extends Node;
 
-# Global Signlas
-signal reqPlayerSwitch(player: Variant);
+# driverExit: Sinking.gd, InShip.gd
+# reqCamList: InShip.gd, Player/Idle.gd
+# cameraSwitching: MainCamera.gd, Hud.gd, Player/Idle.gd, InShip.gd
+# vehicleDestroying: Hud.gd, Skinking.gd 
+# vehicleDestroyed: Hud.gd, Skinking.gd
+
+signal reqCamList(packet: Dictionary);
+signal noPlayersLeft();
+signal cameraSwitching();
+signal cameraSwitched();
+signal vehicleDestroying(packet: Dictionary);
+signal vehicleDestroyed(packet: Dictionary);
+signal reqPlayerSwitch(packet: Dictionary);
+signal reqLinearSwitch(packet: Dictionary);
+signal playerDead(packet: Dictionary);
+signal vehicalLowHp(drive: CharacterBody2D);
+signal driverEnter(vehicle: Vehicles);
+signal driverExit(packet: Dictionary);
+
+# Types
+enum Vehicles {SHIP, PLANE}
 
 # Variables 
 var hud: CanvasLayer;
+var mainCamera: Camera2D;
 
 func _ready() -> void:
-	# Connect Signlas
-	reqPlayerSwitch.connect(initSwitchCamera);
 	# Setup Hud 
 	hud = Lod.gameHud.instantiate();
 	get_tree().current_scene.add_child(hud);
 
+	# Setup Main Camera
+	mainCamera = Lod.mainCamera.instantiate();
+	get_tree().current_scene.add_child(mainCamera);
+
 func getHud() -> CanvasLayer:
-	if (hud): return hud;
+	if (hud and is_instance_valid(hud)and not hud.is_queued_for_deletion()): return hud;
+	else: return null;
+
+func getMainCamera() -> Camera2D:
+	if (mainCamera and is_instance_valid(mainCamera) and not hud.is_queued_for_deletion()): return mainCamera;
 	else: return null;
 
 func setCursor(c :Resource) -> void:
@@ -23,9 +49,3 @@ func setCursor(c :Resource) -> void:
 func removeCursor() -> void:
 	setCursor(Lod.cursor);
 
-func initSwitchCamera(player: Variant):
-	if (Lod.SwitchCameraScene):
-		# Start Switching 
-		var switchCamera = Lod.SwitchCameraScene.instantiate();
-		get_tree().current_scene.add_child(switchCamera);
-		switchCamera.randomSwitch(player);

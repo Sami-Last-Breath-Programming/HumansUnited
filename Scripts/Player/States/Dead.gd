@@ -5,7 +5,6 @@ var ship: CharacterBody2D;
 
 func Entry() -> void:
 	# Shrink Animation
-	parent.camera.enabled = true;
 	var tween = parent.create_tween();
 	tween.set_parallel(true);
 	
@@ -19,14 +18,20 @@ func Entry() -> void:
 	# finished signal
 	tween.finished.connect(func():
 		parent.velocity = Vector2.ZERO;
-					
-		# Handle Ship Dead
-		if (stateManager.lastState in [stateManager.States.IDLE, stateManager.States.IN_SHIP]):
-			Manager.reqPlayerSwitch.emit(parent);
+		parent.visible = false;
 		
-		# Delete Self	
+		# Set Payload
+		var packet: Dictionary = {&"name": parent.name}
+		Manager.playerDead.emit(packet);
+		checkPlayerState();
 		stateManager.delete();
 	)
-
-func Exit() -> void:
-	parent.camera.enabled = false;
+func checkPlayerState() -> void:
+	if stateManager.lastState in [
+		stateManager.States.IDLE, 
+		stateManager.States.IN_SHIP
+	]: # ADD IN PLANE
+		
+		# Set Payload
+		var packet: Dictionary = {&"name": parent.name}
+		Manager.reqPlayerSwitch.emit.call_deferred((packet));

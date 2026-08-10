@@ -19,6 +19,7 @@ var planeSpeed: float;
 var planeDamage: float;
 var planeBoostSpeed: float;
 var airFriction: float;
+var defaultCameraZoom: Vector2;
 
 # Init Globals
 func _ready() -> void:
@@ -38,4 +39,5 @@ func _ready() -> void:
 	planeBoostSpeed = 600.0;
 	planeDamage = 100.0;
 	airFriction = 80.0;
+	defaultCameraZoom = Vector2(1.0, 1.0);
 	defaultBoostShipSpeed = 200.0;

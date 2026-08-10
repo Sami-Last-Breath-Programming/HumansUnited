@@ -2,23 +2,29 @@ extends State;
 
 # Variables
 var driver: CharacterBody2D;
+var driveState: StringName
+
+# Booleans
+var isDriver: bool;
 
 func Entry() -> void:
-	# Ship Last State
-	var lastState = parent.stateManager.lastState;
-	# Hud Exist 
-	var hud = Manager.getHud();
-	# Disable Boost, Exit Button if not player ship
-	if hud and not lastState in [	
-			parent.stateManager.States.EMPTY,
-			parent.stateManager.States.DISABLED, 
-		]: 
-		hud.disableBtn(hud.Buttons.BOOST);
-		hud.disableBtn(hud.Buttons.CAM_SWITCH);
+	# Check driver
+	driver = parent.getDriver();
+	if (
+		driver and
+		driver.stateManager.currentState == driver.stateManager.States.IN_SHIP
+		): isDriver = true; 
+	else:
+		isDriver = false;
+
+	# Emit signal 
+	var packet: Dictionary = {
+		&"driver": isDriver,
+	}
+	Manager.vehicleDestroying.emit(packet);
 	
 	# Enable Particle
 	parent.sinkParticle.emitting = true;
-	parent.shipCamera.enabled = true;
 	
 	# Driver Exist
 	driver = parent.getDriver();
@@ -42,19 +48,23 @@ func Entry() -> void:
 	
 	# finished signal
 	tween.finished.connect(func():
+		# Set vehical destroyed signal 
+		Manager.vehicleDestroyed.emit(packet);
+		
 		# Driver Exist
 		driver = parent.getDriver();
 		if driver:
-			var status = driver.takeDamage(Global.shipSinkDamage);
-			# Check if drive alive 
-			if (status == driver.Health.STILL): 
-				# Check for ship disabled
-				if (lastState == parent.stateManager.States.DISABLED):
-					driver.stateManager.changeState(driver.stateManager.States.DISABLED);
-				else:
-					driver.stateManager.changeState(driver.stateManager.States.IDLE);
-		
+			var packet2: Dictionary = {
+				&"vehicle": &"Ship",
+				&"driver": parent.getDriver().name,
+				&"driverPos": parent.getDriver().global_position,
+				&"cameraZoom": Manager.getMainCamera().zoom,
+			}
+			Manager.driverExit.emit(packet2);
+			driver.takeDamage.call_deferred(Global.shipSinkDamage);
+	
 		# Free the ship object
+		await get_tree().create_timer(0.4).timeout;
 		stateManager.delete();
 	)
 	
@@ -64,12 +74,5 @@ func Exit() -> void:
 	# Post Setup Driver 
 	if (driver and not driver.visible):
 		driver.visible = true;
-	# Enable boost button
-	var hud = Manager.getHud();
-	# Enable Boost, Exit Button 
-	if (hud): 
-		hud.enableBtn(hud.Buttons.BOOST);
-		hud.enableBtn(hud.Buttons.CAM_SWITCH);
 	# Disable particles
 	parent.sinkParticle.emitting = false;
-	parent.shipCamera.enabled = false;

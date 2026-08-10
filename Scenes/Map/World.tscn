@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://fqa7moca3wny" path="res://Scenes/Movable/Player.tscn" id="1_jhh15"]
 [ext_resource type="PackedScene" uid="uid://bxgblcs82p6cu" path="res://Scenes/Map/Chunk/Middle.tscn" id="1_my3o7"]
 [ext_resource type="PackedScene" uid="uid://2yqq8e2krcr8" path="res://Scenes/Movable/Ship.tscn" id="2_my3o7"]
-[ext_resource type="PackedScene" uid="uid://f4fvp6rtmaub" path="res://Scenes/Movable/Plane.tscn" id="4_febdn"]
 
 [node name="World" type="Node2D" unique_id=1073102178]
 metadata/_edit_horizontal_guides_ = [270.0]
@@ -18,42 +17,37 @@ y_sort_enabled = true
 y_sort_enabled = true
 
 [node name="Player" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
-position = Vector2(198, 1224)
 
-[node name="StateManager" parent="Y-Order/Players/Player" index="9" unique_id=728419902]
+[node name="StateManager" parent="Y-Order/Players/Player" index="8" unique_id=728419902]
 playerState = 1
 
 [node name="Player2" parent="Y-Order/Players" unique_id=29665311 instance=ExtResource("1_jhh15")]
-position = Vector2(1328, 702)
+position = Vector2(600, 450)
+playerHealth = 10.0
 
 [node name="Player3" parent="Y-Order/Players" unique_id=1983845796 instance=ExtResource("1_jhh15")]
-position = Vector2(1710, 347)
+position = Vector2(982, 447)
+playerHealth = 10.0
 
-[node name="Player4" parent="Y-Order/Players" unique_id=1385310624 instance=ExtResource("1_jhh15")]
-position = Vector2(52, 220)
-
-[node name="Player5" parent="Y-Order/Players" unique_id=1675415518 instance=ExtResource("1_jhh15")]
-position = Vector2(1519, -474)
-
-[node name="Ships" type="Node2D" parent="Y-Order" unique_id=185378479]
+[node name="Ships" type="Node2D" parent="Y-Order" unique_id=1732228289]
 y_sort_enabled = true
 
 [node name="Ship" parent="Y-Order/Ships" unique_id=1322391007 instance=ExtResource("2_my3o7")]
-position = Vector2(575, 415)
-shipHealth = 50.0
+position = Vector2(384, 420)
+shipHealth = 12.0
 shipSpeed = 50.0
 shipDamage = 10.0
 boostShipSpeed = 100.0
 
-[node name="Ship2" parent="Y-Order/Ships" unique_id=528914876 instance=ExtResource("2_my3o7")]
-position = Vector2(1723, 416)
+[node name="Ship2" parent="Y-Order/Ships" unique_id=2030112295 instance=ExtResource("2_my3o7")]
+position = Vector2(446, 502)
 shipSkin = 1
-shipHealth = 100.0
+shipHealth = 12.0
 shipSpeed = 100.0
 shipDamage = 20.0
 boostShipSpeed = 200.0
 
-[node name="Ship3" parent="Y-Order/Ships" unique_id=98031707 instance=ExtResource("2_my3o7")]
+[node name="Ship3" parent="Y-Order/Ships" unique_id=1501036700 instance=ExtResource("2_my3o7")]
 position = Vector2(1514, -568)
 shipSkin = 2
 shipHealth = 150.0
@@ -61,26 +55,20 @@ shipSpeed = 200.0
 shipDamage = 30.0
 boostShipSpeed = 300.0
 
-[node name="Ship4" parent="Y-Order/Ships" unique_id=1601373526 instance=ExtResource("2_my3o7")]
-position = Vector2(1219, 700)
+[node name="Ship4" parent="Y-Order/Ships" unique_id=848273067 instance=ExtResource("2_my3o7")]
+position = Vector2(539, 502)
 shipSkin = 3
-shipHealth = 200.0
+shipHealth = 10.0
 shipSpeed = 300.0
 shipDamage = 40.0
 boostShipSpeed = 400.0
 
-[node name="Ship5" parent="Y-Order/Ships" unique_id=1712601964 instance=ExtResource("2_my3o7")]
+[node name="Ship5" parent="Y-Order/Ships" unique_id=1683957323 instance=ExtResource("2_my3o7")]
 position = Vector2(-63, 181)
 shipSkin = 4
 shipHealth = 250.0
 shipSpeed = 400.0
 shipDamage = 50.0
 boostShipSpeed = 600.0
-
-[node name="Planes" type="Node2D" parent="Y-Order" unique_id=760533035]
-y_sort_enabled = true
-
-[node name="Plane" parent="Y-Order/Planes" unique_id=37351039 instance=ExtResource("4_febdn")]
-position = Vector2(193, 1355)
 
 [editable path="Y-Order/Players/Player"]

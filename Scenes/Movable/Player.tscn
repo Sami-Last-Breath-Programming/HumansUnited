@@ -263,11 +263,7 @@ texture = ExtResource("4_0t1oy")
 z_index = 3
 position = Vector2(0, -0.16)
 shape = ExtResource("3_d064r")
-
-[node name="Camera" type="Camera2D" parent="." unique_id=510250240]
-enabled = false
-zoom = Vector2(2.4, 2.4)
-process_callback = 0
+disabled = true
 
 [node name="Splash" type="AnimatedSprite2D" parent="." unique_id=1107942914]
 visible = false

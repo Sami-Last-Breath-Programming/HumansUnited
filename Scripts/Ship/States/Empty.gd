@@ -4,9 +4,6 @@ extends State;
 var driver: CharacterBody2D;
 
 func Entry() -> void:
-	# Remove Ship Driver
-	driver = parent.getDriver();
-	if driver: parent.removeDriver();
 	# Setup Ship
 	parent.velocity = Vector2.ZERO;
 	# Connect Detector
@@ -27,16 +24,13 @@ func driverEnter(body: Node2D):
 	parent.setDriver(body);
 	
 	# Driver exist
-	driver = parent.getDriver()
+	driver = parent.getDriver();
 	
-	# Handle driver 
-	if (driver):
-		# Change driver to in Ship state
-		driver.stateManager.changeState(driver.stateManager.States.IN_SHIP);
-		# Change to Driving state
-		stateManager.changeState.call_deferred((stateManager.States.DRIVING));
+	# Emit signal 
+	Manager.driverEnter.emit(Manager.Vehicles.SHIP);
 	
+	# Change to Driving state
+	stateManager.changeState.call_deferred((stateManager.States.DRIVING));
+
 	# Cooldown	
-	var hud = Manager.getHud();
-	hud.enableBtn(hud.Buttons.BOOST);
 	parent.enterTimer.start(parent.coolDownTime);

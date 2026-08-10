@@ -3,8 +3,7 @@
 [ext_resource type="Script" uid="uid://c4hktdax3wmie" path="res://Scripts/Hud.gd" id="1_e0onf"]
 [ext_resource type="Texture2D" uid="uid://7sbkc7k5idbg" path="res://Assets/UI/Hud/boost.png" id="2_rhayu"]
 [ext_resource type="Texture2D" uid="uid://bo87ua3vxkuvp" path="res://Assets/UI/Hud/boost_clicked.png" id="3_gyfy3"]
-[ext_resource type="Texture2D" uid="uid://brhdoibwhhgos" path="res://Assets/UI/Hud/ship.svg" id="4_rhayu"]
-[ext_resource type="Texture2D" uid="uid://cafoqgtb27f7d" path="res://Assets/UI/Hud/ship_clicked.svg" id="5_gyfy3"]
+[ext_resource type="Texture2D" uid="uid://dmt4cr0o5nbfo" path="res://Assets/UI/Hud/VehicleExit.png" id="4_3j5vs"]
 [ext_resource type="Texture2D" uid="uid://bcys8cxfkjxv" path="res://Assets/UI/Hud/camSwitch.svg" id="6_rhayu"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36asn"]
@@ -66,26 +65,25 @@ texture_normal = ExtResource("2_rhayu")
 texture_pressed = ExtResource("3_gyfy3")
 action = "Boost"
 
-[node name="ShipExt" type="Control" parent="Toggle" unique_id=2125212581]
+[node name="VehicleExt" type="Control" parent="Toggle" unique_id=2125212581]
 layout_mode = 1
 anchor_left = 1.0
 anchor_top = 0.41000003
 anchor_right = 1.0
 anchor_bottom = 0.41000003
-offset_left = -197.0
-offset_top = -38.680023
-offset_right = -104.0
-offset_bottom = 44.319977
+offset_left = -369.0
+offset_top = -54.680023
+offset_right = -337.0
+offset_bottom = -21.680023
 grow_horizontal = 0
 grow_vertical = 2
+scale = Vector2(2.9992728, 2.9992728)
 
-[node name="Touch" type="TouchScreenButton" parent="Toggle/ShipExt" unique_id=1083379630]
+[node name="Touch" type="TouchScreenButton" parent="Toggle/VehicleExt" unique_id=1083379630]
 modulate = Color(1, 1, 1, 0.5176471)
-position = Vector2(4, -7)
 scale = Vector2(0.19782622, 0.19782622)
-texture_normal = ExtResource("4_rhayu")
-texture_pressed = ExtResource("5_gyfy3")
-action = "ShipExit"
+texture_normal = ExtResource("4_3j5vs")
+action = "VehicleExit"
 
 [node name="CamSwitch" type="Control" parent="Toggle" unique_id=335036408]
 custom_minimum_size = Vector2(20, 20)
@@ -94,16 +92,16 @@ anchor_left = 1.0
 anchor_top = 0.125
 anchor_right = 1.0
 anchor_bottom = 0.125
-offset_left = -172.0
-offset_top = -45.0
-offset_right = -84.0
-offset_bottom = 44.0
+offset_left = -186.0
+offset_top = -36.0
+offset_right = -85.0
+offset_bottom = 65.0
 grow_horizontal = 0
 
 [node name="Touch" type="TouchScreenButton" parent="Toggle/CamSwitch" unique_id=966782673]
 modulate = Color(1, 1, 1, 0.5176471)
-position = Vector2(0, 4)
-scale = Vector2(0.2588237, 0.2588237)
+texture_filter = 1
+scale = Vector2(0.30588228, 0.30588228)
 texture_normal = ExtResource("6_rhayu")
 action = "CameraSwitch"
 
@@ -124,7 +122,7 @@ vertical_alignment = 1
 
 [connection signal="mouse_entered" from="Toggle/Boost" to="." method="onFocus"]
 [connection signal="mouse_exited" from="Toggle/Boost" to="." method="notFocus"]
-[connection signal="mouse_entered" from="Toggle/ShipExt" to="." method="onFocus"]
-[connection signal="mouse_exited" from="Toggle/ShipExt" to="." method="notFocus"]
+[connection signal="mouse_entered" from="Toggle/VehicleExt" to="." method="onFocus"]
+[connection signal="mouse_exited" from="Toggle/VehicleExt" to="." method="notFocus"]
 [connection signal="mouse_entered" from="Toggle/CamSwitch" to="." method="onFocus"]
 [connection signal="mouse_exited" from="Toggle/CamSwitch" to="." method="notFocus"]

@@ -4,7 +4,6 @@ extends State;
 var ship: CharacterBody2D;
 
 func Entry() -> void:
-	parent.camera.enabled = false;
 	parent.collider.call_deferred("set_disabled", false); 
 	
 func Exit() -> void:
