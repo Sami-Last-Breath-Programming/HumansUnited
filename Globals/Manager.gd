@@ -5,7 +5,7 @@ extends Node;
 # cameraSwitching: MainCamera.gd, Hud.gd, Player/Idle.gd, InShip.gd
 # vehicleDestroying: Hud.gd, Skinking.gd 
 # vehicleDestroyed: Hud.gd, Skinking.gd
-# vehicalLowHp: Hud.gd
+# vehicalLowHp: Hud.gd, Sinking.gd
 # playerIdle: Hud.gd, Idle.gd, MainCamera.gd
 # cameraSwitched: Player.gd, Hud.gd
 

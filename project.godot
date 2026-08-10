@@ -43,6 +43,7 @@ Player=""
 Ship=""
 Ground=""
 Flora=""
+PlayersGroup=""
 
 [gui]
 

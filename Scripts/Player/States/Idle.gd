@@ -24,6 +24,7 @@ func Entry() -> void:
 	);
 
 	# Set metaData
+	parent.metaData[&"state"] = self.name;
 	parent.metaData[&"inVehicle"] = false;
 	parent.metaData[&"vehicleType"] = null;
 	parent.metaData[&"vehicleId"] = null;

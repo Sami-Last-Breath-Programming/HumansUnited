@@ -52,14 +52,14 @@ func Entry() -> void:
 		Manager.vehicleDestroyed.emit(packet);
 		
 		# Driver Exist
-		driver = parent.getDriver();
+		driver = instance_from_id(parent.metaData[&"driverId"]) if parent.metaData[&"driverId"] != null else null;
 		if driver:
 			# Only Switch if player driver 
-			if (driver.stateManager.currentState == driver.stateManager.States.IN_SHIP):
+			if (driver.metaData[&"state"] == &"IN_SHIP"):
 				var packet2: Dictionary = {
 					&"vehicle": &"Ship",
-					&"driver": parent.getDriver().name,
-					&"driverPos": parent.getDriver().global_position,
+					&"driver": driver.name,
+					&"driverPos": driver.global_position,
 					&"cameraZoom": Manager.getMainCamera().zoom,
 				}
 				Manager.driverExit.emit(packet2);

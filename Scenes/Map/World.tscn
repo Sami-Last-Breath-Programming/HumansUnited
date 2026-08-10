@@ -13,8 +13,9 @@ y_sort_enabled = true
 
 [node name="Middle" parent="Y-Order" unique_id=380037782 instance=ExtResource("1_my3o7")]
 
-[node name="Players" type="Node2D" parent="Y-Order" unique_id=2094934119]
+[node name="Players" type="Node2D" parent="Y-Order" unique_id=2094934119 groups=["PlayersGroup"]]
 y_sort_enabled = true
+position = Vector2(613, 295)
 
 [node name="Player" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
 
@@ -22,27 +23,28 @@ y_sort_enabled = true
 playerState = 1
 
 [node name="Player2" parent="Y-Order/Players" unique_id=29665311 instance=ExtResource("1_jhh15")]
-position = Vector2(600, 450)
-playerHealth = 10.0
+position = Vector2(895, -765)
 
 [node name="Player3" parent="Y-Order/Players" unique_id=1983845796 instance=ExtResource("1_jhh15")]
-position = Vector2(982, 447)
-playerHealth = 10.0
+position = Vector2(716, 422)
+
+[node name="Player4" parent="Y-Order/Players" unique_id=1716669147 instance=ExtResource("1_jhh15")]
+position = Vector2(1077, 33)
 
 [node name="Ships" type="Node2D" parent="Y-Order" unique_id=1732228289]
 y_sort_enabled = true
 
 [node name="Ship" parent="Y-Order/Ships" unique_id=1322391007 instance=ExtResource("2_my3o7")]
-position = Vector2(384, 420)
-shipHealth = 1000.0
+position = Vector2(623, 409)
+shipHealth = 50.0
 shipSpeed = 50.0
 shipDamage = 10.0
 boostShipSpeed = 100.0
 
 [node name="Ship2" parent="Y-Order/Ships" unique_id=2030112295 instance=ExtResource("2_my3o7")]
-position = Vector2(446, 502)
+position = Vector2(1254, 717)
 shipSkin = 1
-shipHealth = 1000.0
+shipHealth = 100.0
 shipSpeed = 100.0
 shipDamage = 20.0
 boostShipSpeed = 200.0
@@ -56,19 +58,19 @@ shipDamage = 30.0
 boostShipSpeed = 300.0
 
 [node name="Ship4" parent="Y-Order/Ships" unique_id=848273067 instance=ExtResource("2_my3o7")]
-position = Vector2(539, 502)
+position = Vector2(1700, 421)
 shipSkin = 3
-shipHealth = 1000.0
+shipHealth = 200.0
 shipSpeed = 300.0
-shipDamage = 40.0
+shipDamage = 35.0
 boostShipSpeed = 400.0
 
 [node name="Ship5" parent="Y-Order/Ships" unique_id=1683957323 instance=ExtResource("2_my3o7")]
-position = Vector2(-63, 181)
+position = Vector2(-41, 289)
 shipSkin = 4
 shipHealth = 250.0
 shipSpeed = 400.0
-shipDamage = 50.0
-boostShipSpeed = 600.0
+shipDamage = 40.0
+boostShipSpeed = 550.0
 
 [editable path="Y-Order/Players/Player"]

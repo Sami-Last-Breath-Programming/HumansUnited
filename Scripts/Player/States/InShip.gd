@@ -12,6 +12,7 @@ func Entry() -> void:
 	)
 
 	# Set metaData 
+	parent.metaData[&"state"] = self.name;
 	parent.metaData[&"inVehicle"] = true;
 	parent.metaData[&"vehicleType"] = &"Ship";
 	parent.metaData[&"vehicleId"] = parent.getVehicle().get_instance_id();

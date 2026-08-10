@@ -32,6 +32,11 @@ var healthBarTimer := Timer.new();
 var input: Vector2 = Vector2.ZERO;
 var loadedSkins := [null, null, null, null];
 var driver: CharacterBody2D = null;
+var metaData: Dictionary = {
+	&"driverId": null,
+	&"driverState": null,
+	&"driverInShip": false,
+}
 
 # Booleans
 var isBoost: bool = false;
@@ -147,7 +152,11 @@ func takeDamage(amount: float) -> void:
 			boostShipSpeed = 0.0;
 			damageSpeedApplied = true;
 			sinkParticle.emitting = true;
-			Manager.vehicalLowHp.emit(getDriver());
+			# Only Disable hud if driver is player
+			driver = getDriver();
+			if driver and driver.metaData[&"state"] == &"IN_SHIP":
+				Manager.vehicalLowHp.emit(driver);
+			
 	elif (ratio <= 65):
 		if(loadedSkins[1]): texture.texture = loadedSkins[1];
 	

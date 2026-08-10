@@ -5,6 +5,16 @@ enum {LAND = 1, ROCK = 2, VEHICLE = 8};
 var driver: CharacterBody2D;
 
 func Entry() -> void:
+	# Set metaData 
+	driver = parent.getDriver();
+	# Driver Exist
+	if driver:
+		# Set metaData 
+		parent.metaData[&"driverId"] = driver.get_instance_id();
+		parent.metaData[&"driverState"] = driver.stateManager.currentStateRef.name;
+		print(parent.metaData[&"driverState"]);
+		parent.metaData[&"driverInShip"] = true;
+	
 	# Connect Signal 
 	if (not Manager.driverExit.is_connected(handleExit)):
 		Manager.driverExit.connect(handleExit);
@@ -33,12 +43,15 @@ func Exit() -> void:
 	driver = parent.getDriver();
 	# Set Driver Child of current scene
 	if (driver): 
-		driver.reparent(get_tree().current_scene.get_node("Y-Order"));
+		driver.reparent(get_tree().get_first_node_in_group("PlayersGroup"));
 		driver.global_position = parent.global_position + Vector2(20, 0);
 		
 		# Toggle Driver Visibality
 		if not driver.visible:
 			driver.visible = true;
+		# Remove driver reference
+		if parent.getDriver():
+			parent.removeDriver();
 
 	# Set input zero
 	parent.input = Vector2.ZERO;

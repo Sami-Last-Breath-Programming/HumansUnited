@@ -4,6 +4,11 @@ extends State;
 var driver: CharacterBody2D;
 
 func Entry() -> void:
+	# Set metaData 
+	parent.metaData[&"driverId"] = null;
+	parent.metaData[&"driverState"] = null;
+	parent.metaData[&"driverInShip"] = false;
+	
 	# Setup Ship
 	parent.velocity = Vector2.ZERO;
 	# Connect Detector

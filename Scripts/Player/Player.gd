@@ -31,6 +31,7 @@ var isEntredWaterTimer: Timer 			= Timer.new();
 
 # Setup Meta Data
 var metaData:			Dictionary      = {
+	&"state" : null,
 	&"vehicleId" : null,
 	&"vehicleType": null,
 	&"inVehicle": false,
