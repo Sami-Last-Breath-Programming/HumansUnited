@@ -24,6 +24,11 @@ func _ready() -> void:
 	Manager.driverExit.connect(hideDriverHud);
 	
 	# Lamda Signlas;
+	Manager.playerIdle.connect(func(_drive: CharacterBody2D):
+		# Disable Vehicle controls 
+		hideDriverHud();
+	);
+	
 	Manager.vehicleDestroying.connect(func(packet: Dictionary):
 		if packet[&"driver"]: 
 			await get_tree().create_timer(0.1).timeout;
@@ -147,12 +152,14 @@ func onFocus():
 func notFocus():
 	Manager.removeCursor();
 
-func showDriverHud(vehicle: Manager.Vehicles) -> void:
-	match vehicle:
-		Manager.Vehicles.SHIP:
+func showDriverHud(packet: Dictionary) -> void:
+	match packet[&"vehicle"]:
+		&"Ship":
 			enableBtn(Buttons.VEHICLE_EXIT);
 
-func hideDriverHud(packet: Dictionary) -> void:
+func hideDriverHud(packet: Dictionary = {&"vehicle": null}) -> void:
 	match packet[&"vehicle"]:
 		&"Ship":
 			disableBtn(Buttons.VEHICLE_EXIT);
+		null:
+			disableBtn(Buttons.VEHICLE_EXIT);  # Disable all vehicles hud 

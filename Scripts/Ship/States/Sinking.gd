@@ -54,13 +54,15 @@ func Entry() -> void:
 		# Driver Exist
 		driver = parent.getDriver();
 		if driver:
-			var packet2: Dictionary = {
-				&"vehicle": &"Ship",
-				&"driver": parent.getDriver().name,
-				&"driverPos": parent.getDriver().global_position,
-				&"cameraZoom": Manager.getMainCamera().zoom,
-			}
-			Manager.driverExit.emit(packet2);
+			# Only Switch if player driver 
+			if (driver.stateManager.currentState == driver.stateManager.States.IN_SHIP):
+				var packet2: Dictionary = {
+					&"vehicle": &"Ship",
+					&"driver": parent.getDriver().name,
+					&"driverPos": parent.getDriver().global_position,
+					&"cameraZoom": Manager.getMainCamera().zoom,
+				}
+				Manager.driverExit.emit(packet2);
 			driver.takeDamage.call_deferred(Global.shipSinkDamage);
 	
 		# Free the ship object

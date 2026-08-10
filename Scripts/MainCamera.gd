@@ -1,8 +1,7 @@
 extends Camera2D;
 
 # Signals
-signal playerIdle(player: CharacterBody2D);
-signal playerVehicleActive(vehicle: CharacterBody2D);
+signal playerVehicleActive(packet: Dictionary);
 
 # Constants
 const MAX_CAMERA_SWITCH_SPEED: float = 400.0;
@@ -16,7 +15,7 @@ var isFirstReq: bool = true;
 
 func _ready() -> void:
 	# Connect Signals
-	self.playerIdle.connect(followPlayer);
+	Manager.playerIdle.connect(followPlayer);
 	Manager.reqLinearSwitch.connect(switch);
 	self.playerVehicleActive.connect(followVehicle);
 	Manager.reqPlayerSwitch.connect(randomSwitch);
@@ -36,6 +35,7 @@ func followPlayer(player: CharacterBody2D) -> void:
 	if not isFirstReq: 
 		self.reparent(player);
 		self.global_position = player.global_position;
+
 	else:
 		# Setup camera
 		self.global_position = player.global_position;
@@ -49,21 +49,24 @@ func followPlayer(player: CharacterBody2D) -> void:
 	tween.tween_property(self, "zoom", Vector2(2.4, 2.4), 1);
 	isFirstReq= false;
 
-func followVehicle(vehicle: CharacterBody2D) -> void:
-	self.reparent(vehicle);
-	self.global_position = vehicle.global_position;
-	# Wait
-	await get_tree().create_timer(0.2).timeout;
+func followVehicle(packet: Dictionary) -> void:
+	var vehicle = instance_from_id(packet[&"vehicleId"]) as CharacterBody2D;
+	# Vehicle Exist
+	if vehicle:
+		self.reparent(vehicle);
+		self.global_position = packet[&"vehiclePos"];
+		# Wait
+		await get_tree().create_timer(0.2).timeout;
 
-	# Zoom Setup For player
-	var tween = create_tween();
-	tween.tween_property(self, "zoom", Vector2(1.6, 1.6), 1);
+		# Zoom Setup For player
+		var tween = create_tween();
+		tween.tween_property(self, "zoom", Vector2(1.6, 1.6), 1);
 
-	tween.finished.connect(func():
-		# Enable Camera Smoothing 
-		self.position_smoothing_enabled = true;
-		self.rotation_smoothing_enabled = true;	
-	);
+		tween.finished.connect(func():
+			# Enable Camera Smoothing 
+			self.position_smoothing_enabled = true;
+			self.rotation_smoothing_enabled = true;	
+		);
 
 func postExitVehicleSetup(packet: Dictionary) -> void:
 	# Setup Zoom 

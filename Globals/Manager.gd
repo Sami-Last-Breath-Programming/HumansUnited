@@ -1,11 +1,15 @@
 extends Node;
 
 # driverExit: Sinking.gd, InShip.gd
-# reqCamList: InShip.gd, Player/Idle.gd
+# reqCamList: InShip.gd, Player/Idle.gd, Hud.gd
 # cameraSwitching: MainCamera.gd, Hud.gd, Player/Idle.gd, InShip.gd
 # vehicleDestroying: Hud.gd, Skinking.gd 
 # vehicleDestroyed: Hud.gd, Skinking.gd
+# vehicalLowHp: Hud.gd
+# playerIdle: Hud.gd, Idle.gd, MainCamera.gd
+# cameraSwitched: Player.gd, Hud.gd
 
+signal playerIdle(player: CharacterBody2D);
 signal reqCamList(packet: Dictionary);
 signal noPlayersLeft();
 signal cameraSwitching();
@@ -16,11 +20,8 @@ signal reqPlayerSwitch(packet: Dictionary);
 signal reqLinearSwitch(packet: Dictionary);
 signal playerDead(packet: Dictionary);
 signal vehicalLowHp(drive: CharacterBody2D);
-signal driverEnter(vehicle: Vehicles);
+signal driverEnter(packet: Dictionary);
 signal driverExit(packet: Dictionary);
-
-# Types
-enum Vehicles {SHIP, PLANE}
 
 # Variables 
 var hud: CanvasLayer;

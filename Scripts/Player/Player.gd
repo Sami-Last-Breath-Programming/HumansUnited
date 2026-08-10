@@ -29,6 +29,13 @@ var coolDownTimer: 		Timer 			= Timer.new();
 var healthBarTimer: 	Timer 			= Timer.new();
 var isEntredWaterTimer: Timer 			= Timer.new();
 
+# Setup Meta Data
+var metaData:			Dictionary      = {
+	&"vehicleId" : null,
+	&"vehicleType": null,
+	&"inVehicle": false,
+};
+
 # Booelans
 var toset:		bool = false;
 var isCooldown: bool = false;
@@ -184,5 +191,16 @@ func handleSwitch():
 	if Manager.cameraSwitched.is_connected(handleSwitch):
 		Manager.cameraSwitched.disconnect(handleSwitch);
 	
-	# Change State
-	stateManager.changeState(stateManager.States.IDLE);
+	# Check MetaData
+	if metaData[&"inVehicle"]:
+		var vehical = instance_from_id(metaData[&"vehicleId"]);
+		# If Vehicle Exist
+		if vehical:
+			# Check Vehicle Type
+			match metaData[&"vehicleType"]:
+				&"Ship":
+					stateManager.changeState(stateManager.States.IN_SHIP);
+				# TODO: Plane steup heres
+	else:
+		# Handle Non Vehicle 
+		stateManager.changeState(stateManager.States.IDLE);

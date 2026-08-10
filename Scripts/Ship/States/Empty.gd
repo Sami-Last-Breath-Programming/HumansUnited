@@ -22,13 +22,14 @@ func driverEnter(body: Node2D):
 	
 	# Setup driver
 	parent.setDriver(body);
-	
-	# Driver exist
-	driver = parent.getDriver();
-	
+
 	# Emit signal 
-	Manager.driverEnter.emit(Manager.Vehicles.SHIP);
-	
+	var packet: Dictionary = {
+		&"id": parent.get_instance_id(),
+		&"vehicle":&"Ship",
+	};
+	Manager.driverEnter.emit(packet);
+
 	# Change to Driving state
 	stateManager.changeState.call_deferred((stateManager.States.DRIVING));
 

@@ -14,16 +14,22 @@ var isSubmerge = false;
 
 func Entry() -> void:
 	# Connect Signal 
-	Manager.cameraSwitching.connect(func ():
-		stateManager.changeState(stateManager.States.DISABLED),
-		CONNECT_ONE_SHOT	
-	)
 	if (not Manager.driverEnter.is_connected(handleVehicle)):
 		Manager.driverEnter.connect(handleVehicle);
 	
-	# Signal To Main Camera
-	var mainCamera = Manager.getMainCamera();
-	mainCamera.playerIdle.emit.call_deferred(parent);
+	# Connect Lambda Signal
+	Manager.cameraSwitching.connect(func():
+		stateManager.changeState(stateManager.States.DISABLED),
+		CONNECT_ONE_SHOT	
+	);
+
+	# Set metaData
+	parent.metaData[&"inVehicle"] = false;
+	parent.metaData[&"vehicleType"] = null;
+	parent.metaData[&"vehicleId"] = null;
+	
+	# Signal To Manager
+	Manager.playerIdle.emit.call_deferred(parent);
 	
 	# TileMapLayer setup
 	ground = parent.getGround();
@@ -39,7 +45,7 @@ func Exit() -> void:
 	# Disconnect signal 
 	if Manager.driverEnter.is_connected(handleVehicle):
 		Manager.driverEnter.disconnect(handleVehicle);
-	
+
 	# Disable Effects
 	parent.dust.emitting = false;
 	parent.showOutLine(false);
@@ -134,12 +140,17 @@ func reqSwitch() -> void:
 	var packet: Dictionary = {&"name": parent.name,}
 	Manager.reqCamList.emit(packet);
 
-func handleVehicle(vehicle: Manager.Vehicles):
+func handleVehicle(packet: Dictionary):
 	# Match Vehicle
-	match vehicle:
-		Manager.Vehicles.SHIP:
-			stateManager.changeState(stateManager.States.IN_SHIP);
-		Manager.Vehicles.PLANE:
+	match packet[&"vehicle"]:
+		&"Ship":
+			var ship: CharacterBody2D = instance_from_id(packet[&"id"]) as CharacterBody2D;
+			print(ship);
+			if ship:
+				parent.setVehicle(ship);
+				stateManager.changeState(stateManager.States.IN_SHIP);
+				print("to-ship-now");
+		&"Plane":
 			stateManager.changeState(stateManager.States.IN_PLANE); # Todo
 	# Disconnect Signal
 	if (Manager.driverEnter.is_connected(handleVehicle)):

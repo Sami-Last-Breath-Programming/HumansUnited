@@ -29,10 +29,12 @@ var enterTimer := Timer.new();
 var damageTimer := Timer.new(); 
 var coolDownTimer := Timer.new();
 var healthBarTimer := Timer.new();
+var input: Vector2 = Vector2.ZERO;
 var loadedSkins := [null, null, null, null];
 var driver: CharacterBody2D = null;
 
 # Booleans
+var isBoost: bool = false;
 var toset := false;
 var damageSpeedApplied := false;
 var canUpdatePhysics := false;
@@ -107,6 +109,12 @@ func changeSkin(res: String) -> void:
 	shipCollider.position.x = shipData.skins[shipSkin][-2][2][0];
 	shipCollider.position.y = shipData.skins[shipSkin][-2][2][1];
 	toset = false;
+
+func setInput(inp: Vector2) -> void:
+	input = inp;
+
+func handleBoost(b: bool) -> void:
+	isBoost = b;
 
 func takeDamage(amount: float) -> void:
 	# Wait for cooldown

@@ -28,6 +28,7 @@ func fetch(packet: Dictionary) -> void:
 			camListEntryNode.setName(player.name);
 			camListEntryNode.setLastPlayerName(packet[&"name"]);
 			camListEntryNode.setTarget(player);
+
 			camListEntryNode.playStart();
 
 func hideSelf(flag: bool):

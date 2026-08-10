@@ -34,7 +34,7 @@ y_sort_enabled = true
 
 [node name="Ship" parent="Y-Order/Ships" unique_id=1322391007 instance=ExtResource("2_my3o7")]
 position = Vector2(384, 420)
-shipHealth = 12.0
+shipHealth = 1000.0
 shipSpeed = 50.0
 shipDamage = 10.0
 boostShipSpeed = 100.0
@@ -42,7 +42,7 @@ boostShipSpeed = 100.0
 [node name="Ship2" parent="Y-Order/Ships" unique_id=2030112295 instance=ExtResource("2_my3o7")]
 position = Vector2(446, 502)
 shipSkin = 1
-shipHealth = 12.0
+shipHealth = 1000.0
 shipSpeed = 100.0
 shipDamage = 20.0
 boostShipSpeed = 200.0
@@ -58,7 +58,7 @@ boostShipSpeed = 300.0
 [node name="Ship4" parent="Y-Order/Ships" unique_id=848273067 instance=ExtResource("2_my3o7")]
 position = Vector2(539, 502)
 shipSkin = 3
-shipHealth = 10.0
+shipHealth = 1000.0
 shipSpeed = 300.0
 shipDamage = 40.0
 boostShipSpeed = 400.0
