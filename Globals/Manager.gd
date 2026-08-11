@@ -8,13 +8,14 @@ extends Node;
 # vehicleDestroyed: Hud.gd, Skinking.gd
 # vehicalLowHp: Hud.gd, Sinking.gd
 # playerIdle: Hud.gd, Idle.gd, MainCamera.gd
-# cameraSwitched: Player.gd, Hud.gd
+# cameraSwitching: mainCamera.gd, Player/Idle.gd, InShip.gd, Player/Disabled.gd, Driving.gd
+# cameraSwitched: Player.gd, Hud.gd, mainCamera.gd
 
 signal playerIdle(player: CharacterBody2D);
 signal reqCamList(packet: Dictionary);
 signal noPlayersLeft();
-signal cameraSwitching();
-signal cameraSwitched();
+signal cameraSwitching(packet: Dictionary);
+signal cameraSwitched(packet: Dictionary);
 signal vehicleDestroying(packet: Dictionary);
 signal vehicleDestroyed(packet: Dictionary);
 signal reqPlayerSwitch(packet: Dictionary);
@@ -23,10 +24,12 @@ signal playerDead(packet: Dictionary);
 signal vehicalLowHp(drive: CharacterBody2D);
 signal driverEnter(packet: Dictionary);
 signal driverExit(packet: Dictionary);
+signal nonPlayerDead(packet: Dictionary);
 
 # Variables 
 var hud: CanvasLayer;
 var mainCamera: Camera2D;
+var playerDeadRef: Array[StringName] = [];
 
 func _ready() -> void:
 	# Setup Hud 
@@ -37,12 +40,21 @@ func _ready() -> void:
 	mainCamera = Lod.mainCamera.instantiate();
 	get_tree().current_scene.add_child(mainCamera);
 
+	# Signal 
+	cameraSwitched.connect(postSwitchCheck);
+
+	# Lambda signal
+	playerDead.connect(func(packet: Dictionary):
+		playerDeadRef.append(packet[&"name"]);
+		print(playerDeadRef);
+	) 
+
 func getHud() -> CanvasLayer:
 	if (hud and is_instance_valid(hud)and not hud.is_queued_for_deletion()): return hud;
 	else: return null;
 
 func getMainCamera() -> Camera2D:
-	if (mainCamera and is_instance_valid(mainCamera) and not hud.is_queued_for_deletion()): return mainCamera;
+	if (is_instance_valid(mainCamera) and not hud.is_queued_for_deletion()): return mainCamera;
 	else: return null;
 
 func setCursor(c :Resource) -> void:
@@ -51,3 +63,15 @@ func setCursor(c :Resource) -> void:
 func removeCursor() -> void:
 	setCursor(Lod.cursor);
 
+func postSwitchCheck(packet) -> void:
+	if packet[&"targetName"] == &"NULL" or packet[&"targetName"] in playerDeadRef:
+		# Request switch 
+		mainCamera = getMainCamera();
+		# Camera Exist
+		if mainCamera:
+			# Random Switch 
+			mainCamera.randomSwitch({
+				&"name": &"NULL",
+			})
+			# Clear playerDeadRef
+			playerDeadRef = [];

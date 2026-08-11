@@ -32,7 +32,7 @@ func _ready() -> void:
 	defaultShipHealth = 50.0;
 	defaultPlayerHeath = 100.0;
 	defaultShipDamage = 50.0;
-	shipSinkDamage = 80.0;
+	shipSinkDamage = 50.0;
 	oceanFriction = 100.0;
 	planeHeath = 200.0;
 	planeSpeed = 400.0;

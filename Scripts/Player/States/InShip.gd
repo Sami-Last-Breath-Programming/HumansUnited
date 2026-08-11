@@ -6,8 +6,11 @@ func Entry() -> void:
 		Manager.driverExit.connect(handleExit);
 	
 	# Connect Lambda Signal
-	Manager.cameraSwitching.connect(func():
-		stateManager.changeState(stateManager.States.DISABLED),
+	Manager.cameraSwitching.connect(func(packet: Dictionary):
+		# Check if self request
+		if packet[&"lastPlayerName"] == parent.name:
+			stateManager.changeState(stateManager.States.DISABLED),
+		
 		CONNECT_ONE_SHOT	
 	)
 
@@ -86,6 +89,9 @@ func PhysicsUpdate(_d: float) -> void:
 	ship.setInput(input);
 
 func reqSwitch(): 
+	# Update metaData
+	parent.metaData[&"isSwiching"] = true;
+	
 	# Payload
 	var packet: Dictionary = {
 		&"name": parent.name,

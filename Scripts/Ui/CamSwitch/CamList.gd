@@ -8,11 +8,18 @@ extends Node
 
 # Booleans 
 var onWay: bool = false;
+var isOn: bool = false;
+
+func _ready() -> void:
+	# Connect signal 
+	if (not Manager.playerDead.is_connected(updateList)):
+		Manager.playerDead.connect(updateList);
 
 func fetch(packet: Dictionary) -> void:
 	# Start Animation
 	if not self.visible: self.visible = true;
 	onWay = true;
+	isOn = true;
 	showAnim.start();
 	# Find all players 
 	var players: Array[Node] = get_tree().get_nodes_in_group("Player");
@@ -32,6 +39,8 @@ func fetch(packet: Dictionary) -> void:
 			camListEntryNode.playStart();
 
 func hideSelf(flag: bool):
+	# Set flag 
+	isOn = false;
 	# Disable Processing 
 	for button in vHolder.get_children():
 		button.process_mode = Node.PROCESS_MODE_DISABLED;
@@ -51,3 +60,11 @@ func handleHide() -> void:
 
 func handleShow() -> void:
 	onWay = false;
+
+func updateList(packet: Dictionary) -> void:
+	if isOn:
+		for button in vHolder.get_children():
+			if button:
+				if button.getName() == packet[&"name"]:
+					button.visible = false;
+					button.queue_free();

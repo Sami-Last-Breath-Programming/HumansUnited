@@ -4,14 +4,18 @@ extends Camera2D;
 signal playerVehicleActive(packet: Dictionary);
 
 # Constants
+const CHECK_TIME: float = 4.0;
 const MAX_CAMERA_SWITCH_SPEED: float = 400.0;
 
 # Variables
+var switchAnim: Tween;
 var closestPlayer: CharacterBody2D;
 var closestDistant: float = INF;
+var camTimer: Timer = Timer.new();
 
 # Booleans 
 var isFirstReq: bool = true;
+var isSwiching: bool = false;
 
 func _ready() -> void:
 	# Connect Signals
@@ -26,6 +30,11 @@ func _ready() -> void:
 		if (self.get_parent().name == packet[&"name"]):
 			self.reparent(get_tree().current_scene);
 	);
+
+	# Set up timer 
+	self.add_child(camTimer);
+	camTimer.one_shot = true;
+	camTimer.timeout.connect(handleRoot);
 	
 func followPlayer(player: CharacterBody2D) -> void:
 	# Wait for others
@@ -88,11 +97,12 @@ func postExitVehicleSetup(packet: Dictionary) -> void:
 
 func switch(packet: Dictionary) -> void:	
 	# Signal to Manager
-	Manager.cameraSwitching.emit();
+	Manager.cameraSwitching.emit(packet);
 	
 	# Set target
 	closestPlayer = checkPlayer(packet[&"targetPlayer"]);
-	if not closestPlayer: findClosestPlayer(packet[&"lastPlayerName"]);
+	if not closestPlayer: 
+		findClosestPlayer(packet[&"lastPlayerName"]);
 
 	# Set Signal in closest player
 	if checkPlayer(closestPlayer):
@@ -100,41 +110,48 @@ func switch(packet: Dictionary) -> void:
 			Manager.cameraSwitched.connect(closestPlayer.handleSwitch);
 	
 	# Play switch animation
-	playAnim();
+	playAnim({
+		&"targetPlayer": closestPlayer,
+		&"targetName": closestPlayer.name if checkPlayer(closestPlayer) else &"NULL",
+		&"lastPlayerName": packet[&"lastPlayerName"]
+	});
 
 func randomSwitch(packet: Dictionary) -> void:
 	# Signal to Manager
-	Manager.cameraSwitching.emit();
+	Manager.cameraSwitching.emit({&"lastPlayerName": packet[&"name"]});
 	
 	# Find the closest player
-	findClosestPlayer(packet);
+	findClosestPlayer(packet[&"name"]);
 	
 	# Set Signal in closest player
-	if closestPlayer:
+	if checkPlayer(closestPlayer):
 		if (not Manager.cameraSwitched.is_connected(closestPlayer.handleSwitch)):
 			Manager.cameraSwitched.connect(closestPlayer.handleSwitch);
 
 	# Play and Free
-	print("SwitchCamera: Playing Animation!")
-	playAnim();
+	playAnim({
+		&"targetPlayer": checkPlayer(closestPlayer),
+		&"targetName": closestPlayer.name if checkPlayer(closestPlayer) else &"NULL",
+		&"lastPlayerName": packet[&"name"]
+	});
 
-func checkPlayer(p: CharacterBody2D) ->  CharacterBody2D:
+func checkPlayer(p: Variant) ->  CharacterBody2D:
 	if (is_instance_valid(p) and not p.is_queued_for_deletion()): return p if p else null;
 	else: return null;
 
-func findClosestPlayer(packet: Dictionary) -> void:
+func findClosestPlayer(lastPlayer: StringName) -> void:
 	# Get All player nodes
 	var players: Array[Node] = get_tree().get_nodes_in_group("Player");
 	# Handle only one player
 	if players.size() == 1:
-		closestPlayer = players[0] if players[0].name != packet[&"name"] else null;
+		closestPlayer = players[0] if players[0].name != lastPlayer else null;
 		
 	else:
 		# Loop on Array
 		for player in players:		
 			player = checkPlayer(player);
 			# Handle Self 			
-			if player.name == packet[&"name"]: continue;
+			if player.name == lastPlayer: continue;
 			# If closest player exist
 			if player:
 				# Get the Distance of Npc
@@ -146,7 +163,7 @@ func findClosestPlayer(packet: Dictionary) -> void:
 	# Reset closest distance
 	closestDistant = INF;	
 
-func playAnim() -> void:
+func playAnim(packet: Dictionary) -> void:
 	# Handle all players dead
 	if not checkPlayer(closestPlayer):
 		# Signal To Manager
@@ -162,12 +179,12 @@ func playAnim() -> void:
 	self.rotation_smoothing_enabled = true;
 
 	# Create a tween
-	var tween = create_tween();
-	tween.tween_property(self, "zoom", Global.defaultCameraZoom, 0.5);
-	tween.tween_property(self, "global_position", closestPlayer.global_position, switchTime);
+	switchAnim = create_tween();
+	switchAnim.tween_property(self, "zoom", Global.defaultCameraZoom, 0.5);
+	switchAnim.tween_property(self, "global_position", closestPlayer.global_position, switchTime);
 	
 	# Wait for animation finised
-	tween.finished.connect(func ():
+	switchAnim.finished.connect(func ():
 		await get_tree().create_timer(0.8).timeout;
 		
 		# Disable Camera Smoothing 
@@ -175,6 +192,19 @@ func playAnim() -> void:
 		self.rotation_smoothing_enabled = false;
 		
 		# Signal to Manager
-		Manager.cameraSwitched.emit();
+		Manager.cameraSwitched.emit(packet);
 		closestPlayer = null;
+
+		# Start camTimer
+		camTimer.start(CHECK_TIME);
 	);
+
+func handleRoot() -> void:
+	if self.get_parent().name == &"World":
+		# Random Switch 
+		randomSwitch({
+			&"name": &"NULL",
+		})
+func stopTimer() -> void:
+	if not camTimer.is_stopped():
+		camTimer.stop();

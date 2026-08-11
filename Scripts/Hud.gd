@@ -41,13 +41,13 @@ func _ready() -> void:
 		if packet[&"driver"]: disableSelf(false);	
 	)
 
-	Manager.cameraSwitching.connect(func():
+	Manager.cameraSwitching.connect(func(_packet: Dictionary):
 		setCamList(false, true);
 		# showCamList();
 		await get_tree().create_timer(0.6).timeout;
 		disableSelf(true);
 	);
-	Manager.cameraSwitched.connect(func(): 
+	Manager.cameraSwitched.connect(func(_packet: Dictionary): 
 		await get_tree().create_timer(0.4).timeout;	
 		disableSelf(false)
 	);
@@ -120,7 +120,10 @@ func enableBtn(btn: Buttons) -> void:
 
 func deadScreen() -> void:
 	# TODO: Make Dead Screen;
-	pass;
+	# Stop Camera timer 
+	var mainCamera = Manager.getMainCamera();
+	if mainCamera:
+		mainCamera.stopTimer();
 
 func setCamList(flag: bool, anim: bool):
 	if not flag:

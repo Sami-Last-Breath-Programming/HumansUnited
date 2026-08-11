@@ -17,6 +17,9 @@ func notFocus():
 func setName(pName: String):
 	Name.text = pName;
 
+func getName() -> String:
+	return Name.text;
+
 func setLastPlayerName(lpName: StringName):
 	lastPlayerName = lpName;
 

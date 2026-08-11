@@ -62,8 +62,15 @@ func Entry() -> void:
 					&"driverPos": driver.global_position,
 					&"cameraZoom": Manager.getMainCamera().zoom,
 				}
-				Manager.driverExit.emit(packet2);
-			driver.takeDamage.call_deferred(Global.shipSinkDamage);
+				Manager.driverExit.emit(packet2);	
+			else:
+				# Clear metaData
+				if driver.has_method("clearMetaData"):
+					driver.clearMetaData();
+
+			# Give Damage to driver
+			if driver.has_method("takeDamage"):
+				driver.takeDamage(Global.shipSinkDamage);
 	
 		# Free the ship object
 		await get_tree().create_timer(0.4).timeout;

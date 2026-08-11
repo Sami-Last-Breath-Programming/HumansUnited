@@ -35,6 +35,7 @@ var metaData:			Dictionary      = {
 	&"vehicleId" : null,
 	&"vehicleType": null,
 	&"inVehicle": false,
+	&"isSwiching": false,
 };
 
 # Booelans
@@ -187,11 +188,11 @@ func getFlora() -> TileMapLayer:
 	if tmp: return tmp;
 	else: return null;
 
-func handleSwitch():
+func handleSwitch(_packet: Dictionary) -> void:
 	# Disconnect Signal 
 	if Manager.cameraSwitched.is_connected(handleSwitch):
 		Manager.cameraSwitched.disconnect(handleSwitch);
-	
+
 	# Check MetaData
 	if metaData[&"inVehicle"]:
 		var vehical = instance_from_id(metaData[&"vehicleId"]);
@@ -205,3 +206,8 @@ func handleSwitch():
 	else:
 		# Handle Non Vehicle 
 		stateManager.changeState(stateManager.States.IDLE);
+
+func clearMetaData() -> void:
+	metaData[&"inVehicle"] = false;
+	metaData[&"vehicleType"] = null;
+	metaData[&"vehicleId"] = null;

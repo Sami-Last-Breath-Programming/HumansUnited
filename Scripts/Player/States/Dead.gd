@@ -3,7 +3,7 @@ extends State
 # Variables
 var ship: CharacterBody2D;
 
-func Entry() -> void:
+func Entry() -> void:	
 	# Shrink Animation
 	var tween = parent.create_tween();
 	tween.set_parallel(true);
@@ -18,12 +18,16 @@ func Entry() -> void:
 	# finished signal
 	tween.finished.connect(func():
 		parent.velocity = Vector2.ZERO;
-		parent.visible = false;
+		parent.texture.visible = false;
+		parent.collider.call_deferred("set_disabled", true);
+		checkPlayerState();
 		
 		# Set Payload
 		var packet: Dictionary = {&"name": parent.name}
 		Manager.playerDead.emit(packet);
-		checkPlayerState();
+
+		# Wait for frame 
+		await get_tree().process_frame;
 		stateManager.delete();
 	)
 func checkPlayerState() -> void:

@@ -3,21 +3,30 @@ extends State;
 # Variables
 enum {LAND = 1, ROCK = 2, VEHICLE = 8};
 var driver: CharacterBody2D;
+var canDrive: bool;
 
 func Entry() -> void:
 	# Set metaData 
 	driver = parent.getDriver();
+	# Set flag
+	canDrive = true
+
 	# Driver Exist
 	if driver:
 		# Set metaData 
 		parent.metaData[&"driverId"] = driver.get_instance_id();
 		parent.metaData[&"driverState"] = driver.stateManager.currentStateRef.name;
-		print(parent.metaData[&"driverState"]);
 		parent.metaData[&"driverInShip"] = true;
 	
 	# Connect Signal 
 	if (not Manager.driverExit.is_connected(handleExit)):
 		Manager.driverExit.connect(handleExit);
+	
+	if (not Manager.cameraSwitching.is_connected(stopShip)):
+		Manager.cameraSwitching.connect(stopShip);
+
+	if (not Manager.cameraSwitched.is_connected(startShip)):
+		Manager.cameraSwitched.connect(startShip);
 	
 	# Driver exist
 	driver = parent.getDriver();
@@ -39,6 +48,12 @@ func Exit() -> void:
 	if (Manager.driverExit.is_connected(handleExit)):
 		Manager.driverExit.disconnect(handleExit);
 	
+	if (Manager.cameraSwitching.is_connected(stopShip)):
+		Manager.cameraSwitching.disconnect(stopShip);
+
+	if (Manager.cameraSwitched.is_connected(startShip)):
+		Manager.cameraSwitched.disconnect(startShip);
+	
 	# Driver exist
 	driver = parent.getDriver();
 	# Set Driver Child of current scene
@@ -53,9 +68,12 @@ func Exit() -> void:
 		if parent.getDriver():
 			parent.removeDriver();
 
-	# Set input zero
+	# Stop ship
+	canDrive = false;
 	parent.input = Vector2.ZERO;
 	parent.isBoost = false;
+	parent.velocity = Vector2.ZERO;
+	parent.particle.emitting = false;
 
 	# Disconnect Detector
 	parent.detector.body_entered.disconnect(damageBody);
@@ -81,6 +99,8 @@ func damageBody(body: CharacterBody2D):
 	print("Damage GIven to object: ", outsideDriver);
 
 func PhysicsUpdate(_delta: float) -> void:
+	if not canDrive: return;
+	
 	# Change Velocity
 	parent.velocity = parent.input * (parent.boostShipSpeed if parent.isBoost else parent.shipSpeed);
 	
@@ -114,7 +134,28 @@ func handleCollisions(_d: float) -> void:
 			LAND: if canDamage(): parent.takeDamage(10.0); 
 			ROCK: parent.takeDamage(5.0); 
 			VEHICLE: handleShip(collider);
-			
+
+func startShip(packet: Dictionary) -> void:
+	# Wait for driver
+	await get_tree().process_frame;
+	# Check for driver
+	driver = parent.getDriver();
+	# Driver Exist
+	if driver and packet[&"targetPlayer"]:
+		if driver.name == packet[&"targetPlayer"].name:
+			canDrive = true;
+
+func stopShip(packet: Dictionary):
+	driver = parent.getDriver();
+	# Driver Exist
+	if driver:
+		if packet[&"lastPlayerName"] == driver.name:
+			canDrive = false;
+			parent.input = Vector2.ZERO;
+			parent.isBoost = false;
+			parent.velocity = Vector2.ZERO;
+			parent.particle.emitting = false;
+
 func handleShip(collider) -> void:
 	if collider != parent:
 		if collider.has_method("takeDamage"):
