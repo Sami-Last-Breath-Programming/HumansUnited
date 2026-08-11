@@ -8,9 +8,13 @@ extends CanvasLayer;
 @onready var toggleHud: Control = $Toggle;
 @onready var camSwitch: Control = $Toggle/CamSwitch
 
+# Constants
+const HIDE_TOUCH_BUTTON_POS: Vector2 = Vector2(6000, 0);
+
 # Variables
 var camListNode: Control;
 var jevent:  Array[StringName];
+var touchBtnPos: Dictionary;
 enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT}
 
 # Booleans
@@ -22,7 +26,7 @@ func _ready() -> void:
 	Manager.noPlayersLeft.connect(deadScreen);
 	Manager.driverEnter.connect(showDriverHud);
 	Manager.driverExit.connect(hideDriverHud);
-	
+
 	# Lamda Signlas;
 	Manager.playerIdle.connect(func(_drive: CharacterBody2D):
 		# Disable Vehicle controls 
@@ -49,7 +53,10 @@ func _ready() -> void:
 	);
 	Manager.cameraSwitched.connect(func(_packet: Dictionary): 
 		await get_tree().create_timer(0.4).timeout;	
-		disableSelf(false)
+		disableSelf(false);
+		# Show touch btns 
+		vehicalExt.global_position = touchBtnPos[&"vehicalExt"];
+		boostBtn.global_position = touchBtnPos[&"boostBtn"];
 	);
 	Manager.vehicalLowHp.connect(func(driver: CharacterBody2D):
 		if driver: disableBtn(Buttons.BOOST);
@@ -66,6 +73,10 @@ func _ready() -> void:
 	# Debug Properties 
 	vehicalExt.process_mode = Node.PROCESS_MODE_DISABLED;
 	vehicalExt.visible = false;
+
+	# Cache touch buttons pos
+	touchBtnPos[&"vehicalExt"] = vehicalExt.global_position;
+	touchBtnPos[&"boostBtn"] = boostBtn.global_position;
 
 func _process(_delta: float) -> void:
 	processFps();
@@ -143,8 +154,8 @@ func showCamList(packet: Dictionary):
 		setCamList(true, false);
 		
 		# Hide touch btns 
-		disableBtn(Buttons.BOOST);
-		disableBtn(Buttons.VEHICLE_EXIT);
+		vehicalExt.global_position = HIDE_TOUCH_BUTTON_POS;
+		boostBtn.global_position = HIDE_TOUCH_BUTTON_POS;
 		
 		# Setup the CamList
 		if camListNode and is_instance_valid(camListNode):
@@ -155,8 +166,8 @@ func showCamList(packet: Dictionary):
 			camListNode.fetch(packet);
 	else:
 		# Show touch btns 
-		enableBtn(Buttons.BOOST);
-		enableBtn(Buttons.VEHICLE_EXIT);
+		vehicalExt.global_position = touchBtnPos[&"vehicalExt"];
+		boostBtn.global_position = touchBtnPos[&"boostBtn"];
 		setCamList(false, true);
 
 func onFocus():
