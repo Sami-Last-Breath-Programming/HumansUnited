@@ -141,6 +141,11 @@ func showCamList(packet: Dictionary):
 	if not isCamList:
 		# Set Flag
 		setCamList(true, false);
+		
+		# Hide touch btns 
+		disableBtn(Buttons.BOOST);
+		disableBtn(Buttons.VEHICLE_EXIT);
+		
 		# Setup the CamList
 		if camListNode and is_instance_valid(camListNode):
 			camListNode.fetch(packet);
@@ -149,6 +154,9 @@ func showCamList(packet: Dictionary):
 			camSwitch.add_child(camListNode);
 			camListNode.fetch(packet);
 	else:
+		# Show touch btns 
+		enableBtn(Buttons.BOOST);
+		enableBtn(Buttons.VEHICLE_EXIT);
 		setCamList(false, true);
 
 func onFocus():
