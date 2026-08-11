@@ -63,7 +63,10 @@ func _ready() -> void:
 	coolDownTimer.one_shot = true;
 	healthBarTimer.one_shot = true;
 	isEntredWaterTimer.one_shot = true;
-	healthBarTimer.timeout.connect(func():healthBar.visible = false);
+	healthBarTimer.timeout.connect(func():
+		healthBar.visible = false;
+		playerName.visible = true;
+	);
 
 func _process(_delta: float) -> void:
 	processSkin();
@@ -116,9 +119,11 @@ func processSkin() -> void:
 func takeDamage(amount: float) -> void:
 	# Wait for cooldown
 	if not coolDownTimer.is_stopped(): return;
-	
+
 	# Show Health for a while
 	if healthBarTimer.is_stopped():
+		# Hide name 
+		playerName.visible = false;
 		# Create Timer for Health bar
 		healthBarTimer.start(healthBarTime);
 		healthBar.visible = true;
@@ -127,9 +132,7 @@ func takeDamage(amount: float) -> void:
 	playerHealth -= amount;
 	playerHealth = max(0, playerHealth);
 	healthBar.value = playerHealth;
-	
-	print(playerHealth);
-	
+
 	# Check player death 
 	if (playerHealth <= 0.0):
 		stateManager.changeState(stateManager.States.DEATH);

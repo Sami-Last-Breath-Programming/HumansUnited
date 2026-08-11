@@ -71,17 +71,16 @@ anchor_left = 1.0
 anchor_top = 0.41000003
 anchor_right = 1.0
 anchor_bottom = 0.41000003
-offset_left = -369.0
-offset_top = -54.680023
-offset_right = -337.0
-offset_bottom = -21.680023
+offset_left = -271.0
+offset_top = -24.680023
+offset_right = -239.0
+offset_bottom = 8.319977
 grow_horizontal = 0
 grow_vertical = 2
 scale = Vector2(2.9992728, 2.9992728)
 
 [node name="Touch" type="TouchScreenButton" parent="Toggle/VehicleExt" unique_id=1083379630]
 modulate = Color(1, 1, 1, 0.5176471)
-position = Vector2(32.34117, 5.001212)
 scale = Vector2(0.19782622, 0.19782622)
 texture_normal = ExtResource("4_3j5vs")
 action = "VehicleExit"
