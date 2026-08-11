@@ -17,19 +17,19 @@ y_sort_enabled = true
 y_sort_enabled = true
 position = Vector2(613, 295)
 
-[node name="Raju" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
+[node name="Alpha" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
 position = Vector2(-52, 165)
 
-[node name="StateManager" parent="Y-Order/Players/Raju" index="8" unique_id=728419902]
+[node name="StateManager" parent="Y-Order/Players/Alpha" index="9" unique_id=728419902]
 playerState = 1
 
 [node name="Romeo" parent="Y-Order/Players" unique_id=29665311 instance=ExtResource("1_jhh15")]
 position = Vector2(-13, 192)
 
-[node name="Aramaan" parent="Y-Order/Players" unique_id=1983845796 instance=ExtResource("1_jhh15")]
+[node name="BCA" parent="Y-Order/Players" unique_id=1983845796 instance=ExtResource("1_jhh15")]
 position = Vector2(716, 422)
 
-[node name="Fraudyia" parent="Y-Order/Players" unique_id=1716669147 instance=ExtResource("1_jhh15")]
+[node name="Fraudia" parent="Y-Order/Players" unique_id=1716669147 instance=ExtResource("1_jhh15")]
 position = Vector2(1077, 33)
 
 [node name="Ships" type="Node2D" parent="Y-Order" unique_id=1732228289]
@@ -74,4 +74,4 @@ shipSpeed = 400.0
 shipDamage = 40.0
 boostShipSpeed = 550.0
 
-[editable path="Y-Order/Players/Raju"]
+[editable path="Y-Order/Players/Alpha"]

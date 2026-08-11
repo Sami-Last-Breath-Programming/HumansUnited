@@ -13,6 +13,9 @@ var isEntredWater = false;
 var isSubmerge = false;
 
 func Entry() -> void:
+	# Set Name Color
+	parent.setNameColor("#ffff00");
+	
 	# Connect Signal 
 	if (not Manager.driverEnter.is_connected(handleVehicle)):
 		Manager.driverEnter.connect(handleVehicle);
@@ -46,6 +49,9 @@ func Entry() -> void:
 	anim = parent.animManager;
 	
 func Exit() -> void:	
+	# Remove Color 
+	parent.setNameColor("#ffffff")
+	
 	# Disconnect signal 
 	if Manager.driverEnter.is_connected(handleVehicle):
 		Manager.driverEnter.disconnect(handleVehicle);

@@ -11,6 +11,7 @@ enum SkinType {SKIN, BOAT}
 @onready var stateManager 	:= $StateManager;
 @onready var animManager 	:= $AnimManager;
 @onready var playerData 	:= PlayerData.new();
+@onready var playerName: RichTextLabel = $Hbox/Name
 
 # Exported
 @export var playerHealth: 		float;
@@ -43,12 +44,12 @@ var toset:		bool = false;
 var isCooldown: bool = false;
 
 func _ready() -> void:
-	# Init State Manager
-	stateManager.init();
-	
 	# Set the Default Player Skin
 	setSkin(currentPlayerSkin);
 	setPlayerProperties();
+	
+	# Init State Manager
+	stateManager.init();
 	
 	# Set Health Bar
 	healthBar.visible = false;
@@ -77,6 +78,9 @@ func setSkin(index: int) -> void:
 			Lod.req(res);
 	
 func setPlayerProperties() -> void:
+	# Set Name 	
+	playerName.text = self.name; 
+
 	if not playerHealth: 		playerHealth = Global.defaultPlayerHeath;
 	if not currentPlayerSkin: 	currentPlayerSkin = Global.defaultPlayerSkin;
 
@@ -206,6 +210,13 @@ func handleSwitch(_packet: Dictionary) -> void:
 	else:
 		# Handle Non Vehicle 
 		stateManager.changeState(stateManager.States.IDLE);
+
+func setNameColor(color: String) -> void:
+	var pName = str(self.name);
+	var f = "[color=" + color + "]" + pName + "[/color]";
+	if not pName.is_empty():
+		playerName.text = f;
+		print(f);
 
 func clearMetaData() -> void:
 	metaData[&"inVehicle"] = false;
