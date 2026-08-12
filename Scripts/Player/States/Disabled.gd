@@ -4,6 +4,13 @@ extends State;
 var ship: CharacterBody2D;
 
 func Entry() -> void:
+	# Check metaData
+	if parent.metaData[&"inVehicle"]:
+		if parent.metaData[&"vehicleType"] == &"Ship":
+			# Set water skin
+			if parent.has_method("setPlayerSkin"):
+				parent.setPlayerSkin(parent.SkinType.BOAT);
+	
 	# Set metaData 
 	parent.metaData[&"state"] = self.name;
 	parent.collider.call_deferred("set_disabled", false);

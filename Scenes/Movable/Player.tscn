@@ -17,9 +17,9 @@
 [ext_resource type="Script" uid="uid://1dn14pdpj5v6" path="res://Scripts/Player/States/Dead.gd" id="10_yoq75"]
 [ext_resource type="Script" uid="uid://cxiuxqdyt831l" path="res://Scripts/Player/AnimManager.gd" id="13_kg8pq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1xx56"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i25tc"]
 shader = ExtResource("3_i25tc")
-shader_parameter/outline_color = Color(0.84661686, 0.8466157, 0.84661627, 1)
+shader_parameter/outline_color = Color(0.8784314, 0.8352941, 0, 1)
 shader_parameter/outline_thickness = 0.80000001192096
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_d064r"]
@@ -244,7 +244,7 @@ size_flags_horizontal = 3
 alignment = 1
 
 [node name="Name" type="RichTextLabel" parent="Hbox" unique_id=907964619]
-z_index = 4
+z_index = 7
 texture_filter = 1
 layout_mode = 2
 size_flags_horizontal = 3
@@ -268,15 +268,15 @@ scale = Vector2(0.984375, 0.984375)
 sprite_frames = ExtResource("2_gntrk")
 animation = &"idle_down"
 
-[node name="Outline" type="AnimatedSprite2D" parent="." unique_id=1195090179]
+[node name="Outline" type="AnimatedSprite2D" parent="." unique_id=1031946131]
 visible = false
-z_index = 4
+z_index = 7
 y_sort_enabled = true
-material = SubResource("ShaderMaterial_1xx56")
-position = Vector2(0, -10)
+material = SubResource("ShaderMaterial_i25tc")
+position = Vector2(-2, -8)
 scale = Vector2(0.984375, 0.984375)
 sprite_frames = ExtResource("2_gntrk")
-animation = &"dead_right"
+animation = &"idle_up"
 
 [node name="Shadow" type="Sprite2D" parent="." unique_id=285121502]
 z_index = 2

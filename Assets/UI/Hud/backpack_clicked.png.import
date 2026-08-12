@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bkjfghc684pkj"
-path.s3tc="res://.godot/imported/Tree1.png-b2bdc29394d1f7f9bb94bafb3c0aeaaa.s3tc.ctex"
-path.etc2="res://.godot/imported/Tree1.png-b2bdc29394d1f7f9bb94bafb3c0aeaaa.etc2.ctex"
+uid="uid://c7sa7a4ublilf"
+path.s3tc="res://.godot/imported/backpack_clicked.png-78f39369c7e3b374c008bbd0d1b340c6.s3tc.ctex"
+path.etc2="res://.godot/imported/backpack_clicked.png-78f39369c7e3b374c008bbd0d1b340c6.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Flora/Tress/Tree1.png"
-dest_files=["res://.godot/imported/Tree1.png-b2bdc29394d1f7f9bb94bafb3c0aeaaa.s3tc.ctex", "res://.godot/imported/Tree1.png-b2bdc29394d1f7f9bb94bafb3c0aeaaa.etc2.ctex"]
+source_file="res://Assets/UI/Hud/backpack_clicked.png"
+dest_files=["res://.godot/imported/backpack_clicked.png-78f39369c7e3b374c008bbd0d1b340c6.s3tc.ctex", "res://.godot/imported/backpack_clicked.png-78f39369c7e3b374c008bbd0d1b340c6.etc2.ctex"]
 
 [params]
 

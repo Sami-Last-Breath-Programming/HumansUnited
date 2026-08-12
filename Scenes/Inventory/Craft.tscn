@@ -1,0 +1,45 @@
+[gd_scene format=3 uid="uid://8232ha4x8g2y"]
+
+[ext_resource type="Texture2D" uid="uid://b0veg6rg7cu5j" path="res://Assets/UI/Inventory/Slot.png" id="1_l4ogm"]
+[ext_resource type="Texture2D" uid="uid://b57b3801t43bx" path="res://Assets/Icons/Log.png" id="2_yabru"]
+
+[node name="Craft" type="TextureRect" unique_id=991207086]
+self_modulate = Color(1.25, 1.25, 1.25, 1)
+custom_minimum_size = Vector2(0, 440)
+size_flags_vertical = 4
+texture = ExtResource("1_l4ogm")
+expand_mode = 1
+
+[node name="VBox" type="VBoxContainer" parent="." unique_id=312609705]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.029000001
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 27.038002
+offset_top = 36.0
+offset_right = -36.0
+offset_bottom = -39.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pic" type="CenterContainer" parent="VBox" unique_id=1915053347]
+custom_minimum_size = Vector2(0, 80)
+clip_contents = true
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Texture" type="TextureRect" parent="VBox/Pic" unique_id=179451280]
+layout_mode = 2
+texture = ExtResource("2_yabru")
+
+[node name="Name" type="RichTextLabel" parent="VBox" unique_id=725504262]
+self_modulate = Color(0.97913045, 0.91586757, 0.9061556, 1)
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+size_flags_vertical = 8
+text = "Type:	Log
+"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1

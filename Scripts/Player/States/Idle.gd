@@ -3,7 +3,6 @@ extends State
 # Variables
 var anim: Node;
 var ground: TileMapLayer;
-var floraLayer: TileMapLayer;
 enum {WATER = 16};
 
 # Booleans
@@ -14,7 +13,7 @@ var isSubmerge = false;
 
 func Entry() -> void:
 	# Set Name Color
-	parent.setNameColor("#ffff00");
+	parent.setNameColor("#f3e703");
 	
 	# Connect Signal 
 	if (not Manager.driverEnter.is_connected(handleVehicle)):
@@ -40,7 +39,6 @@ func Entry() -> void:
 	
 	# TileMapLayer setup
 	ground = parent.getGround();
-	floraLayer = parent.getFlora();
 	
 	# Player Setup
 	parent.setPlayerSkin(parent.SkinType.SKIN);
@@ -50,7 +48,7 @@ func Entry() -> void:
 	
 func Exit() -> void:	
 	# Remove Color 
-	parent.setNameColor("#ffffff")
+	parent.setNameColor("#f0f0f0")
 	
 	# Disconnect signal 
 	if Manager.driverEnter.is_connected(handleVehicle):
@@ -79,7 +77,6 @@ func PhysicsUpdate(_d: float) -> void:
 
 	# Check 
 	checkWater();
-	checkTree();
 	
 	# Get Movement
 	var input = Input.get_vector(
@@ -89,17 +86,64 @@ func PhysicsUpdate(_d: float) -> void:
 			
 	# Handle Rotation, Particles & Animation
 	if (input != Vector2.ZERO):
+		# Check for water
 		if inWater: 
 			anim.play(anim.Anim.SWIM);
+			handleWaterAnim(input);
 			parent.dust.emitting = false;
-		else: parent.dust.emitting = true;
+		else: 
+			parent.dust.emitting = true;
+			handleAnim(input, true);
 	else:
 		parent.dust.emitting = false;
 		if inWater: anim.stop(anim.Anim.SWIM);
+		else: handleAnim(input, false);
 	
 	# Movement
 	parent.velocity = input * (Global.playerRunSpeed if isBoost else Global.playerSpeed);
 	parent.move_and_slide();
+
+func handleAnim(input: Vector2, yes: bool) -> void:
+	if yes:
+		if abs(input.x) > abs(input.y):
+			# Check Horizontal
+			if input.x > 0.1:
+				parent.animManager.play("walk_right")
+			elif input.x < -0.1:
+				parent.animManager.play("walk_left")
+		else:
+			# Check Vertical
+			if input.y > 0.1:
+				parent.animManager.play("walk_down")
+			elif input.y < -0.1:
+				parent.animManager.play("walk_up")
+	else:
+		if abs(parent.lasDir.x) > abs(parent.lasDir.y):
+			# Check Horizontal
+			if parent.lasDir.x > 0.1:
+				parent.animManager.play("idle_right")
+			elif parent.lasDir.x < -0.1:
+				parent.animManager.play("idle_left")
+		else:
+			# Check Vertical
+			if parent.lasDir.y > 0.1:
+				parent.animManager.play("idle_down")
+			elif parent.lasDir.y < -0.1:
+				parent.animManager.play("idle_up")
+
+func handleWaterAnim(input: Vector2) -> void:
+	if abs(input.x) > abs(input.y):
+		# Check Horizontal
+		if input.x > 0.1:
+			parent.animManager.play("idle_right");
+		elif input.x < -0.1:
+			parent.animManager.play("idle_left");
+	else:
+		# Check Vertical
+		if input.y > 0.1:
+			parent.animManager.play("idle_down");
+		elif input.y < -0.1:
+			parent.animManager.play("idle_up");
 
 func checkWater() -> void:
 	# If Ground Exits
@@ -133,17 +177,6 @@ func checkWater() -> void:
 				parent.isEntredWaterTimer.start(1);
 				isEntredWater = true;
 				inWater = true;
-
-func checkTree() -> void:
-	# If flora Exist
-	if floraLayer:
-		# Player feet position
-		var local_pos = floraLayer.local_to_map(parent.global_position);
-		# Get flora tile
-		var f_tile = floraLayer.get_cell_source_id(local_pos);
-		# Check if on flora tile 
-		if f_tile != -1: parent.showOutLine(true);
-		else: parent.showOutLine(false);
 		
 func reqSwitch() -> void:
 	# Update metadata

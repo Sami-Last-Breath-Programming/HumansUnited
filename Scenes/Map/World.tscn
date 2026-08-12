@@ -18,19 +18,22 @@ y_sort_enabled = true
 position = Vector2(613, 295)
 
 [node name="Alpha" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
-position = Vector2(-52, 165)
+position = Vector2(41, -13)
 
 [node name="StateManager" parent="Y-Order/Players/Alpha" index="9" unique_id=728419902]
 playerState = 1
 
 [node name="Romeo" parent="Y-Order/Players" unique_id=29665311 instance=ExtResource("1_jhh15")]
-position = Vector2(-13, 192)
+position = Vector2(853, -753)
 
 [node name="BCA" parent="Y-Order/Players" unique_id=1983845796 instance=ExtResource("1_jhh15")]
 position = Vector2(716, 422)
 
 [node name="Fraudia" parent="Y-Order/Players" unique_id=1716669147 instance=ExtResource("1_jhh15")]
 position = Vector2(1077, 33)
+
+[node name="Noob" parent="Y-Order/Players" unique_id=459670519 instance=ExtResource("1_jhh15")]
+position = Vector2(-526, -30)
 
 [node name="Ships" type="Node2D" parent="Y-Order" unique_id=1732228289]
 y_sort_enabled = true
@@ -43,7 +46,7 @@ shipDamage = 10.0
 boostShipSpeed = 100.0
 
 [node name="Ship2" parent="Y-Order/Ships" unique_id=2030112295 instance=ExtResource("2_my3o7")]
-position = Vector2(688, 424)
+position = Vector2(1219, 720)
 shipSkin = 1
 shipHealth = 100.0
 shipSpeed = 100.0
@@ -71,7 +74,7 @@ position = Vector2(-41, 289)
 shipSkin = 4
 shipHealth = 250.0
 shipSpeed = 400.0
-shipDamage = 40.0
+shipDamage = 20.0
 boostShipSpeed = 550.0
 
 [editable path="Y-Order/Players/Alpha"]

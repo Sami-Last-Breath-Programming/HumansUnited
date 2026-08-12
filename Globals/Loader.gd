@@ -4,6 +4,7 @@ extends Node
 const cursor: Resource					= preload("res://Assets/UI/Hud/cursor.png");
 const gameHud: PackedScene 				= preload("res://Scenes/Hud.tscn");
 const camList: PackedScene				= preload("res://Scenes/UI/CamList.tscn");
+const inventroy: PackedScene			= preload("res://Scenes/Inventory/Inventory.tscn");
 const mainCamera: PackedScene 			= preload("res://Scenes/MainCamera.tscn");
 const clickedCursor: Resource			= preload("res://Assets/UI/Hud/click.png");
 

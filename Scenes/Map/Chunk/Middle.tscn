@@ -4,8 +4,8 @@
 [ext_resource type="Texture2D" uid="uid://c8mophpflfywk" path="res://Assets/Grounds/Road.png" id="1_j3tlf"]
 [ext_resource type="Texture2D" uid="uid://c0qiegpmhxqyo" path="res://Assets/Water/Water_Movement.png" id="2_nicfu"]
 [ext_resource type="Texture2D" uid="uid://cq0vma3gtdp3x" path="res://Assets/Grounds/Road_End.png" id="3_a5xku"]
-[ext_resource type="Texture2D" uid="uid://bkjfghc684pkj" path="res://Assets/Flora/Tress/Tree1.png" id="3_jn72o"]
 [ext_resource type="Texture2D" uid="uid://caxmew3wa7h53" path="res://Assets/Water/Rock/Atlas.png" id="4_uqp2g"]
+[ext_resource type="PackedScene" uid="uid://bj78f8fudwo7k" path="res://Scenes/Interactives/Tree.tscn" id="7_kwhnf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ducwx"]
 texture = ExtResource("1_febdn")
@@ -2122,29 +2122,14 @@ terrain_set_0/terrain_0/name = "Foam"
 terrain_set_0/terrain_0/color = Color(0.39469254, 0.61536276, 1, 1)
 sources/2 = SubResource("TileSetAtlasSource_lfyhp")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_b7uvk"]
-texture = ExtResource("3_jn72o")
-texture_region_size = Vector2i(192, 256)
-0:0/animation_columns = 4
-0:0/animation_speed = 8.0
-0:0/animation_frame_0/duration = 1.0
-0:0/animation_frame_1/duration = 1.0
-0:0/animation_frame_2/duration = 1.0
-0:0/animation_frame_3/duration = 1.0
-0:0/animation_frame_4/duration = 1.0
-0:0/animation_frame_5/duration = 1.0
-0:0/animation_frame_6/duration = 1.0
-0:0/animation_frame_7/duration = 1.0
-0:0/0 = 0
-0:0/0/texture_origin = Vector2i(0, 74)
-0:0/0/y_sort_origin = 12
-0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-6.3999996, 9.600002, 12.799999, 9.600002, 12.799999, 15.14698, 22.400002, 22.400002, 12.799999, 28.8, 6.4000015, 32, -9.6, 28.8, -19.2, 25.600002)
+[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_a5xku"]
+resource_name = "Tree"
+scenes/1/scene = ExtResource("7_kwhnf")
 
 [sub_resource type="TileSet" id="TileSet_l60uc"]
-tile_size = Vector2i(64, 64)
 physics_layer_0/collision_layer = 32
 physics_layer_0/collision_mask = 0
-sources/1 = SubResource("TileSetAtlasSource_b7uvk")
+sources/1 = SubResource("TileSetScenesCollectionSource_a5xku")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_bcbdc"]
 texture = ExtResource("4_uqp2g")
@@ -2229,11 +2214,10 @@ tile_set = SubResource("TileSet_qpfou")
 tile_map_data = PackedByteArray("AAADAP//AgAAAAAAAAAEAP//AgAAAAAAAAAFAP//AgAAAAAAAAAGAP//AgAAAAAAAAAGAAAAAgAAAAAAAAAGAAEAAgAAAAAAAAAGAAIAAgAAAAAAAAAFAAIAAgAAAAAAAAAEAAIAAgAAAAAAAAADAAAAAgAAAAAAAAADAAEAAgAAAAAAAAADAAIAAgAAAAAAAAABAP//AgAAAAAAAAABAAAAAgAAAAAAAAAAAAEAAgAAAAAAAAABAAEAAgAAAAAAAAABAAIAAgAAAAAAAAAAAAIAAgAAAAAAAAABAAMAAgAAAAAAAAABAAQAAgAAAAAAAAABAAUAAgAAAAAAAAABAAYAAgAAAAAAAAABAAcAAgAAAAAAAAABAAgAAgAAAAAAAAABAAkAAgAAAAAAAAABAP7/AgAAAAAAAAABAP3/AgAAAAAAAAABAPz/AgAAAAAAAAABAPv/AgAAAAAAAAABAPr/AgAAAAAAAAABAAoAAgAAAAAAAAABAPn/AgAAAAAAAAAAAAAAAgAAAAAAAAAGAAUAAgAAAAAAAAAHAAUAAgAAAAAAAAAIAAUAAgAAAAAAAAAIAAYAAgAAAAAAAAAJAAYAAgAAAAAAAAAKAAUAAgAAAAAAAAAKAAYAAgAAAAAAAAALAAUAAgAAAAAAAAAMAAYAAgAAAAAAAAALAAYAAgAAAAAAAAAMAAcAAgAAAAAAAAAMAAgAAgAAAAAAAAAMAAUAAgAAAAAAAAAMAAkAAgAAAAAAAAALAAkAAgAAAAAAAAAKAAkAAgAAAAAAAAAJAAkAAgAAAAAAAAAIAAkAAgAAAAAAAAAIAAgAAgAAAAAAAAAHAAgAAgAAAAAAAAAGAAkAAgAAAAAAAAAFAAkAAgAAAAAAAAAEAAkAAgAAAAAAAAAEAAgAAgAAAAAAAAAEAAcAAgAAAAAAAAAEAAYAAgAAAAAAAAAEAAUAAgAAAAAAAAAFAAUAAgAAAAAAAAALAPz/AgAAAAAAAAAMAPz/AgAAAAAAAAAMAP3/AgAAAAAAAAAMAP7/AgAAAAAAAAALAP7/AgAAAAAAAAAKAP7/AgAAAAAAAAAJAP7/AgAAAAAAAAAIAPv/AgAAAAAAAAAIAP3/AgAAAAAAAAAIAP7/AgAAAAAAAAAIAPz/AgAAAAAAAAAJAPv/AgAAAAAAAAAKAPv/AgAAAAAAAAALAAAAAgAAAAAAAAAMAAAAAgAAAAAAAAANAAAAAgAAAAAAAAANAAEAAgAAAAAAAAANAAIAAgAAAAAAAAAKAAAAAgAAAAAAAAAKAAEAAgAAAAAAAAAMAAMAAgAAAAAAAAAKAAIAAgAAAAAAAAAKAAMAAgAAAAAAAAALAAMAAgAAAAAAAAA=")
 tile_set = SubResource("TileSet_vngp5")
 
-[node name="Flora" type="TileMapLayer" parent="." unique_id=587802409 groups=["Flora"]]
+[node name="Flora" type="TileMapLayer" parent="." unique_id=587802409]
 z_index = 3
 y_sort_enabled = true
-scale = Vector2(0.6, 0.6)
-tile_map_data = PackedByteArray("AAANAP//AQAAAAAAAAATAAEAAQAAAAAAAAAMAAUAAQAAAAAAAAATAAYAAQAAAAAAAAAeAPn/AQAAAAAAAAAfAPL/AQAAAAAAAAAnAPb/AQAAAAAAAAAjAPb/AQAAAAAAAAAqAAMAAQAAAAAAAAAkAAQAAQAAAAAAAAApAAgAAQAAAAAAAAAlAAkAAQAAAAAAAAAoABcAAQAAAAAAAAAnABwAAQAAAAAAAAAjABgAAQAAAAAAAAAfABwAAQAAAAAAAAAaABYAAQAAAAAAAAAYABoAAQAAAAAAAAAQABQAAQAAAAAAAAAUABYAAQAAAAAAAAARABkAAQAAAAAAAAATAB0AAQAAAAAAAAAeABgAAQAAAAAAAAACAAIAAQAAAAAAAAABAAQAAQAAAAAAAAACAAcAAQAAAAAAAAAQAAMAAQAAAAAAAAA=")
+tile_map_data = PackedByteArray("AABMAOL/AQAAAAAAAQBfAOb/AQAAAAAAAQBHAOv/AQAAAAAAAQBUAOv/AQAAAAAAAQBbAO//AQAAAAAAAQBZAAoAAQAAAAAAAQBmAAoAAQAAAAAAAQBiABIAAQAAAAAAAQBdABgAAQAAAAAAAQBZABEAAQAAAAAAAQBgADMAAQAAAAAAAQBSADoAAQAAAAAAAQBeAEQAAQAAAAAAAQBNAEQAAQAAAAAAAQAuADEAAQAAAAAAAQA8ADMAAQAAAAAAAQA8ADwAAQAAAAAAAQAqADoAAQAAAAAAAQAsAEQAAQAAAAAAAQA1AEEAAQAAAAAAAQAFAAUAAQAAAAAAAQAFAAwAAQAAAAAAAQAFABIAAQAAAAAAAQBHADsAAQAAAAAAAQAfAP//AQAAAAAAAQAwAAUAAQAAAAAAAQAeAA0AAQAAAAAAAQAvABAAAQAAAAAAAQAnAAMAAQAAAAAAAQAkABEAAQAAAAAAAQAoAAkAAQAAAAAAAQA=")
 tile_set = SubResource("TileSet_l60uc")
 
 [node name="Fauna" type="TileMapLayer" parent="." unique_id=1019298124]

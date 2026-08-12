@@ -42,7 +42,6 @@ enabled=PackedStringArray("res://addons/proton_control_animation/plugin.cfg")
 Player=""
 Ship=""
 Ground=""
-Flora=""
 PlayersGroup=""
 
 [gui]

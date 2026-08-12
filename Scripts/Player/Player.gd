@@ -18,6 +18,7 @@ enum SkinType {SKIN, BOAT}
 @export var currentPlayerSkin: 	int;
 
 # Variables
+var lasDir: 			Vector2			= Vector2(0, 0);
 var coolDownTime: 		float 			= 0.5;
 var healthBarTime: 		float 			= 2.4;
 var vehicle: 			CharacterBody2D = null;
@@ -27,6 +28,7 @@ var playerSkinCollider: Resource 		= null;
 var playerBoatCollider: Resource 		= null;
 var result: 			Array 			= [null];
 var coolDownTimer: 		Timer 			= Timer.new();
+var hurtTimer:			Timer           = Timer.new();
 var healthBarTimer: 	Timer 			= Timer.new();
 var isEntredWaterTimer: Timer 			= Timer.new();
 
@@ -59,17 +61,32 @@ func _ready() -> void:
 	# Timers Setup
 	self.add_child(coolDownTimer);
 	self.add_child(healthBarTimer);
+	self.add_child(hurtTimer);
 	self.add_child(isEntredWaterTimer);
+	hurtTimer.one_shot = true;
 	coolDownTimer.one_shot = true;
 	healthBarTimer.one_shot = true;
 	isEntredWaterTimer.one_shot = true;
+	hurtTimer.timeout.connect(func():
+		handleAnim();
+	)	
 	healthBarTimer.timeout.connect(func():
 		healthBar.visible = false;
 		playerName.visible = true;
 	);
 
 func _process(_delta: float) -> void:
+	# Process skin 
 	processSkin();
+
+	# Store last Direction
+	var input = Input.get_vector(
+		"Left", "Right", "Up", 
+		"Down"
+	);
+	if (input != Vector2.ZERO):
+		# Store last direction
+		lasDir = input; 
 
 func setSkin(index: int) -> void:
 	# Set the skin index
@@ -83,6 +100,7 @@ func setSkin(index: int) -> void:
 func setPlayerProperties() -> void:
 	# Set Name 	
 	playerName.text = self.name; 
+	setNameColor("#f0f0f0");
 
 	if not playerHealth: 		playerHealth = Global.defaultPlayerHeath;
 	if not currentPlayerSkin: 	currentPlayerSkin = Global.defaultPlayerSkin;
@@ -136,10 +154,14 @@ func takeDamage(amount: float) -> void:
 	# Check player death 
 	if (playerHealth <= 0.0):
 		stateManager.changeState(stateManager.States.DEATH);
-		print("Player death: ", self);
 		return;
 	
-	# Show Damage Animation
+	# Show hurt animation
+	if hurtTimer.is_stopped():
+		hurtTimer.start(1);
+		handleHurtAnimation();
+	
+	# Setup Tween
 	var tween = create_tween().set_loops(3);
 	tween.tween_property(texture, "modulate:a", 0.05, 0.08);
 	tween.tween_property(texture, "modulate:a", 1.0, 0.08);
@@ -190,11 +212,6 @@ func getGround() -> TileMapLayer:
 	if tmp: return tmp;
 	else: return null;
 
-func getFlora() -> TileMapLayer:
-	var tmp: TileMapLayer = get_tree().get_first_node_in_group("Flora");
-	if tmp: return tmp;
-	else: return null;
-
 func handleSwitch(_packet: Dictionary) -> void:
 	# Disconnect Signal 
 	if Manager.cameraSwitched.is_connected(handleSwitch):
@@ -214,12 +231,42 @@ func handleSwitch(_packet: Dictionary) -> void:
 		# Handle Non Vehicle 
 		stateManager.changeState(stateManager.States.IDLE);
 
+func handleAnim() -> void:
+	if abs(lasDir.x) > abs(lasDir.y):
+		# Check Horizontal
+		if lasDir.x > 0.1:
+			animManager.play("idle_right")
+		elif lasDir.x < -0.1:
+			animManager.play("idle_left")
+	else:
+		# Check Vertical
+		if lasDir.y > 0.1:
+			animManager.play("idle_down")
+		elif lasDir.y < -0.1:
+			animManager.play("idle_up")
+
+func handleHurtAnimation() -> void:
+	if abs(lasDir.x) > abs(lasDir.y):
+		# Check Horizontal
+		if lasDir.x > 0.1:
+			animManager.play("hurt_right")
+		elif lasDir.x < -0.1:
+			animManager.play("hurt_left")
+	else:
+		# Check Vertical
+		if lasDir.y > 0.1:
+			animManager.play("hurt_down")
+		elif lasDir.y < -0.1:
+			animManager.play("hurt_up")
+
 func setNameColor(color: String) -> void:
 	var pName = str(self.name);
 	var f = "[color=" + color + "]" + pName + "[/color]";
 	if not pName.is_empty():
 		playerName.text = f;
-		print(f);
+
+func getMetaData() -> Dictionary:
+	return metaData;
 
 func clearMetaData() -> void:
 	metaData[&"inVehicle"] = false;

@@ -4,7 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://7sbkc7k5idbg" path="res://Assets/UI/Hud/boost.png" id="2_rhayu"]
 [ext_resource type="Texture2D" uid="uid://bo87ua3vxkuvp" path="res://Assets/UI/Hud/boost_clicked.png" id="3_gyfy3"]
 [ext_resource type="Texture2D" uid="uid://dmt4cr0o5nbfo" path="res://Assets/UI/Hud/VehicleExit.png" id="4_3j5vs"]
+[ext_resource type="Texture2D" uid="uid://cnmyac5yh6ywi" path="res://Assets/UI/Hud/backpack.png" id="6_gyfy3"]
 [ext_resource type="Texture2D" uid="uid://bcys8cxfkjxv" path="res://Assets/UI/Hud/camSwitch.svg" id="6_rhayu"]
+[ext_resource type="Texture2D" uid="uid://c7sa7a4ublilf" path="res://Assets/UI/Hud/backpack_clicked.png" id="7_gyfy3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36asn"]
 bg_color = Color(1, 1, 1, 0.5176471)
@@ -44,6 +46,26 @@ action_right = &"Right"
 action_up = &"Up"
 action_down = &"Down"
 visibility_mode = 1
+
+[node name="InventoryBtn" type="TextureButton" parent="Toggle" unique_id=178345661]
+self_modulate = Color(1, 1, 1, 0.60784316)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.075
+anchor_top = 0.193
+anchor_right = 0.075
+anchor_bottom = 0.193
+offset_left = -42.4
+offset_top = -42.064003
+offset_right = 43.000023
+offset_bottom = 41.935997
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("6_gyfy3")
+texture_pressed = ExtResource("7_gyfy3")
+ignore_texture_size = true
+stretch_mode = 0
 
 [node name="Boost" type="Control" parent="Toggle" unique_id=314057350]
 layout_mode = 1
@@ -120,6 +142,7 @@ text = "FPS:	  60"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[connection signal="pressed" from="Toggle/InventoryBtn" to="." method="openInventroy"]
 [connection signal="mouse_entered" from="Toggle/Boost" to="." method="onFocus"]
 [connection signal="mouse_exited" from="Toggle/Boost" to="." method="notFocus"]
 [connection signal="mouse_entered" from="Toggle/VehicleExt" to="." method="onFocus"]

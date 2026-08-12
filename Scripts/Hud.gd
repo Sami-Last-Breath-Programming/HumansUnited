@@ -12,7 +12,8 @@ extends CanvasLayer;
 const HIDE_TOUCH_BUTTON_POS: Vector2 = Vector2(6000, 0);
 
 # Variables
-var camListNode: Control;
+var inventroy: Button = null;
+var camListNode: Control = null;
 var jevent:  Array[StringName];
 var touchBtnPos: Dictionary;
 enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT}
@@ -169,6 +170,16 @@ func showCamList(packet: Dictionary):
 		vehicalExt.global_position = touchBtnPos[&"vehicalExt"];
 		boostBtn.global_position = touchBtnPos[&"boostBtn"];
 		setCamList(false, true);
+
+func openInventroy() -> void:
+	# Init inventory
+	if not inventroy or not is_instance_valid(inventroy):
+		inventroy = Lod.inventroy.instantiate() as Button;
+		toggleHud.add_child(inventroy);
+		inventroy.openInventroy();
+	else:
+		inventroy.process_mode = Node.PROCESS_MODE_INHERIT;
+		inventroy.openInventroy();
 
 func onFocus():
 	Manager.setCursor(Lod.clickedCursor);

@@ -1,0 +1,369 @@
+[gd_scene format=3 uid="uid://b5hrbto5nq1hr"]
+
+[ext_resource type="Texture2D" uid="uid://c1gwod3cxhsve" path="res://Assets/UI/Inventory/Table.png" id="1_pwdm7"]
+[ext_resource type="Script" uid="uid://6ada1mk3f7fs" path="res://Scripts/Inventroy/InventroyManager.gd" id="1_q28r3"]
+[ext_resource type="Texture2D" uid="uid://bvjoncrccet25" path="res://Assets/UI/Inventory/Sheet.png" id="2_nqetm"]
+[ext_resource type="PackedScene" uid="uid://db052wtj8o4ws" path="res://Scenes/Inventory/Slot.tscn" id="3_fmpa0"]
+[ext_resource type="Texture2D" uid="uid://gw178uxb1576" path="res://Assets/UI/SwitchList/Banner_Slots.png" id="3_nqetm"]
+[ext_resource type="PackedScene" uid="uid://8232ha4x8g2y" path="res://Scenes/Inventory/Craft.tscn" id="4_fmpa0"]
+[ext_resource type="Texture2D" uid="uid://bewe06wapdshm" path="res://Assets/Ships/Sprites/Ship8.png" id="5_evwvx"]
+[ext_resource type="Texture2D" uid="uid://d3e4jl40f28v8" path="res://Assets/Icons/Hammer.png" id="5_to64l"]
+[ext_resource type="Texture2D" uid="uid://cu7v4h4opya8u" path="res://Assets/Ships/Sprites/Ship1.png" id="6_xk6y3"]
+[ext_resource type="Texture2D" uid="uid://de82pn0n78aoh" path="res://Assets/Ships/Sprites/Ship7.png" id="7_1p2o8"]
+[ext_resource type="Texture2D" uid="uid://dmcyg5vuy8b3i" path="res://Assets/Ships/Sprites/Ship12.png" id="8_q28r3"]
+[ext_resource type="Texture2D" uid="uid://3f03jbsyqk4a" path="res://Assets/Ships/Sprites/Ship9.png" id="9_tdxdq"]
+[ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="13_7gv7e"]
+[ext_resource type="Script" uid="uid://ciccapc76ic3k" path="res://addons/proton_control_animation/src/animations/rotate.gd" id="14_v81qf"]
+[ext_resource type="Script" uid="uid://doh0f6x2cdghd" path="res://addons/proton_control_animation/src/animations/fade.gd" id="15_jprbw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xy7gf"]
+bg_color = Color(0, 0, 0, 0.36078432)
+
+[sub_resource type="Resource" id="Resource_7gv7e"]
+script = ExtResource("14_v81qf")
+from_relative_rotation = -180.0
+to = 2
+metadata/_custom_type_script = "uid://ciccapc76ic3k"
+
+[sub_resource type="Resource" id="Resource_v81qf"]
+script = ExtResource("14_v81qf")
+to = 2
+to_absolute_rotation = -180.0
+metadata/_custom_type_script = "uid://ciccapc76ic3k"
+
+[sub_resource type="Resource" id="Resource_35vc0"]
+script = ExtResource("15_jprbw")
+to = 1.0
+default_duration = 0.4
+metadata/_custom_type_script = "uid://doh0f6x2cdghd"
+
+[sub_resource type="Resource" id="Resource_axwip"]
+script = ExtResource("15_jprbw")
+from = 1.0
+default_duration = 0.4
+metadata/_custom_type_script = "uid://doh0f6x2cdghd"
+
+[node name="Inventory" type="Button" unique_id=244427874]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/normal_mirrored = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/pressed_mirrored = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/hover = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/hover_mirrored = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/hover_pressed_mirrored = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/disabled_mirrored = SubResource("StyleBoxFlat_xy7gf")
+theme_override_styles/focus = SubResource("StyleBoxFlat_xy7gf")
+script = ExtResource("1_q28r3")
+
+[node name="BG" type="NinePatchRect" parent="." unique_id=873367000]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -492.0
+offset_top = -616.0
+offset_right = 493.0
+offset_bottom = -37.0
+grow_horizontal = 2
+grow_vertical = 0
+rotation = -3.1415927
+mouse_filter = 0
+texture = ExtResource("1_pwdm7")
+region_rect = Rect2(0, 0, 232, 252)
+patch_margin_left = 64
+patch_margin_top = 64
+patch_margin_right = 64
+patch_margin_bottom = 64
+
+[node name="Main" type="Control" parent="BG" unique_id=767527907]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Shop" type="NinePatchRect" parent="BG/Main" unique_id=588780306]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 18.0
+offset_top = 28.0
+offset_right = -543.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_nqetm")
+region_rect = Rect2(0, 0, 192, 192)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Texture" type="TextureRect" parent="BG/Main/Shop" unique_id=1593636249]
+self_modulate = Color(0.39607844, 0.2509804, 0.23137255, 0.3882353)
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.047000002
+anchor_top = 0.037
+anchor_right = 0.95100003
+anchor_bottom = 0.96900004
+offset_left = -0.069000244
+offset_top = -2.0179996
+offset_right = -0.07702637
+offset_bottom = -0.06600952
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture = ExtResource("3_nqetm")
+expand_mode = 1
+
+[node name="Scroll" type="ScrollContainer" parent="BG/Main/Shop" unique_id=1048834090]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = 38.0
+offset_right = -25.0
+offset_bottom = -55.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+vertical_scroll_mode = 3
+
+[node name="HBox" type="VBoxContainer" parent="BG/Main/Shop/Scroll" unique_id=43425848]
+clip_children = 2
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="Craft" parent="BG/Main/Shop/Scroll/HBox" unique_id=991207086 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Craft7" parent="BG/Main/Shop/Scroll/HBox" unique_id=54433078 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Texture" parent="BG/Main/Shop/Scroll/HBox/Craft7/VBox/Pic" parent_id_path=PackedInt32Array(54433078, 1915053347) index="0" unique_id=179451280]
+texture = ExtResource("5_to64l")
+
+[node name="Name" parent="BG/Main/Shop/Scroll/HBox/Craft7/VBox" parent_id_path=PackedInt32Array(54433078, 312609705) index="1" unique_id=725504262]
+text = "Type:	Wooden Hammer
+"
+
+[node name="Craft3" parent="BG/Main/Shop/Scroll/HBox" unique_id=635534834 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Texture" parent="BG/Main/Shop/Scroll/HBox/Craft3/VBox/Pic" parent_id_path=PackedInt32Array(635534834, 1915053347) index="0" unique_id=179451280]
+texture = ExtResource("6_xk6y3")
+
+[node name="Name" parent="BG/Main/Shop/Scroll/HBox/Craft3/VBox" parent_id_path=PackedInt32Array(635534834, 312609705) index="1" unique_id=725504262]
+text = "Type:	Ship
+
+Level: 1
+"
+
+[node name="Craft4" parent="BG/Main/Shop/Scroll/HBox" unique_id=1105142192 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Texture" parent="BG/Main/Shop/Scroll/HBox/Craft4/VBox/Pic" parent_id_path=PackedInt32Array(1105142192, 1915053347) index="0" unique_id=179451280]
+texture = ExtResource("7_1p2o8")
+
+[node name="Name" parent="BG/Main/Shop/Scroll/HBox/Craft4/VBox" parent_id_path=PackedInt32Array(1105142192, 312609705) index="1" unique_id=725504262]
+text = "Type:	Ship
+
+Level: 2
+
+"
+
+[node name="Craft5" parent="BG/Main/Shop/Scroll/HBox" unique_id=777730771 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Texture" parent="BG/Main/Shop/Scroll/HBox/Craft5/VBox/Pic" parent_id_path=PackedInt32Array(777730771, 1915053347) index="0" unique_id=179451280]
+texture = ExtResource("8_q28r3")
+
+[node name="Name" parent="BG/Main/Shop/Scroll/HBox/Craft5/VBox" parent_id_path=PackedInt32Array(777730771, 312609705) index="1" unique_id=725504262]
+text = "Type:	Ship
+
+Level: 3
+"
+
+[node name="Craft6" parent="BG/Main/Shop/Scroll/HBox" unique_id=533531465 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Texture" parent="BG/Main/Shop/Scroll/HBox/Craft6/VBox/Pic" parent_id_path=PackedInt32Array(533531465, 1915053347) index="0" unique_id=179451280]
+texture = ExtResource("9_tdxdq")
+
+[node name="Name" parent="BG/Main/Shop/Scroll/HBox/Craft6/VBox" parent_id_path=PackedInt32Array(533531465, 312609705) index="1" unique_id=725504262]
+text = "Type:	Ship
+
+Level: 4
+"
+
+[node name="Craft2" parent="BG/Main/Shop/Scroll/HBox" unique_id=933560517 instance=ExtResource("4_fmpa0")]
+layout_mode = 2
+
+[node name="Texture" parent="BG/Main/Shop/Scroll/HBox/Craft2/VBox/Pic" parent_id_path=PackedInt32Array(933560517, 1915053347) index="0" unique_id=179451280]
+texture = ExtResource("5_evwvx")
+
+[node name="Name" parent="BG/Main/Shop/Scroll/HBox/Craft2/VBox" parent_id_path=PackedInt32Array(933560517, 312609705) index="1" unique_id=725504262]
+text = "Type:	Ship
+
+Level: 5
+"
+
+[node name="Items" type="NinePatchRect" parent="BG/Main" unique_id=1090831960]
+clip_children = 2
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 423.0
+offset_top = 27.0
+offset_right = -22.0
+offset_bottom = -41.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_nqetm")
+region_rect = Rect2(0, 0, 192, 192)
+patch_margin_left = 10
+patch_margin_top = 10
+patch_margin_right = 10
+patch_margin_bottom = 10
+
+[node name="Texture" type="TextureRect" parent="BG/Main/Items" unique_id=503781621]
+self_modulate = Color(0.39607844, 0.2509804, 0.23137255, 0.3882353)
+custom_minimum_size = Vector2(0, 200)
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.047000002
+anchor_top = 0.037
+anchor_right = 0.95100003
+anchor_bottom = 0.96900004
+offset_left = -12.709002
+offset_top = -7.1660004
+offset_right = 14.8029785
+offset_bottom = 7.0579834
+size_flags_horizontal = 3
+size_flags_vertical = 0
+texture = ExtResource("3_nqetm")
+expand_mode = 1
+
+[node name="Grid" type="GridContainer" parent="BG/Main/Items" unique_id=882446947]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 45.0
+offset_top = 43.0
+offset_right = -42.0
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/h_separation = 20
+theme_override_constants/v_separation = 10
+columns = 4
+
+[node name="Slot1" parent="BG/Main/Items/Grid" unique_id=229108013 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot2" parent="BG/Main/Items/Grid" unique_id=860809126 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot3" parent="BG/Main/Items/Grid" unique_id=706954561 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot4" parent="BG/Main/Items/Grid" unique_id=1813361625 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot5" parent="BG/Main/Items/Grid" unique_id=455505299 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot6" parent="BG/Main/Items/Grid" unique_id=706728940 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot7" parent="BG/Main/Items/Grid" unique_id=1199445141 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot8" parent="BG/Main/Items/Grid" unique_id=682935477 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot9" parent="BG/Main/Items/Grid" unique_id=12534455 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot10" parent="BG/Main/Items/Grid" unique_id=1775014326 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot11" parent="BG/Main/Items/Grid" unique_id=1269316418 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot12" parent="BG/Main/Items/Grid" unique_id=2102364835 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot13" parent="BG/Main/Items/Grid" unique_id=90112452 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot14" parent="BG/Main/Items/Grid" unique_id=973255349 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot15" parent="BG/Main/Items/Grid" unique_id=1901362315 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Slot16" parent="BG/Main/Items/Grid" unique_id=2133547031 instance=ExtResource("3_fmpa0")]
+layout_mode = 2
+
+[node name="Open" type="Node" parent="." unique_id=1200160507 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("13_7gv7e")
+target = NodePath("../BG")
+animation = SubResource("Resource_7gv7e")
+start_trigger_source = NodePath("..")
+stop_trigger_source = NodePath("..")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[node name="Close" type="Node" parent="." unique_id=1751881883 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("13_7gv7e")
+target = NodePath("../BG")
+animation = SubResource("Resource_v81qf")
+start_trigger_source = NodePath("..")
+stop_trigger_source = NodePath("..")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[node name="FadeIn" type="Node" parent="." unique_id=264436781 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("13_7gv7e")
+target = NodePath("../BG/Main")
+animation = SubResource("Resource_35vc0")
+start_trigger_source = NodePath("../BG/Main")
+stop_trigger_source = NodePath("../BG/Main")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[node name="FadeOut" type="Node" parent="." unique_id=1217247978 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
+script = ExtResource("13_7gv7e")
+target = NodePath("../BG/Main")
+animation = SubResource("Resource_axwip")
+start_trigger_source = NodePath("../BG/Main")
+stop_trigger_source = NodePath("../BG/Main")
+metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
+
+[connection signal="pressed" from="." to="." method="closeInventroy"]
+[connection signal="animation_ended" from="Open" to="." method="handlePostStart"]
+[connection signal="animation_ended" from="Close" to="." method="handlePostClose"]
+[connection signal="animation_ended" from="FadeIn" to="." method="handlePostFadeIn"]
+[connection signal="animation_ended" from="FadeOut" to="." method="handlePostFadeOut"]
+
+[editable path="BG/Main/Shop/Scroll/HBox/Craft7"]
+[editable path="BG/Main/Shop/Scroll/HBox/Craft3"]
+[editable path="BG/Main/Shop/Scroll/HBox/Craft4"]
+[editable path="BG/Main/Shop/Scroll/HBox/Craft5"]
+[editable path="BG/Main/Shop/Scroll/HBox/Craft6"]
+[editable path="BG/Main/Shop/Scroll/HBox/Craft2"]

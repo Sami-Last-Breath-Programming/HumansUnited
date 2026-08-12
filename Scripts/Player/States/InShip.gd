@@ -39,6 +39,7 @@ func Entry() -> void:
 		Manager.driverEnter.emit(packet2);  
 
 	# Player setup
+	parent.playerName.visible = false;
 	parent.position = Vector2.ZERO;
 	parent.setPlayerSkin(parent.SkinType.BOAT);
 
@@ -47,6 +48,7 @@ func Exit() -> void:
 	if Manager.driverExit.is_connected(handleExit):
 		Manager.driverExit.disconnect(handleExit);
 	
+	parent.playerName.visible = true;
 	parent.setPlayerSkin(parent.SkinType.SKIN);
 
 func HandleInput(_e: InputEvent) -> void:
@@ -87,6 +89,24 @@ func PhysicsUpdate(_d: float) -> void:
 	# Set input to ship;
 	var input =  Input.get_vector("Left", "Right", "Up", "Down");
 	ship.setInput(input);
+
+	# Handle Animation 
+	if (input != Vector2.ZERO):
+		handleAnim(input);
+
+func handleAnim(input: Vector2) -> void:
+	if abs(input.x) > abs(input.y):
+		# Check Horizontal
+		if input.x > 0.1:
+			parent.animManager.play("idle_right");
+		elif input.x < -0.1:
+			parent.animManager.play("idle_left");
+	else:
+		# Check Vertical
+		if input.y > 0.1:
+			parent.animManager.play("idle_down");
+		elif input.y < -0.1:
+			parent.animManager.play("idle_up");
 
 func reqSwitch(): 
 	# Update metaData

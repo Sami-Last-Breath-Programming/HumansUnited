@@ -10,12 +10,10 @@ var isDriver: bool;
 func Entry() -> void:
 	# Check driver
 	driver = parent.getDriver();
-	if (
-		driver and
-		driver.stateManager.currentState == driver.stateManager.States.IN_SHIP
-		): isDriver = true; 
-	else:
-		isDriver = false;
+	if driver:
+		# Check if driver was in ship
+		if driver.stateManager.currentState == driver.stateManager.States.IN_SHIP: isDriver = true;
+	else: isDriver = false;
 
 	# Emit signal 
 	var packet: Dictionary = {
@@ -67,7 +65,7 @@ func Entry() -> void:
 				# Clear metaData
 				if driver.has_method("clearMetaData"):
 					driver.clearMetaData();
-
+				
 			# Give Damage to driver
 			if driver.has_method("takeDamage"):
 				driver.takeDamage(Global.shipSinkDamage);
