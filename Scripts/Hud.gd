@@ -1,5 +1,11 @@
 extends CanvasLayer;
 
+# reqHandBtn() -> {&"id": int, playerId: int, &"show": bool}
+
+# Signals
+signal reqHandBtn(packet: Dictionary);
+signal handBthHidden(packet: Dictionary);
+
 # Lazy Load
 @onready var jstick: VirtualJoystick = $Toggle/VirtualJoystick;
 @onready var boostBtn: Control = $Toggle/Boost;
@@ -7,19 +13,22 @@ extends CanvasLayer;
 @onready var vehicalExt: Control = $Toggle/VehicleExt;
 @onready var toggleHud: Control = $Toggle;
 @onready var camSwitch: Control = $Toggle/CamSwitch
+@onready var handBtn: TextureButton = $Toggle/HandBtn;
 
 # Constants
 const HIDE_TOUCH_BUTTON_POS: Vector2 = Vector2(6000, 0);
 
 # Variables
 var inventroy: Button = null;
-var camListNode: Control = null;
+var camListNode: Control;
+var lastHandPacket: Dictionary = {};
 var jevent:  Array[StringName];
 var touchBtnPos: Dictionary;
-enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT}
+enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT, HAND}
 
 # Booleans
 var isCamList = false;
+var isDebug = false;
 
 func _ready() -> void:	
 	# Connect Signal 
@@ -35,17 +44,14 @@ func _ready() -> void:
 		# Enable player controls
 		showPlayerHud();
 	);
-	
 	Manager.vehicleDestroying.connect(func(packet: Dictionary):
 		if packet[&"driver"]: 
 			await get_tree().create_timer(0.1).timeout;
 			disableSelf(true);
 	);
-	
 	Manager.vehicleDestroyed.connect(func(packet: Dictionary):
 		if packet[&"driver"]: disableSelf(false);	
 	)
-
 	Manager.cameraSwitching.connect(func(_packet: Dictionary):
 		setCamList(false, true);
 		# showCamList();
@@ -62,6 +68,32 @@ func _ready() -> void:
 	Manager.vehicalLowHp.connect(func(driver: CharacterBody2D):
 		if driver: disableBtn(Buttons.BOOST);
 	);
+	reqHandBtn.connect(func(packet: Dictionary):
+		# Caller exist
+		var ref: Variant = instance_from_id(packet.get(&"id", -1));
+		if ref:
+			# Check for flag
+			if packet[&"show"]: 
+				# Enable button
+				enableBtn(Buttons.HAND);
+				lastHandPacket = packet;
+			else : 
+				# Disable button
+				disableBtn(Buttons.HAND);
+
+				# Send Stop 
+				if ref.has_method("stopAction"):
+					ref.stopAction();
+	);
+	handBtn.pressed.connect(func():
+		# If not packet 
+		if lastHandPacket.is_empty(): return;
+		
+		# Caller exist
+		var ref : Variant = instance_from_id(lastHandPacket.get(&"id", -1));
+		if ref and ref.has_method("doAction"):
+			ref.doAction(lastHandPacket);
+	)
 	
 	# Joystick
 	jevent = [
@@ -71,9 +103,12 @@ func _ready() -> void:
 		jstick.action_right
 	];
 	jstick.visibility_mode = VirtualJoystick.VISIBILITY_WHEN_TOUCHED;
-	# Debug Properties 
+	
+	# Disable Properties 
 	vehicalExt.process_mode = Node.PROCESS_MODE_DISABLED;
+	handBtn.disabled = true;
 	vehicalExt.visible = false;
+	handBtn.visible = false;
 
 	# Cache touch buttons pos
 	touchBtnPos[&"vehicalExt"] = vehicalExt.global_position;
@@ -90,6 +125,9 @@ func disableBtn(btn: Buttons) -> void:
 		Buttons.BOOST:
 			boostBtn.process_mode = Node.PROCESS_MODE_DISABLED;
 			boostBtn.visible = false;
+		Buttons.HAND:
+			if not handBtn.disabled: handBtn.disabled = true;
+			if handBtn.visible: handBtn.visible = false;
 		Buttons.VEHICLE_EXIT:
 			vehicalExt.process_mode = Node.PROCESS_MODE_DISABLED;
 			vehicalExt.visible = false;
@@ -123,6 +161,9 @@ func enableBtn(btn: Buttons) -> void:
 		Buttons.BOOST:
 			boostBtn.process_mode = Node.PROCESS_MODE_INHERIT;
 			boostBtn.visible = true;
+		Buttons.HAND:
+			if handBtn.disabled: handBtn.disabled = false;
+			if not handBtn.visible: handBtn.visible = true;
 		Buttons.VEHICLE_EXIT:
 			vehicalExt.process_mode = Node.PROCESS_MODE_INHERIT;
 			vehicalExt.visible = true;
@@ -204,3 +245,11 @@ func hideDriverHud(packet: Dictionary = {&"vehicle": null}) -> void:
 			disableBtn(Buttons.VEHICLE_EXIT);
 		null:
 			disableBtn(Buttons.VEHICLE_EXIT);  # Disable all vehicles hud 
+
+func handleDebugToggle() -> void:
+	if not isDebug:
+		isDebug = true;
+		Manager.toggleDebug.emit(isDebug);
+	else:
+		isDebug = false;
+		Manager.toggleDebug.emit(isDebug);

@@ -2,28 +2,10 @@
 
 [ext_resource type="Texture2D" uid="uid://b0veg6rg7cu5j" path="res://Assets/UI/Inventory/Slot.png" id="1_cuqsf"]
 [ext_resource type="Script" uid="uid://b0j3bbcpk0ex5" path="res://Scripts/Inventroy/Slot.gd" id="2_oeuwi"]
-[ext_resource type="Script" uid="uid://b4hvmk8t0qkgu" path="res://addons/proton_control_animation/src/proton_control_animation.gd" id="2_vs4c1"]
-[ext_resource type="Script" uid="uid://cgcpcomn0ia24" path="res://addons/proton_control_animation/src/animations/modulate.gd" id="4_oeuwi"]
-
-[sub_resource type="Resource" id="Resource_psa1d"]
-script = ExtResource("4_oeuwi")
-from_color = Color(0, 0, 0, 0)
-to = 2
-to_color = Color(1.25, 1.25, 1.25, 1)
-easing = 1
-metadata/_custom_type_script = "uid://cgcpcomn0ia24"
 
 [node name="Slot" type="TextureRect" unique_id=229108013]
-modulate = Color(1, 1, 1, 0)
+modulate = Color(1.25, 1.25, 1.25, 1)
 custom_minimum_size = Vector2(100, 100)
 texture = ExtResource("1_cuqsf")
 expand_mode = 1
 script = ExtResource("2_oeuwi")
-
-[node name="PopUp" type="Node" parent="." unique_id=1040453914 node_paths=PackedStringArray("target", "start_trigger_source", "stop_trigger_source")]
-script = ExtResource("2_vs4c1")
-target = NodePath("..")
-animation = SubResource("Resource_psa1d")
-start_trigger_source = NodePath("..")
-stop_trigger_source = NodePath("..")
-metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"

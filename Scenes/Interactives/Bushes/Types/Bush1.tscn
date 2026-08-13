@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://bilrv6vawsg0t"]
+
+[ext_resource type="PackedScene" uid="uid://doqgfyah2tkps" path="res://Scenes/Interactives/Bushes/Bush.tscn" id="1_6easg"]
+[ext_resource type="Texture2D" uid="uid://blpbqryohqvdb" path="res://Assets/Flora/Bushes/Bush1.png" id="2_atldk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6easg"]
+size = Vector2(18, 15)
+
+[node name="Bush" unique_id=488614953 instance=ExtResource("1_6easg")]
+
+[node name="Texture" parent="." index="0" unique_id=748654425]
+show_behind_parent = true
+scale = Vector2(0.24285713, 0.24285717)
+texture = ExtResource("2_atldk")
+
+[node name="Detect" parent="Near" parent_id_path=PackedInt32Array(1614582571) index="0" unique_id=1307300948]
+position = Vector2(1, -4)
+shape = SubResource("RectangleShape2D_6easg")
+
+[node name="Debug" parent="." index="3" unique_id=324997438]
+offset_left = -34.0
+offset_top = -29.0
+offset_right = 45.0
+offset_bottom = -12.0

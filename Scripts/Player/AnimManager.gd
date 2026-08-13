@@ -5,7 +5,7 @@ enum Anim { SWIM, SPLASH, PLAYER};
 
 # Lazy Load
 @onready var playerTexture : AnimatedSprite2D =  $"../Texture";
-@onready var outlineTexture : AnimatedSprite2D = $"../Outline";
+@onready var outlineTexture : AnimatedSprite2D = $"../Texture/Outline";
 @onready var playerSwim: AnimatedSprite2D = $"../Swim";
 @onready var playerSplash: AnimatedSprite2D = $"../Splash";
 

@@ -10,6 +10,7 @@ extends Node;
 # playerIdle: Hud.gd, Idle.gd, MainCamera.gd
 # cameraSwitching: mainCamera.gd, Player/Idle.gd, InShip.gd, Player/Disabled.gd, Driving.gd
 # cameraSwitched: Player.gd, Hud.gd, mainCamera.gd
+# toggleDebug: Tree, Rock, Bush
 
 signal playerIdle(player: CharacterBody2D);
 signal reqCamList(packet: Dictionary);
@@ -25,6 +26,7 @@ signal vehicalLowHp(drive: CharacterBody2D);
 signal driverEnter(packet: Dictionary);
 signal driverExit(packet: Dictionary);
 signal nonPlayerDead(packet: Dictionary);
+signal toggleDebug(flag: bool);
 
 # Variables 
 var hud: CanvasLayer;

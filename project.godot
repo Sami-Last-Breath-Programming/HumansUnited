@@ -20,6 +20,7 @@ run/max_fps=90
 Global="*uid://cnhxfnsbiopbv"
 Manager="*uid://cnn2xs77c2bch"
 Lod="*uid://caid8n2e5bni8"
+GameResource="*uid://gpewv2i764ss"
 
 [debug]
 
@@ -102,6 +103,8 @@ pointing/emulate_touch_from_mouse=true
 2d_physics/layer_4="VEHICLE"
 2d_physics/layer_5="Water"
 2d_physics/layer_6="Flora"
+2d_physics/layer_7="Head"
+2d_physics/layer_8="Holder"
 
 [physics]
 

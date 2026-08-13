@@ -356,7 +356,7 @@ stop_trigger_source = NodePath("../BG/Main")
 metadata/_custom_type_script = "uid://b4hvmk8t0qkgu"
 
 [connection signal="pressed" from="." to="." method="closeInventroy"]
-[connection signal="animation_ended" from="Open" to="." method="handlePostStart"]
+[connection signal="animation_ended" from="Open" to="." method="handlePostOpen"]
 [connection signal="animation_ended" from="Close" to="." method="handlePostClose"]
 [connection signal="animation_ended" from="FadeIn" to="." method="handlePostFadeIn"]
 [connection signal="animation_ended" from="FadeOut" to="." method="handlePostFadeOut"]

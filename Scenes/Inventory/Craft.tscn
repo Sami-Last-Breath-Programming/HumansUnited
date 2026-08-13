@@ -38,6 +38,7 @@ self_modulate = Color(0.97913045, 0.91586757, 0.9061556, 1)
 custom_minimum_size = Vector2(50, 50)
 layout_mode = 2
 size_flags_vertical = 8
+mouse_filter = 2
 text = "Type:	Log
 "
 fit_content = true

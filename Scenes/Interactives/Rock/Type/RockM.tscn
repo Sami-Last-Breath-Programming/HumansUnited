@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://bhj6fivb6ei6r"]
+
+[ext_resource type="PackedScene" uid="uid://dahgqqenoclgf" path="res://Scenes/Interactives/Rock/Rock.tscn" id="1_8f1qk"]
+[ext_resource type="Texture2D" uid="uid://b3msrt113vmk5" path="res://Assets/Flora/Rocks/Rock2.png" id="2_l62t5"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4vqai"]
+size = Vector2(17, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_shywa"]
+size = Vector2(17, 24)
+
+[node name="Rock" unique_id=452225268 instance=ExtResource("1_8f1qk")]
+
+[node name="Texture" parent="." index="0" unique_id=919684279]
+position = Vector2(-1.9999981, -0.99999857)
+scale = Vector2(0.23333333, 0.23333333)
+texture = ExtResource("2_l62t5")
+
+[node name="Body" parent="." index="1" unique_id=1920432749]
+position = Vector2(0.23958452, -1.5000012)
+scale = Vector2(1.0416666, 1.0795453)
+polygon = PackedVector2Array(-0.25, -5.5, 1.75, -5.5, 5.75, -2.5, 7.75, 1.5, 5.75, 4.5, -0.25, 5.5, -6.25, 3.5, -7.25, 0.5, -5.25, -3.5, -2.25, -5.5)
+
+[node name="Detect" parent="Near" parent_id_path=PackedInt32Array(1480187013) index="0" unique_id=1945221521]
+position = Vector2(0.5, -1.5)
+shape = SubResource("RectangleShape2D_4vqai")
+
+[node name="Detect" parent="YOrder" parent_id_path=PackedInt32Array(2024049026) index="0" unique_id=1121385083]
+position = Vector2(0.5, 4)
+shape = SubResource("RectangleShape2D_shywa")
+
+[node name="Debug" parent="." index="4" unique_id=1499086999]
+offset_left = -35.0
+offset_top = -10.0
+offset_right = 44.0
+offset_bottom = 7.0

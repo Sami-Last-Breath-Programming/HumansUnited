@@ -1,0 +1,100 @@
+[gd_scene format=3 uid="uid://doqgfyah2tkps"]
+
+[ext_resource type="Script" uid="uid://dtbcewoigkwyy" path="res://Scripts/Interactives/Bush/Bush.gd" id="1_07tvt"]
+[ext_resource type="Script" uid="uid://udjbi24swf5h" path="res://Scripts/Interactives/Bush/Near.gd" id="1_apj13"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h7pf5"]
+size = Vector2(22, 22)
+
+[sub_resource type="Animation" id="Animation_h7pf5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_07tvt"]
+resource_name = "idle"
+length = 0.001
+step = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, -20)]
+}
+
+[sub_resource type="Animation" id="Animation_apj13"]
+resource_name = "shake"
+step = 0.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Texture:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.20333335, 0.44666666, 0.65999997, 0.85333335),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, -20), Vector2(2, -20), Vector2(0, -20), Vector2(-2, -20), Vector2(0, -20)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_07tvt"]
+_data = {
+&"RESET": SubResource("Animation_h7pf5"),
+&"idle": SubResource("Animation_07tvt"),
+&"shake": SubResource("Animation_apj13")
+}
+
+[node name="Bush" type="Node2D" unique_id=1865119071]
+script = ExtResource("1_07tvt")
+
+[node name="Texture" type="Sprite2D" parent="." unique_id=748654425]
+z_index = 2
+position = Vector2(0, -20)
+
+[node name="Near" type="Area2D" parent="." unique_id=1614582571]
+position = Vector2(0, -10)
+collision_layer = 0
+collision_mask = 132
+script = ExtResource("1_apj13")
+
+[node name="Detect" type="CollisionShape2D" parent="Near" unique_id=1307300948]
+shape = SubResource("RectangleShape2D_h7pf5")
+debug_color = Color(1, 1, 1, 0)
+
+[node name="Anim" type="AnimationPlayer" parent="." unique_id=585010386]
+libraries/ = SubResource("AnimationLibrary_07tvt")
+autoplay = &"idle"
+
+[node name="Debug" type="Label" parent="." unique_id=324997438]
+self_modulate = Color(1, 1, 1, 0.83137256)
+z_index = 6
+offset_left = -38.0
+offset_top = -32.0
+offset_right = 41.0
+offset_bottom = -15.0
+theme_override_font_sizes/font_size = 10
+text = "Doing Nothing"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="Near" to="Near" method="handleOnBush"]
+[connection signal="area_exited" from="Near" to="Near" method="handleOffBush"]
+[connection signal="body_entered" from="Near" to="Near" method="handleBushAnim"]
+[connection signal="body_exited" from="Near" to="Near" method="handleBushAnimStop"]

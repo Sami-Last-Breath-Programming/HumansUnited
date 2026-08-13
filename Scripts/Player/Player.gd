@@ -5,7 +5,7 @@ enum SkinType {SKIN, BOAT}
 # Lazy Load 
 @onready var dust 			:= $Dust;
 @onready var texture 		:= $Texture;
-@onready var outline 		:= $Outline;
+@onready var outline 		:= $Texture/Outline;
 @onready var healthBar 		:= $Progress;
 @onready var collider 		:= $Collision;
 @onready var stateManager 	:= $StateManager;
@@ -34,6 +34,7 @@ var isEntredWaterTimer: Timer 			= Timer.new();
 
 # Setup Meta Data
 var metaData:			Dictionary      = {
+	&"id": null,
 	&"state" : null,
 	&"vehicleId" : null,
 	&"vehicleType": null,
@@ -50,6 +51,9 @@ func _ready() -> void:
 	setSkin(currentPlayerSkin);
 	setPlayerProperties();
 	
+	# Set id 
+	metaData[&"id"] = self.get_instance_id();
+
 	# Init State Manager
 	stateManager.init();
 	
@@ -110,7 +114,6 @@ func getSkin(index: int) -> String:
 
 func processOutline() -> void:
 	outline.sprite_frames = texture.sprite_frames;
-	outline.position = texture.position;
 
 func processSkin() -> void:
 	# Check flag

@@ -1,7 +1,9 @@
 [gd_scene format=3 uid="uid://bj78f8fudwo7k"]
 
 [ext_resource type="Texture2D" uid="uid://bkjfghc684pkj" path="res://Assets/Flora/Trees/Tree1.png" id="1_sicxk"]
+[ext_resource type="Script" uid="uid://ditgp82x5mcyj" path="res://Scripts/Interactives/Tree/Tree.gd" id="1_vl77v"]
 [ext_resource type="Script" uid="uid://d2y6fnglybpn1" path="res://Scripts/Interactives/Tree/Leaves.gd" id="2_l72n6"]
+[ext_resource type="Script" uid="uid://dm2hoi8tw3jt1" path="res://Scripts/Interactives/Tree/Trunk.gd" id="2_lut2k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_a5xku"]
 atlas = ExtResource("1_sicxk")
@@ -71,13 +73,14 @@ animations = [{
 size = Vector2(24, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vngp5"]
-size = Vector2(28, 15)
+size = Vector2(28, 19)
 
 [node name="Tree" type="StaticBody2D" unique_id=175814047]
 z_index = 3
 y_sort_enabled = true
 collision_layer = 32
 collision_mask = 0
+script = ExtResource("1_vl77v")
 
 [node name="Texture" type="AnimatedSprite2D" parent="." unique_id=123820883]
 y_sort_enabled = true
@@ -91,16 +94,17 @@ frame_progress = 0.07283149
 offset = Vector2(0, -85)
 
 [node name="Trunk" type="CollisionShape2D" parent="." unique_id=346938996]
-position = Vector2(0, -4.5)
+position = Vector2(0, -4)
 shape = SubResource("RectangleShape2D_a5xku")
 debug_color = Color(1, 1, 1, 0)
 
 [node name="OnTrunk" type="Area2D" parent="." unique_id=521414641]
 collision_layer = 0
-collision_mask = 4
+collision_mask = 192
+script = ExtResource("2_lut2k")
 
 [node name="Detect" type="CollisionShape2D" parent="OnTrunk" unique_id=463341112]
-position = Vector2(0, -3.5)
+position = Vector2(0, -1.5)
 shape = SubResource("RectangleShape2D_vngp5")
 debug_color = Color(1, 1, 1, 0)
 
@@ -114,5 +118,21 @@ modulate = Color(0.16078432, 0.7294118, 0, 0)
 position = Vector2(0, -46)
 polygon = PackedVector2Array(-1, -55, 32, 25, 19, 37, -15, 37, -33, 23)
 
+[node name="Debug" type="Label" parent="." unique_id=1775021832]
+self_modulate = Color(1, 1, 1, 0.83137256)
+z_index = 3
+offset_left = -38.0
+offset_top = -50.0
+offset_right = 41.0
+offset_bottom = -33.0
+theme_override_font_sizes/font_size = 10
+text = "Doing Nothing"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="area_entered" from="OnTrunk" to="OnTrunk" method="handleOnTrunk"]
+[connection signal="area_entered" from="OnTrunk" to="OnTrunk" method="handleAreaOnTrunk"]
+[connection signal="area_exited" from="OnTrunk" to="OnTrunk" method="handleOffTrunk"]
+[connection signal="area_exited" from="OnTrunk" to="OnTrunk" method="handleAreaOffTrunk"]
 [connection signal="body_entered" from="OnLeaves" to="OnLeaves" method="handleOnLeaves"]
 [connection signal="body_exited" from="OnLeaves" to="OnLeaves" method="handleOffLeaves"]

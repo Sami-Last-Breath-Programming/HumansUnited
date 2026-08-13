@@ -4,9 +4,13 @@
 [ext_resource type="Texture2D" uid="uid://7sbkc7k5idbg" path="res://Assets/UI/Hud/boost.png" id="2_rhayu"]
 [ext_resource type="Texture2D" uid="uid://bo87ua3vxkuvp" path="res://Assets/UI/Hud/boost_clicked.png" id="3_gyfy3"]
 [ext_resource type="Texture2D" uid="uid://dmt4cr0o5nbfo" path="res://Assets/UI/Hud/VehicleExit.png" id="4_3j5vs"]
+[ext_resource type="Texture2D" uid="uid://2lmu522xupsv" path="res://Assets/UI/Hud/hand.png" id="4_vvfq2"]
+[ext_resource type="Texture2D" uid="uid://dhp4c4d7j1lqe" path="res://Assets/UI/Hud/hand_clicked.png" id="5_mo077"]
+[ext_resource type="Texture2D" uid="uid://cjnluxp00py3b" path="res://Assets/UI/Hud/debug.png" id="6_0c5mj"]
 [ext_resource type="Texture2D" uid="uid://cnmyac5yh6ywi" path="res://Assets/UI/Hud/backpack.png" id="6_gyfy3"]
 [ext_resource type="Texture2D" uid="uid://bcys8cxfkjxv" path="res://Assets/UI/Hud/camSwitch.svg" id="6_rhayu"]
 [ext_resource type="Texture2D" uid="uid://c7sa7a4ublilf" path="res://Assets/UI/Hud/backpack_clicked.png" id="7_gyfy3"]
+[ext_resource type="Texture2D" uid="uid://bhru6gh0sjqu5" path="res://Assets/UI/Hud/debug_clicked.png" id="7_hmj8b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36asn"]
 bg_color = Color(1, 1, 1, 0.5176471)
@@ -56,14 +60,53 @@ anchor_left = 0.075
 anchor_top = 0.193
 anchor_right = 0.075
 anchor_bottom = 0.193
-offset_left = -42.4
-offset_top = -42.064003
-offset_right = 43.000023
-offset_bottom = 41.935997
+offset_left = -41.4
+offset_top = -18.064003
+offset_right = 44.000023
+offset_bottom = 65.936
 grow_horizontal = 0
 grow_vertical = 2
 texture_normal = ExtResource("6_gyfy3")
 texture_pressed = ExtResource("7_gyfy3")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="HandBtn" type="TextureButton" parent="Toggle" unique_id=2032621258]
+visible = false
+self_modulate = Color(1, 1, 1, 0.60784316)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.0
+anchor_top = 0.44500002
+anchor_right = 1.0
+anchor_bottom = 0.44500002
+offset_left = -458.0
+offset_top = -60.360016
+offset_right = -352.0
+offset_bottom = 45.639984
+grow_horizontal = 0
+grow_vertical = 2
+texture_normal = ExtResource("4_vvfq2")
+texture_pressed = ExtResource("5_mo077")
+ignore_texture_size = true
+stretch_mode = 0
+
+[node name="Debug" type="TextureButton" parent="Toggle" unique_id=780416936]
+self_modulate = Color(1, 1, 1, 0.60784316)
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 33.0
+offset_top = -113.0
+offset_right = 115.0
+offset_bottom = -31.0
+texture_normal = ExtResource("6_0c5mj")
+texture_pressed = ExtResource("7_hmj8b")
+texture_hover = ExtResource("6_0c5mj")
+texture_disabled = ExtResource("6_0c5mj")
+texture_focused = ExtResource("6_0c5mj")
 ignore_texture_size = true
 stretch_mode = 0
 
@@ -132,10 +175,10 @@ modulate = Color(1, 1, 1, 0.84705883)
 anchors_preset = -1
 anchor_top = 0.07300001
 anchor_bottom = 0.07300001
-offset_left = 29.0
-offset_top = -26.304005
-offset_right = 128.0
-offset_bottom = 19.695995
+offset_left = 53.0
+offset_top = -22.304005
+offset_right = 152.0
+offset_bottom = 23.695995
 grow_vertical = 0
 theme_override_font_sizes/font_size = 20
 text = "FPS:	  60"
@@ -143,6 +186,8 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [connection signal="pressed" from="Toggle/InventoryBtn" to="." method="openInventroy"]
+[connection signal="pressed" from="Toggle/HandBtn" to="." method="handleHand"]
+[connection signal="pressed" from="Toggle/Debug" to="." method="handleDebugToggle"]
 [connection signal="mouse_entered" from="Toggle/Boost" to="." method="onFocus"]
 [connection signal="mouse_exited" from="Toggle/Boost" to="." method="notFocus"]
 [connection signal="mouse_entered" from="Toggle/VehicleExt" to="." method="onFocus"]

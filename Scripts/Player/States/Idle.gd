@@ -2,6 +2,7 @@ extends State
 
 # Variables
 var anim: Node;
+var speed: Vector2;
 var ground: TileMapLayer;
 enum {WATER = 16};
 
@@ -72,9 +73,6 @@ func HandleInput(_e: InputEvent) -> void:
 	elif _e.is_action_released("Boost"): isBoost = false
 
 func PhysicsUpdate(_d: float) -> void:
-	# Process outline 
-	parent.processOutline();
-
 	# Check 
 	checkWater();
 	
@@ -91,16 +89,19 @@ func PhysicsUpdate(_d: float) -> void:
 			anim.play(anim.Anim.SWIM);
 			handleWaterAnim(input);
 			parent.dust.emitting = false;
+			speed = input * ((Global.playerRunSpeed / 2) if isBoost else (Global.playerSpeed / 4));
 		else: 
 			parent.dust.emitting = true;
 			handleAnim(input, true);
+			speed = input * (Global.playerRunSpeed if isBoost else Global.playerSpeed);
 	else:
+		speed = input;
 		parent.dust.emitting = false;
 		if inWater: anim.stop(anim.Anim.SWIM);
 		else: handleAnim(input, false);
 	
 	# Movement
-	parent.velocity = input * (Global.playerRunSpeed if isBoost else Global.playerSpeed);
+	parent.velocity = speed;
 	parent.move_and_slide();
 
 func handleAnim(input: Vector2, yes: bool) -> void:

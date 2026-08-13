@@ -1,9 +1,5 @@
 extends Button;
 
-# Signlas
-signal AnimSlots();
-signal RestSlotsColor();
-
 # Lazy Load 
 @onready var openAnim: ProtonControlAnimation = $Open;
 @onready var closeAnime: ProtonControlAnimation = $Close;
@@ -11,25 +7,32 @@ signal RestSlotsColor();
 @onready var fadeOut: ProtonControlAnimation = $FadeOut;
 @onready var main: Control = $BG/Main;
 
+# Booleans 
+var isAnimating: bool;
+
 func openInventroy() -> void:
+	if isAnimating: return;
+	isAnimating = true;
 	self.visible = true;
 	openAnim.start();
 
 func closeInventroy() -> void:
+	if isAnimating: return;
+	isAnimating = true;
 	fadeOut.start();
 
-func handlePostStart() -> void:
+func handlePostOpen() -> void:
 	main.visible = true;
 	fadeIn.start();
 
+func handlePostClose() -> void:
+	isAnimating = false;
+	self.visible = false;
+	self.process_mode = Node.PROCESS_MODE_DISABLED;	
+
 func handlePostFadeIn() -> void:
-	AnimSlots.emit();
+	isAnimating = false;
 
 func handlePostFadeOut() -> void:
 	main.visible = false;
-	RestSlotsColor.emit();
 	closeAnime.start();
-
-func handlePostClose() -> void:
-	self.visible = false;
-	self.process_mode = Node.PROCESS_MODE_DISABLED;	
