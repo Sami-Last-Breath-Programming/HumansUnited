@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bbfa5adq5g3j1" path="res://Scripts/Player/Player.gd" id="1_5ixxa"]
 [ext_resource type="SpriteFrames" uid="uid://5w614xak5t6o" path="res://Resources/Skins/Player/1/skin.tres" id="2_gntrk"]
+[ext_resource type="PackedScene" uid="uid://ci1w04o5v0vbj" path="res://Scenes/Interactives/Weapons/Hammer.tscn" id="2_x2dyb"]
 [ext_resource type="Texture2D" uid="uid://xwn3qly8ttjw" path="res://Particles/ball.svg" id="3_bhhdu"]
 [ext_resource type="Shape2D" uid="uid://cekl2kfxv30va" path="res://Resources/Skins/Player/1/skinCollider.tres" id="3_d064r"]
 [ext_resource type="Shader" uid="uid://dmqdvgm2lcjto" path="res://Shader/Outline.gdshader" id="3_i25tc"]
@@ -249,6 +250,10 @@ offset_bottom = -25.0
 size_flags_horizontal = 3
 alignment = 1
 
+[node name="Hand" type="Marker2D" parent="Hbox" unique_id=1463386304]
+z_index = 4
+position = Vector2(75, 30)
+
 [node name="Name" type="RichTextLabel" parent="Hbox" unique_id=907964619]
 z_index = 7
 texture_filter = 1
@@ -265,6 +270,10 @@ scroll_active = false
 autowrap_mode = 0
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Weapon" type="Marker2D" parent="." unique_id=2065736507]
+
+[node name="Hammer" parent="Weapon" unique_id=1770476563 instance=ExtResource("2_x2dyb")]
 
 [node name="Holder" type="Area2D" parent="." unique_id=311806294]
 collision_layer = 128
@@ -289,7 +298,7 @@ debug_color = Color(1, 1, 1, 0)
 [node name="Texture" type="AnimatedSprite2D" parent="." unique_id=546085828]
 z_index = 3
 y_sort_enabled = true
-position = Vector2(0, -12.000001)
+position = Vector2(0, -9.000001)
 scale = Vector2(0.984375, 0.984375)
 sprite_frames = ExtResource("2_gntrk")
 animation = &"idle_down"

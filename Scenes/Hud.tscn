@@ -102,6 +102,7 @@ offset_left = 33.0
 offset_top = -113.0
 offset_right = 115.0
 offset_bottom = -31.0
+grow_vertical = 0
 texture_normal = ExtResource("6_0c5mj")
 texture_pressed = ExtResource("7_hmj8b")
 texture_hover = ExtResource("6_0c5mj")

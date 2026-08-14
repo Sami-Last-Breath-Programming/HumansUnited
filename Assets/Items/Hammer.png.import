@@ -2,9 +2,9 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b57b3801t43bx"
-path.s3tc="res://.godot/imported/Log.png-42529c969003344edbc5f6f0ecad85d3.s3tc.ctex"
-path.etc2="res://.godot/imported/Log.png-42529c969003344edbc5f6f0ecad85d3.etc2.ctex"
+uid="uid://d3e4jl40f28v8"
+path.s3tc="res://.godot/imported/Hammer.png-658dcf8bcb65eb6cb52ce2a656710cc9.s3tc.ctex"
+path.etc2="res://.godot/imported/Hammer.png-658dcf8bcb65eb6cb52ce2a656710cc9.etc2.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc", "etc2_astc"],
 "vram_texture": true
@@ -12,8 +12,8 @@ metadata={
 
 [deps]
 
-source_file="res://Assets/Icons/Log.png"
-dest_files=["res://.godot/imported/Log.png-42529c969003344edbc5f6f0ecad85d3.s3tc.ctex", "res://.godot/imported/Log.png-42529c969003344edbc5f6f0ecad85d3.etc2.ctex"]
+source_file="res://Assets/Items/Hammer.png"
+dest_files=["res://.godot/imported/Hammer.png-658dcf8bcb65eb6cb52ce2a656710cc9.s3tc.ctex", "res://.godot/imported/Hammer.png-658dcf8bcb65eb6cb52ce2a656710cc9.etc2.ctex"]
 
 [params]
 

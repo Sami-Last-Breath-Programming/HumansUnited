@@ -9,7 +9,6 @@ func handleOnLeaves(body: CharacterBody2D) -> void:
 			var metaData = body.getMetaData();
 			# Only show outline if not Npc or not disabled
 			if metaData[&"state"] == &"IDLE":
-				body.processOutline();
 				body.showOutLine(true);
 
 func handleOffLeaves(body: CharacterBody2D) -> void:

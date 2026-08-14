@@ -136,7 +136,7 @@ func randomSwitch(packet: Dictionary) -> void:
 	});
 
 func checkPlayer(p: Variant) ->  CharacterBody2D:
-	if (is_instance_valid(p) and not p.is_queued_for_deletion()): return p if p else null;
+	if (is_instance_valid(p) and not p.is_queued_for_deletion()): return p if p is CharacterBody2D else null;
 	else: return null;
 
 func findClosestPlayer(lastPlayer: StringName) -> void:
@@ -150,10 +150,10 @@ func findClosestPlayer(lastPlayer: StringName) -> void:
 		# Loop on Array
 		for player in players:		
 			player = checkPlayer(player);
-			# Handle Self 			
-			if player.name == lastPlayer: continue;
 			# If closest player exist
 			if player:
+				# Handle Self 			
+				if player.name == lastPlayer: continue;
 				# Get the Distance of Npc
 				var npcDis = self.global_position.distance_squared_to(player.global_position);
 				# Store the smallest distance and player
@@ -165,11 +165,13 @@ func findClosestPlayer(lastPlayer: StringName) -> void:
 
 func playAnim(packet: Dictionary) -> void:
 	# Handle all players dead
-	if not checkPlayer(closestPlayer):
+	closestPlayer = checkPlayer(closestPlayer);
+	print(closestPlayer.name);
+	if not closestPlayer:
 		# Signal To Manager
 		Manager.noPlayersLeft.emit();
 		return;
-	
+
 	# Calculate distance 
 	var dis: float = self.global_position.distance_to(closestPlayer.global_position);
 	var switchTime: float = dis / MAX_CAMERA_SWITCH_SPEED;
@@ -205,6 +207,7 @@ func handleRoot() -> void:
 		randomSwitch({
 			&"name": &"NULL",
 		})
+
 func stopTimer() -> void:
 	if not camTimer.is_stopped():
 		camTimer.stop();

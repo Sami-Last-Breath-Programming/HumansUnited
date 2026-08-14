@@ -12,6 +12,7 @@ enum SkinType {SKIN, BOAT}
 @onready var animManager 	:= $AnimManager;
 @onready var playerData 	:= PlayerData.new();
 @onready var playerName: RichTextLabel = $Hbox/Name
+@onready var weaponHolder: Marker2D = $Weapon;
 
 # Exported
 @export var playerHealth: 		float;
@@ -22,6 +23,7 @@ var lasDir: 			Vector2			= Vector2(0, 0);
 var coolDownTime: 		float 			= 0.5;
 var healthBarTime: 		float 			= 2.4;
 var vehicle: 			CharacterBody2D = null;
+var weapon:				Node2D		= null;
 var playerBoatTexture: 	SpriteFrames 	= null;
 var playerSkinTexture: 	SpriteFrames 	= null;
 var playerSkinCollider: Resource 		= null;
@@ -31,6 +33,7 @@ var coolDownTimer: 		Timer 			= Timer.new();
 var hurtTimer:			Timer           = Timer.new();
 var healthBarTimer: 	Timer 			= Timer.new();
 var isEntredWaterTimer: Timer 			= Timer.new();
+var outlineTimer:		Timer			= Timer.new();
 
 # Setup Meta Data
 var metaData:			Dictionary      = {
@@ -54,6 +57,9 @@ func _ready() -> void:
 	# Set id 
 	metaData[&"id"] = self.get_instance_id();
 
+	# Reference Weapon 
+	weapon = weaponHolder.get_child(0);;
+
 	# Init State Manager
 	stateManager.init();
 	
@@ -66,11 +72,15 @@ func _ready() -> void:
 	self.add_child(coolDownTimer);
 	self.add_child(healthBarTimer);
 	self.add_child(hurtTimer);
+	self.add_child(outlineTimer);
 	self.add_child(isEntredWaterTimer);
 	hurtTimer.one_shot = true;
 	coolDownTimer.one_shot = true;
 	healthBarTimer.one_shot = true;
 	isEntredWaterTimer.one_shot = true;
+	
+	# Timer timeout connect
+	outlineTimer.timeout.connect(showWeaponOutline);
 	hurtTimer.timeout.connect(func():
 		handleAnim();
 	)	
@@ -207,8 +217,28 @@ func setPlayerSkin(type: SkinType):
 			texture.position.y 	= playerData.skins[currentPlayerSkin][5][2][1];
 
 func showOutLine(flag: bool) -> void:
-	if flag: outline.visible = true;
-	else: outline.visible = false;
+	if flag: 
+		# Start the outline timer
+		if outlineTimer.is_stopped():
+			outlineTimer.start(0.12);
+		# Show player outline
+		outline.visible = true;
+		processOutline();
+
+	else: 
+		# Stop outline timer
+		if not outlineTimer.is_stopped():
+			outlineTimer.stop();
+		# Hide player outline
+		outline.visible = false;
+		# Hide weapon outline 
+		if weapon and weapon.has_method("showOutline"):
+			weapon.showOutline(false);
+
+func showWeaponOutline() -> void:
+	# Show weapon outline 
+	if weapon and weapon.has_method("showOutline"):
+		weapon.showOutline(true);
 
 func getGround() -> TileMapLayer:
 	var tmp: TileMapLayer = get_tree().get_first_node_in_group("Ground");

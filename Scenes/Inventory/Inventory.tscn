@@ -7,7 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://gw178uxb1576" path="res://Assets/UI/SwitchList/Banner_Slots.png" id="3_nqetm"]
 [ext_resource type="PackedScene" uid="uid://8232ha4x8g2y" path="res://Scenes/Inventory/Craft.tscn" id="4_fmpa0"]
 [ext_resource type="Texture2D" uid="uid://bewe06wapdshm" path="res://Assets/Ships/Sprites/Ship8.png" id="5_evwvx"]
-[ext_resource type="Texture2D" uid="uid://d3e4jl40f28v8" path="res://Assets/Icons/Hammer.png" id="5_to64l"]
+[ext_resource type="Texture2D" uid="uid://d3e4jl40f28v8" path="res://Assets/Items/Hammer.png" id="5_to64l"]
 [ext_resource type="Texture2D" uid="uid://cu7v4h4opya8u" path="res://Assets/Ships/Sprites/Ship1.png" id="6_xk6y3"]
 [ext_resource type="Texture2D" uid="uid://de82pn0n78aoh" path="res://Assets/Ships/Sprites/Ship7.png" id="7_1p2o8"]
 [ext_resource type="Texture2D" uid="uid://dmcyg5vuy8b3i" path="res://Assets/Ships/Sprites/Ship12.png" id="8_q28r3"]

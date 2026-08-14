@@ -18,7 +18,7 @@ func Entry() -> void:
 	tween.tween_property(parent, "scale", Vector2.ZERO, 1.0)\
 		.set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT);
 	
-	# Delay cleanup by 2 seconds 
+	# Delay cleanup
 	tween.chain().tween_interval(0.6);
 	
 	# finished signal

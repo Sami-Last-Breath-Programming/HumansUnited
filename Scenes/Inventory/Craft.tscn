@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://8232ha4x8g2y"]
 
 [ext_resource type="Texture2D" uid="uid://b0veg6rg7cu5j" path="res://Assets/UI/Inventory/Slot.png" id="1_l4ogm"]
-[ext_resource type="Texture2D" uid="uid://b57b3801t43bx" path="res://Assets/Icons/Log.png" id="2_yabru"]
+[ext_resource type="Texture2D" uid="uid://b57b3801t43bx" path="res://Assets/Items/Log.png" id="2_yabru"]
 
 [node name="Craft" type="TextureRect" unique_id=991207086]
 self_modulate = Color(1.25, 1.25, 1.25, 1)

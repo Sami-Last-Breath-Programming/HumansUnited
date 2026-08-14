@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bnlum1rjg87u1"
-path="res://.godot/imported/Idle.png-c2461f5ef434c0a26e3c0865083d32b1.ctex"
+uid="uid://clhk7s4s6i3q5"
+path="res://.godot/imported/Axe_Stone.png-252d2e328a786902f841a71ffd5764ca.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Player/Player1/Ground/Idle.png"
-dest_files=["res://.godot/imported/Idle.png-c2461f5ef434c0a26e3c0865083d32b1.ctex"]
+source_file="res://Assets/Items/Axe_Stone.png"
+dest_files=["res://.godot/imported/Axe_Stone.png-252d2e328a786902f841a71ffd5764ca.ctex"]
 
 [params]
 

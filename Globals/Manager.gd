@@ -49,7 +49,7 @@ func _ready() -> void:
 	playerDead.connect(func(packet: Dictionary):
 		playerDeadRef.append(packet[&"name"]);
 		print(playerDeadRef);
-	) 
+	)
 
 func getHud() -> CanvasLayer:
 	if (hud and is_instance_valid(hud)and not hud.is_queued_for_deletion()): return hud;

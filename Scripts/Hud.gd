@@ -28,7 +28,7 @@ enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT, HAND}
 
 # Booleans
 var isCamList = false;
-var isDebug = false;
+var isDebug = true;
 
 func _ready() -> void:	
 	# Connect Signal 
@@ -90,7 +90,7 @@ func _ready() -> void:
 		if lastHandPacket.is_empty(): return;
 		
 		# Caller exist
-		var ref : Variant = instance_from_id(lastHandPacket.get(&"id", -1));
+		var ref : Variant = instance_from_id(lastHandPacket.get(&"id", null));
 		if ref and ref.has_method("doAction"):
 			ref.doAction(lastHandPacket);
 	)

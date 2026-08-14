@@ -133,6 +133,9 @@ func handleAnim(input: Vector2, yes: bool) -> void:
 				parent.animManager.play("idle_up")
 
 func handleWaterAnim(input: Vector2) -> void:
+	# Request Weapon Water Animation 
+	parent.animManager.weaponPlay("water");
+	# Request Player Water Animation
 	if abs(input.x) > abs(input.y):
 		# Check Horizontal
 		if input.x > 0.1:

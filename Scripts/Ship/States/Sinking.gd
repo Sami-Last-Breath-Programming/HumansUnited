@@ -9,29 +9,37 @@ var isDriver: bool;
 
 func Entry() -> void:
 	# Check driver
-	driver = parent.getDriver();
+	driver = instance_from_id(parent.metaData.get(&"driverId"));
 	if driver:
+		# Make sure Driver is not Shifted
+		driver.global_position = parent.global_position;
+		# Handle Roof Ships
+		if parent.hasRoof():
+			driver.visible = false;
 		# Check if driver was in ship
-		if driver.stateManager.currentState == driver.stateManager.States.IN_SHIP: isDriver = true;
+		var metaData = driver.getMetaData();
+		if metaData[&"state"] == &"IN_SHIP":
+			# Handel SwitchList open
+			var hud = Manager.getHud();
+			if hud.isCamList:
+				Manager.reqCamList.emit({
+					&"name": driver.name,
+				})
+			# Wait for camList to hide
+			await get_tree().create_timer(1).timeout;
+			# Set driver true
+			isDriver = true;
 	else: isDriver = false;
 
 	# Emit signal 
 	var packet: Dictionary = {
 		&"driver": isDriver,
+
 	}
 	Manager.vehicleDestroying.emit(packet);
 	
 	# Enable Particle
 	parent.sinkParticle.emitting = true;
-	
-	# Driver Exist
-	driver = parent.getDriver();
-	# Make sure Driver is not Shifted
-	if driver:
-		driver.global_position = parent.global_position;
-		# Handle Roof Ships
-		if parent.hasRoof():
-			driver.visible = false;
 	
 	# Shrink Animation
 	var tween = parent.create_tween();
@@ -50,7 +58,6 @@ func Entry() -> void:
 		Manager.vehicleDestroyed.emit(packet);
 		
 		# Driver Exist
-		driver = instance_from_id(parent.metaData[&"driverId"]) if parent.metaData[&"driverId"] != null else null;
 		if driver:
 			# Only Switch if player driver 
 			if (driver.metaData[&"state"] == &"IN_SHIP"):
@@ -77,7 +84,7 @@ func Entry() -> void:
 	
 func Exit() -> void:
 	# If Driver Exist
-	driver = parent.getDriver();
+	driver = instance_from_id(parent.metaData.get(&"driverId"));
 	# Post Setup Driver 
 	if (driver and not driver.visible):
 		driver.visible = true;
