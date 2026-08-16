@@ -28,7 +28,7 @@ enum Buttons {BOOST, CAM_SWITCH, VEHICLE_EXIT, HAND}
 
 # Booleans
 var isCamList = false;
-var isDebug = true;
+var isDebug = false;
 
 func _ready() -> void:	
 	# Connect Signal 

@@ -4,6 +4,10 @@ extends Node2D;
 @onready var debug: Label = $Debug;
 
 func _ready() -> void:
+	# Set Debug flase
+	debug.visible = false;
+	
+	# Connect Signal
 	Manager.toggleDebug.connect(func(flag: bool):
 		debug.visible = flag;	
 	)

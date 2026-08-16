@@ -20,7 +20,7 @@ position = Vector2(613, 295)
 [node name="Alpha" parent="Y-Order/Players" unique_id=1342755234 instance=ExtResource("1_jhh15")]
 position = Vector2(41, -13)
 
-[node name="StateManager" parent="Y-Order/Players/Alpha" index="9" unique_id=728419902]
+[node name="StateManager" parent="Y-Order/Players/Alpha" index="11" unique_id=728419902]
 playerState = 1
 
 [node name="Romeo" parent="Y-Order/Players" unique_id=29665311 instance=ExtResource("1_jhh15")]
