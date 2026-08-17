@@ -90,9 +90,19 @@ func _ready() -> void:
 		if lastHandPacket.is_empty(): return;
 		
 		# Caller exist
-		var ref : Variant = instance_from_id(lastHandPacket.get(&"id", null));
+		var ref: Variant = instance_from_id(lastHandPacket.get(&"id", null));
 		if ref and ref.has_method("doAction"):
 			ref.doAction(lastHandPacket);
+
+		# Send the siganl to weapon if exist 
+		var id: int = lastHandPacket.get(&"playerId", -1);
+		# Handle null ref
+		if id != -1:	
+			var player: CharacterBody2D = instance_from_id(id);
+			if player.has_method("getWeapon"):
+				var weapon = player.getWeapon();
+				if weapon and weapon.has_method("doAction"): 
+					weapon.doAction();
 	)
 	
 	# Joystick

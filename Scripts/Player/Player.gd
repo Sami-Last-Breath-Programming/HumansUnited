@@ -93,6 +93,7 @@ func _process(_delta: float) -> void:
 	# Process skin 
 	processSkin();
 
+func _physics_process(_delta: float) -> void:
 	# Store last Direction
 	var input = Input.get_vector(
 		"Left", "Right", "Up", 
@@ -182,6 +183,11 @@ func takeDamage(amount: float) -> void:
 	# Start Timer
 	coolDownTimer.start(coolDownTime);
 
+func getWeapon() -> Node2D:
+	if weaponHolder and weaponHolder.get_child(0):
+		return weaponHolder.get_child(0);
+	else: return null;
+
 func getVehicle(body: CharacterBody2D = null) -> CharacterBody2D:
 	var check = vehicle if not body else body; 
 	if ( 
@@ -195,6 +201,17 @@ func getVehicle(body: CharacterBody2D = null) -> CharacterBody2D:
 
 func setVehicle(body: CharacterBody2D) -> void:
 	vehicle = getVehicle(body);
+
+func setZOrder(type: Variant) -> void:
+	# Cache weapon 
+	weapon = getWeapon();
+	# Check type
+	if type is StringName and type == &"Default":
+		texture.z_index = 3;
+		if weapon: weapon.z_index = 0;
+	elif type is int:
+		texture.z_index = type;
+		if weapon: weapon.z_index = type;
 
 func removeVehicle() -> void:
 	vehicle = null;

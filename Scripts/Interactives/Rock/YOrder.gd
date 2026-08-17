@@ -18,8 +18,10 @@ func setupPlayerZIndex(node: Variant, yes: bool) -> void:
 		if yes:
 			# Increase z index
 			var parent = node.get_parent();
-			if is_instance_valid(parent): parent.texture.z_index = 6;
+			if is_instance_valid(parent) and parent.has_method("setZOrder"):
+				parent.setZOrder(7);
 		else :
 			# Decrease z index
 			var parent = node.get_parent();
-			if is_instance_valid(parent): parent.texture.z_index = 3;
+			if is_instance_valid(parent) and parent.has_method("setZOrder"): 
+				parent.setZOrder(&"Default");

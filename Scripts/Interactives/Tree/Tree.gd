@@ -11,6 +11,7 @@ func _ready() -> void:
 	Manager.toggleDebug.connect(func(flag: bool):
 		debug.visible = flag;	
 	)
+
 func doAction(packet: Dictionary) -> void:
 	if packet[&"id"] == self.get_instance_id():
 		debug.text = "Doing Action";

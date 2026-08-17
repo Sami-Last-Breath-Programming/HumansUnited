@@ -5,6 +5,10 @@ extends Area2D;
 
 # Varaibles
 enum {PLAYER =4, HOLDER = 128}
+var alreadyPlayerId: int = -1;
+
+# Booleans 
+var isAlreadyPlayer: bool = false
 
 func handleBushAnim(body: Node2D) -> void:
 	# Check if Player or NPC
@@ -37,6 +41,12 @@ func handleOnBush(area: Area2D) -> void:
 				var metaData = player.getMetaData();
 				# Check body in required state 
 				if metaData[&"state"] == &"IDLE": # Handle NPC Too
+					# Handle more then one player
+					if isAlreadyPlayer and alreadyPlayerId != metaData[&"id"]: return;
+					# Set flag 
+					isAlreadyPlayer = true;
+					# Cache the player
+					alreadyPlayerId = metaData[&"id"];
 					# Send signal to hud
 					var hud = Manager.getHud();
 					hud.reqHandBtn.emit({
@@ -54,6 +64,12 @@ func handleOffBush(area: Area2D) -> void:
 				var metaData = player.getMetaData();
 				# Check body in required state 
 				if metaData[&"state"] == &"IDLE":			
+					# Handle more then one player
+					if isAlreadyPlayer and alreadyPlayerId != metaData[&"id"]: return;
+					# Set flag 
+					isAlreadyPlayer = false;
+					# Reset cache 
+					alreadyPlayerId = -1;
 					# Send signal to hud
 					var hud = Manager.getHud();
 					hud.reqHandBtn.emit({
