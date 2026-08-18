@@ -36,27 +36,34 @@ func _ready() -> void:
 	camTimer.one_shot = true;
 	camTimer.timeout.connect(handleRoot);
 	
-func followPlayer(player: CharacterBody2D) -> void:
+func followPlayer(packet: Dictionary) -> void:
 	# Wait for others
 	await get_tree().process_frame;
 	
-	# Handle only parenting 
-	if not isFirstReq: 
-		self.reparent(player);
-		self.global_position = player.global_position;
+	# Fetch player
+	if packet[&"id"] != -1: 
+		var player: CharacterBody2D = instance_from_id(packet[&"id"]) as CharacterBody2D;
+		# Player Exist
+		if player:
+			# Handle only parenting 
+			if not isFirstReq: 
+				self.reparent(player);
+				self.global_position = player.global_position;
 
-	else:
-		# Setup camera
-		self.global_position = player.global_position;
-		self.reparent(player);
-		self.zoom = Global.defaultCameraZoom;
-		# Wait
-		await get_tree().create_timer(0.5).timeout;
+			else:
+				# Setup camera
+				self.global_position = player.global_position;
+				self.reparent(player);
+				self.zoom = Global.defaultCameraZoom;
+				# Wait
+				await get_tree().create_timer(0.5).timeout;
 
-	# Zoom Setup For player
-	var tween = create_tween();
-	tween.tween_property(self, "zoom", Vector2(2.4, 2.4), 1);
-	isFirstReq= false;
+			# Zoom Setup For player
+			var tween = create_tween();
+			tween.tween_property(self, "zoom", Vector2(2.4, 2.4), 1);
+			isFirstReq= false;
+	
+	else: randomSwitch({&"name": &"NULL"});
 
 func followVehicle(packet: Dictionary) -> void:
 	var vehicle = instance_from_id(packet[&"vehicleId"]) as CharacterBody2D;

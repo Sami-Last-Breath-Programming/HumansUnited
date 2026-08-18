@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://fqa7moca3wny"]
 
 [ext_resource type="Script" uid="uid://bbfa5adq5g3j1" path="res://Scripts/Player/Player.gd" id="1_5ixxa"]
+[ext_resource type="Script" uid="uid://3rvr2qln6bik" path="res://Scripts/Player/Weapon.gd" id="2_5tejd"]
 [ext_resource type="SpriteFrames" uid="uid://5w614xak5t6o" path="res://Resources/Skins/Player/1/skin.tres" id="2_gntrk"]
 [ext_resource type="PackedScene" uid="uid://ci1w04o5v0vbj" path="res://Scenes/Interactives/Weapons/Hammer.tscn" id="2_x2dyb"]
 [ext_resource type="Texture2D" uid="uid://xwn3qly8ttjw" path="res://Particles/ball.svg" id="3_bhhdu"]
@@ -272,6 +273,7 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Weapon" type="Marker2D" parent="." unique_id=2065736507]
+script = ExtResource("2_5tejd")
 
 [node name="Hammer" parent="Weapon" unique_id=1770476563 instance=ExtResource("2_x2dyb")]
 

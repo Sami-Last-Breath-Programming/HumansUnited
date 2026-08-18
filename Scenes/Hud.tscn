@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://bcys8cxfkjxv" path="res://Assets/UI/Hud/camSwitch.svg" id="6_rhayu"]
 [ext_resource type="Texture2D" uid="uid://c7sa7a4ublilf" path="res://Assets/UI/Hud/backpack_clicked.png" id="7_gyfy3"]
 [ext_resource type="Texture2D" uid="uid://bhru6gh0sjqu5" path="res://Assets/UI/Hud/debug_clicked.png" id="7_hmj8b"]
+[ext_resource type="PackedScene" uid="uid://svtbwkfoirq1" path="res://Scenes/UI/HotBox.tscn" id="12_hmj8b"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_36asn"]
 bg_color = Color(1, 1, 1, 0.5176471)
@@ -36,7 +37,8 @@ layout_mode = 1
 anchors_preset = -1
 anchor_right = 0.296
 anchor_bottom = 1.0
-offset_right = 0.0079956055
+offset_left = -4.0
+offset_right = -3.9920044
 grow_horizontal = 2
 grow_vertical = 2
 offset_transform_enabled = true
@@ -170,6 +172,13 @@ texture_filter = 1
 scale = Vector2(0.30588228, 0.30588228)
 texture_normal = ExtResource("6_rhayu")
 action = "CameraSwitch"
+
+[node name="HotBox" parent="Toggle" unique_id=1795684335 instance=ExtResource("12_hmj8b")]
+layout_mode = 1
+offset_left = -296.0
+offset_top = -122.0
+offset_right = 296.0
+offset_bottom = -50.0
 
 [node name="FPS" type="Label" parent="." unique_id=1664733877]
 modulate = Color(1, 1, 1, 0.84705883)

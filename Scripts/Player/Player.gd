@@ -281,6 +281,7 @@ func handleSwitch(_packet: Dictionary) -> void:
 		# Handle Non Vehicle 
 		stateManager.changeState(stateManager.States.IDLE);
 
+
 func handleAnim() -> void:
 	if abs(lasDir.x) > abs(lasDir.y):
 		# Check Horizontal

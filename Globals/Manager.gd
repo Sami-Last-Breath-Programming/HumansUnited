@@ -12,7 +12,7 @@ extends Node;
 # cameraSwitched: Player.gd, Hud.gd, mainCamera.gd
 # toggleDebug: Tree, Rock, Bush
 
-signal playerIdle(player: CharacterBody2D);
+signal playerIdle(packet: Dictionary);
 signal reqCamList(packet: Dictionary);
 signal noPlayersLeft();
 signal cameraSwitching(packet: Dictionary);

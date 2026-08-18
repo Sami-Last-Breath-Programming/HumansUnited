@@ -36,7 +36,10 @@ func Entry() -> void:
 	parent.metaData[&"vehicleId"] = null;
 	
 	# Signal To Manager
-	Manager.playerIdle.emit.call_deferred(parent);
+	Manager.playerIdle.emit.call_deferred({
+		&"id": parent.get_instance_id(),
+		&"name": parent.name,
+	});
 	
 	# TileMapLayer setup
 	ground = parent.getGround();

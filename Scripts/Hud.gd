@@ -14,6 +14,7 @@ signal handBthHidden(packet: Dictionary);
 @onready var toggleHud: Control = $Toggle;
 @onready var camSwitch: Control = $Toggle/CamSwitch
 @onready var handBtn: TextureButton = $Toggle/HandBtn;
+@onready var hotBox: NinePatchRect = $Toggle/HotBox; 
 
 # Constants
 const HIDE_TOUCH_BUTTON_POS: Vector2 = Vector2(6000, 0);
@@ -38,7 +39,7 @@ func _ready() -> void:
 	Manager.driverExit.connect(hideDriverHud);
 
 	# Lamda Signlas;
-	Manager.playerIdle.connect(func(_drive: CharacterBody2D):
+	Manager.playerIdle.connect(func(_packet: Dictionary):
 		# Disable Vehicle controls 
 		hideDriverHud();
 		# Enable player controls

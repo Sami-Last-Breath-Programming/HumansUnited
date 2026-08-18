@@ -1,0 +1,64 @@
+[gd_scene format=3 uid="uid://svtbwkfoirq1"]
+
+[ext_resource type="Texture2D" uid="uid://d1pnn48p8wprb" path="res://Assets/UI/HotBox/Border.png" id="1_5wvn8"]
+[ext_resource type="Script" uid="uid://chielbwf8rccl" path="res://Scripts/Ui/HotBox/HotBox.gd" id="2_3xex0"]
+[ext_resource type="PackedScene" uid="uid://bulswofmpvxvm" path="res://Scenes/UI/HotBox/Slots.tscn" id="2_5wvn8"]
+
+[node name="HotBox" type="NinePatchRect" unique_id=1795684335]
+self_modulate = Color(1, 1, 1, 0.60784316)
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -293.0
+offset_top = -138.0
+offset_right = 299.0
+offset_bottom = -66.0
+grow_horizontal = 2
+grow_vertical = 0
+texture = ExtResource("1_5wvn8")
+patch_margin_left = 2
+patch_margin_top = 1
+patch_margin_right = 2
+patch_margin_bottom = 1
+script = ExtResource("2_3xex0")
+
+[node name="Center" type="CenterContainer" parent="." unique_id=31337267]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 3.0
+offset_right = -2.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Holder" type="HBoxContainer" parent="Center" unique_id=1848267404]
+layout_mode = 2
+
+[node name="Slot" parent="Center/Holder" unique_id=1341895186 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot2" parent="Center/Holder" unique_id=758866643 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot3" parent="Center/Holder" unique_id=466972412 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot4" parent="Center/Holder" unique_id=688666934 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot5" parent="Center/Holder" unique_id=1991569483 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot6" parent="Center/Holder" unique_id=1530237743 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot7" parent="Center/Holder" unique_id=1104719173 instance=ExtResource("2_5wvn8")]
+layout_mode = 2
+
+[node name="Slot8" parent="Center/Holder" unique_id=747090692 instance=ExtResource("2_5wvn8")]
+layout_mode = 2

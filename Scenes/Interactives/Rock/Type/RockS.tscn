@@ -1,9 +1,7 @@
 [gd_scene format=3 uid="uid://bld52lpe27tck"]
 
 [ext_resource type="PackedScene" uid="uid://dahgqqenoclgf" path="res://Scenes/Interactives/Rock/Rock.tscn" id="1_p6dck"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_57q28"]
-load_path = "res://.godot/imported/Rock3.png-6a666d2bb62af62fa77f3e5d13a9747a.ctex"
+[ext_resource type="Texture2D" uid="uid://dbnonwlxbr3rw" path="res://Assets/Flora/Rocks/Rock3.png" id="2_p6dck"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_p6dck"]
 size = Vector2(19, 11)
@@ -16,7 +14,7 @@ size = Vector2(19, 22)
 [node name="Texture" parent="." index="0" unique_id=919684279]
 position = Vector2(1, 0)
 scale = Vector2(0.21302076, 0.21302085)
-texture = SubResource("CompressedTexture2D_57q28")
+texture = ExtResource("2_p6dck")
 offset = Vector2(-10, 0)
 
 [node name="Body" parent="." index="1" unique_id=1920432749]

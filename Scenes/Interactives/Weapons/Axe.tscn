@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://ci1w04o5v0vbj"]
+[gd_scene format=3 uid="uid://cxgtntpank1ws"]
 
-[ext_resource type="Texture2D" uid="uid://d3e4jl40f28v8" path="res://Assets/Items/Hammer.png" id="1_8g65g"]
-[ext_resource type="Script" uid="uid://c7hp146o378ww" path="res://Scripts/Interactives/Weapons/Hammer.gd" id="1_wnt10"]
-[ext_resource type="Shader" uid="uid://dmqdvgm2lcjto" path="res://Shader/Outline.gdshader" id="3_cmhwg"]
+[ext_resource type="Texture2D" uid="uid://clhk7s4s6i3q5" path="res://Assets/Items/Axe_Stone.png" id="1_mbnjt"]
+[ext_resource type="Script" uid="uid://bpgg4shq4olh6" path="res://Scripts/Interactives/Weapons/Axe.gd" id="1_tx2sq"]
+[ext_resource type="Shader" uid="uid://dmqdvgm2lcjto" path="res://Shader/Outline.gdshader" id="2_tx2sq"]
 
 [sub_resource type="Animation" id="Animation_x2dyb"]
 length = 0.001
@@ -621,12 +621,12 @@ _data = {
 }
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l60uc"]
-shader = ExtResource("3_cmhwg")
+shader = ExtResource("2_tx2sq")
 shader_parameter/outline_color = Color(0.8784314, 0.8352941, 0, 1)
 shader_parameter/outline_thickness = 2.0000000298024
 
-[node name="Hammer" type="Node2D" unique_id=1770476563]
-script = ExtResource("1_wnt10")
+[node name="Axe" type="Node2D" unique_id=1148990361]
+script = ExtResource("1_tx2sq")
 
 [node name="Texture" type="Sprite2D" parent="." unique_id=1320908840]
 visible = false
@@ -634,7 +634,7 @@ z_index = 2
 position = Vector2(-10, -5)
 rotation = 2.9705503
 scale = Vector2(0.21154252, 0.207894)
-texture = ExtResource("1_8g65g")
+texture = ExtResource("1_mbnjt")
 
 [node name="Anim" type="AnimationPlayer" parent="." unique_id=363615649]
 root_node = NodePath("../Texture")
@@ -642,11 +642,10 @@ libraries/ = SubResource("AnimationLibrary_bocsx")
 autoplay = &"walk_down"
 
 [node name="Outline" type="Sprite2D" parent="." unique_id=1876466367]
-visible = false
 z_index = 7
 material = SubResource("ShaderMaterial_l60uc")
 position = Vector2(-9, -6.9999995)
 rotation = -1.6423548
-scale = Vector2(0.20789535, 0.21154119)
+scale = Vector2(0.20789535, 0.2115412)
 skew = -0.00066792965
-texture = ExtResource("1_8g65g")
+texture = ExtResource("1_mbnjt")
